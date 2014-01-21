@@ -73,6 +73,7 @@ int Knapsack::fillBagCaching(int n, int bagSize) {
 
   if(bagSize - size[n] < 0) with = 0; // current item doesn't fit.
 
+  cache[n][bagSize].seen = true;
   cache[n][bagSize].value = with > without ? with : without;
   return cache[n][bagSize].value;
 }

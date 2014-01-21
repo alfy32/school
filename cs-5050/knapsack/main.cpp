@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
     int runs        = argc > 2 ? std::stoi(argv[2]) : 30;
     int bagSize     = 1000;
     int minItemSize = 1;
-    int maxItemSize = argc > 4 ? std::stoi(argv[3]) : 100;
+    int maxItemSize = argc > 4 ? std::stoi(argv[3]) : 1000;
     int minValue    = argc > 5 ? std::stoi(argv[4]) : 1;
     int maxValue    = argc > 6 ? std::stoi(argv[5]) : 100;
     int minN        = 6;

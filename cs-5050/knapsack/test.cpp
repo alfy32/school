@@ -59,7 +59,7 @@ void Test::test2dynamic(int runs) {
 
   std::cout << "n\twide\tnarrow" << std::endl;
 
-  for(int n = 64; n < 10000; n*=2) {
+  for(int n = minN; n < maxN; n*=2) {
     int bagSize = 10*n;
     int maxSize = bagSize/10;
 

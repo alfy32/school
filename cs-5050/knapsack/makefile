@@ -10,3 +10,12 @@ knapsack.o: knapsack.cpp knapsack.hpp
 
 test.o: test.cpp test.hpp
 	g++ -std=c++11 -c test.cpp -o test.o
+
+test1: all
+	./knapsack test1 > test1.results
+
+test2.dynamic: all
+	./knapsack test2 dynamic 30 > test2.dynamic.results
+
+test2.caching: all
+	./knapsack test2 caching 30 > test2.caching.results

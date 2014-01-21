@@ -19,7 +19,7 @@ public:
   static void test1(
     int runs = 30,
     int bagSize = 1000,
-    int minItemSize = 1, int maxItemSize = 100,
+    int minItemSize = 1, int maxItemSize = 1000,
     int minValue = 1, int maxValue = 100,
     int minN = 6, int maxN = 1000
   );
