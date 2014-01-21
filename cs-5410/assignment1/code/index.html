@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Game Loop</title>
+
+  <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+<body>
+
+  <div class="pane">
+    <header>
+      Browser GameLoop    
+    </header>
+
+    <div class="main">
+      <div class="left-block">
+        <div class="inner">
+          <div class="timer-display"></div>
+        </div>
+      </div>
+      <div class="right-block">
+        <div class="inner">
+          <form id="add-timer-form" class="timer-add">
+            <label>Name:</label>
+            <input id="name" type="text" autofocus></input>
+
+            <label>Interval:</label>
+            <input id="interval" type="text"></input>
+
+            <label># Times:</label>
+            <input id="times" type="text"></input>
+
+            <div class="add-timer">
+              <input type="submit" value="Add Timer"></input>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div style="clear:both"></div>
+    </div>
+
+    <footer>
+      Created by Alan Christensen for CS 5410 - Copyright &copy; 2014
+    </footer>
+  </div>
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/game-loop.js"></script>
+</body>
+</html>

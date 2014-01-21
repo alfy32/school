@@ -1,0 +1,79 @@
+
+body {
+  margin: 0px;
+  padding: 0px;
+}
+
+.pane {
+  margin: 100px auto 0px auto;
+  padding: 0px;
+  width: 600px;
+  border-radius: 50px;
+  border: 3px solid black;
+  overflow: hidden;
+}
+
+header, footer {  
+  background-color: rgb(12, 99, 0);
+  text-align: center;
+  color: white;
+}
+
+header {
+  padding: 5px;
+  font-size: 35px;
+}
+
+footer {
+  padding: 10px;
+}
+
+.left-block {
+  width: 60%;
+  float: left;
+}
+
+.right-block {
+  width: 40%;
+  float: left;
+}
+
+.inner {
+  padding: 10px;
+  border: 1px solid black;
+  height: 200px;
+}
+
+.timer-add label {
+  display: inline-block;
+  width: 40%;
+}
+
+.timer-add input {
+  width: 54%;
+}
+
+.add-timer {
+  padding: 10px 0px; 
+  text-align: center;
+}
+
+.add-timer input {
+  width: 100%;
+  border-radius: 5px;
+  border: none;
+  height: 30px;
+  background-color: rgb(16, 133, 0);
+  color: white;
+  font-size: 20px;
+}
+
+.add-timer input:hover {
+  background-color: rgb(12, 99, 0);
+}
+
+.timer-display {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
