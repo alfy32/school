@@ -1,6 +1,9 @@
 Game Loop
 ======
 
+This is the classic game loop used for all games.
+
+
 **Step 1:** Initialize
 
 * Graphics
