@@ -1,4 +1,4 @@
 CS 5050 - Advanced Algorithms
 ========
 
-class projects
+Taught by Nicholas S. Flann Spring 2014
