@@ -48,8 +48,6 @@ var Game1 = {
     Game1.update(deltaTime);
     Game1.render();
 
-    while(performance.now() - Game1.lastTime < 1000);
-
     Game1.lastTime = currentTime;
     requestAnimationFrame(Game1.gameLoop);
   },
