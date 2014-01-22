@@ -11,11 +11,11 @@ int main(int argc, char* argv[]) {
     int runs        = argc > 2 ? std::stoi(argv[2]) : 30;
     int bagSize     = 1000;
     int minItemSize = 1;
-    int maxItemSize = argc > 4 ? std::stoi(argv[3]) : 1000;
-    int minValue    = argc > 5 ? std::stoi(argv[4]) : 1;
-    int maxValue    = argc > 6 ? std::stoi(argv[5]) : 100;
+    int maxItemSize = argc > 3 ? std::stoi(argv[3]) : 1000;
+    int minValue    = argc > 4 ? std::stoi(argv[4]) : 1;
+    int maxValue    = argc > 5 ? std::stoi(argv[5]) : 100;
     int minN        = 6;
-    int maxN        = argc > 7 ? std::stoi(argv[6]) : 1000;
+    int maxN        = argc > 6 ? std::stoi(argv[6]) : 1000;
 
     Test::test1(
       runs, 
@@ -23,7 +23,6 @@ int main(int argc, char* argv[]) {
       minItemSize, maxItemSize,
       minValue, maxValue
     );
-
   }
   else if(argc == 4 && std::string(argv[1]) == "test2") {
     std::string test(argv[2]);

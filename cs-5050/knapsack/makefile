@@ -14,6 +14,9 @@ test.o: test.cpp test.hpp
 test1: all
 	./knapsack test1 > test1.results
 
+test1.100: all
+	./knapsack test1 30 100 > test1.100.results
+
 test2.dynamic: all
 	./knapsack test2 dynamic 30 > test2.dynamic.results
 
