@@ -1,7 +1,7 @@
-Bag Size: 1000
-Item Size: 1-1000
-Runs: 30
-n	time(ms)
+#Bag Size: 1000
+#Item Size: 1-1000
+#Runs: 30
+#n	time(ms)
 6	0
 7	0
 8	0
