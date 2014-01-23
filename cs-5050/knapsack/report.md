@@ -26,4 +26,6 @@ Dynamic Programming and Caching Solutions
 
 ![Dynamic and Caching](https://raw.github.com/alfy32/school/master/cs-5050/knapsack/test2.plot.png?token=3528383__eyJzY29wZSI6IlJhd0Jsb2I6YWxmeTMyL3NjaG9vbC9tYXN0ZXIvY3MtNTA1MC9rbmFwc2Fjay90ZXN0Mi5wbG90LnBuZyIsImV4cGlyZXMiOjEzOTEwNjAwNjZ9--4c2f308d57848c190a6a08697b6bb82332286d89)
 
-  I plotted the dynamic and caching together to see which is faster and the results show that it is very similar. This also shows the wide range of sizes verses the narrow range of sizes. 
+  I plotted the dynamic and caching together to see which is faster and the results show that it is very similar. This also shows the wide range of sizes verses the narrow range of sizes. All of the solutions are so similar on this graph. It seems in the caching the narrow graph better as the number of items increase. I would say this is because we have less items to cache. As we try the narrow items it is more probable that we would try items of the same size or that combinations of items would hit the same part of the cache. The graph seems to show that this could have happened. 
+  
+  The dynamic solution must fill the entire array every time so the wide vs. narrow range or sizes makes no apparent difference. The runtime depends completely on the size of the cache. 
