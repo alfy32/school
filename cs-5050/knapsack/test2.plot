@@ -3,7 +3,7 @@ set logscale x
 set xlabel "Number of items(n)"
 set ylabel "Time(ms)"
 
-set title 'Recursive solution'
+set title 'Caching and Dynamic Programming Solutions'
 
 set term png
 set output 'test2.plot.png'
