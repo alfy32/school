@@ -18,3 +18,12 @@ Recursive Solution
 ![Straigth Recursive](https://raw.github.com/alfy32/school/master/cs-5050/knapsack/test1.100.plot.png?token=3528383__eyJzY29wZSI6IlJhd0Jsb2I6YWxmeTMyL3NjaG9vbC9tYXN0ZXIvY3MtNTA1MC9rbmFwc2Fjay90ZXN0MS4xMDAucGxvdC5wbmciLCJleHBpcmVzIjoxMzkxMDU5NzAxfQ%3D%3D--880c3d25de352d85222c67c547fbf7262e0fcf99)
 
   This curve ends up more like the worst case. Which it is a worst case. The smaller items always require more calls to fill the bag. With item sizes maxing at 100 it takes 10 max items to fill the 1000 size bag. The curve of this graph is about `10^(1/3) ~ 2`. Meaning we have the 2^n case. 
+  
+  
+
+Dynamic Programming and Caching Solutions
+-----
+
+![Dynamic and Caching](https://raw.github.com/alfy32/school/master/cs-5050/knapsack/test2.plot.png?token=3528383__eyJzY29wZSI6IlJhd0Jsb2I6YWxmeTMyL3NjaG9vbC9tYXN0ZXIvY3MtNTA1MC9rbmFwc2Fjay90ZXN0Mi5wbG90LnBuZyIsImV4cGlyZXMiOjEzOTEwNjAwNjZ9--4c2f308d57848c190a6a08697b6bb82332286d89)
+
+  I plotted the dynamic and caching together to see which is faster and the results show that it is very similar. This also shows the wide range of sizes verses the narrow range of sizes. 
