@@ -2,7 +2,7 @@ set logscale y
 set xlabel "Number of items(n)"
 set ylabel "Time(ms)"
 
-set title 'Recursive solution'
+set title 'Recursive solution with item sizes 1-100'
 
 set term png
 set output 'test1.100.plot.png'
