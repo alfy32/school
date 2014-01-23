@@ -6,7 +6,7 @@ You are to write a basic Game Loop.  The purpose of this assignment is to help i
 
 Write a program that presents the user with a simple interface, as show in the image below:
 
-![Browser Game Loop Example Picture](https://raw.github.com/alfy32/school/master/cs-5410/assignment1/assignment/browser-game-loop.png?token=3528383__eyJzY29wZSI6IlJhd0Jsb2I6YWxmeTMyL3NjaG9vbC9tYXN0ZXIvY3MtNTQxMC9hc3NpZ25tZW50MS9hc3NpZ25tZW50L2Jyb3dzZXItZ2FtZS1sb29wLnBuZyIsImV4cGlyZXMiOjEzOTEwNTgwMDl9--04f48804c0b288a07487d1af2487760904cd2bd3)
+![Browser Game Loop Example Picture](assignment/browser-game-loop.png)
 
 An event has a name, the interval at which it is reported, and how many times it is reported. The user will enter these details using the controls on the right; the timing interval is in milliseconds.  Any number of timers can be active at one time, not just one at a time as shown in the sample above.
 
