@@ -1,2 +1,2 @@
-*.o
-knapsack
+code/*.o
+code/knapsack
