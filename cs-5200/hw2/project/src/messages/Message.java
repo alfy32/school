@@ -1,20 +1,44 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package messages;
 
 public abstract class Message {
 
     private int messageNumber;
     private int conversationId;
+    
+    private static final int CLASS_ID = 1;
 
-    public abstract Message create(Byte[] bytes);
+    public static enum MessageType {
 
-    public abstract void Encode(Byte[] bytes);
+        REQUEST, REPLY
+    };
 
-    public abstract void Decode(Byte[] bytes);
+    public static Message create(Byte[] bytes) {
+        MessageType type = MessageType.valueOf("1");
+
+        if (type == MessageType.REQUEST) {
+            return Request.create(bytes);
+        } else if (type == MessageType.REPLY) {
+            return Reply.create(bytes);
+        } else {
+            throw new EnumConstantNotPresentException(MessageType.class, "Invalid message type");
+        }
+    }
+
+    public void Encode(Byte[] bytes) {
+        // add message data
+        
+        bytes[0] = CLASS_ID;
+        
+        // add message number
+        
+        // add conversation id
+        
+        
+    }
+
+    public void Decode(Byte[] bytes) {
+        // read message data
+    }
 
     public int getMessageNumber() {
         return messageNumber;
