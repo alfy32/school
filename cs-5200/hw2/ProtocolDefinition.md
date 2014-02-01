@@ -36,7 +36,7 @@ Table 1 lists the possible types of conversations involved in the system. It des
 
 ID | Protocol/Conversation | Initiator | Recipients    | Pattern       | Request Class | Reply Class
 ---| --------------------- | --------- | ------------- | ------------- | ------------- | -----------
-01 | Register              | Any Agent | Field         | Request-Reply | Register      | RegisterConfirmed
+01 | Register              | Any Agent | Field         | Request-Reply | Register      | Assignment
 02 | ClockTick             | Clock     | All Agents    | One-Way       | ClockTick     | N/A
 03 | Move                  | Stud      | Field         | Request-Reply | Move          | Acknowledge
 04 | GetParameters         | Any Agent | Field         | Request-Reply | GetParameters | ParameterList
