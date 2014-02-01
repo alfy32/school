@@ -66,4 +66,4 @@ ID | Protocol       | Initiator | Recipients    | Pattern       | Request Class 
 * GetResource - Get Whinig Twine From Whine or Excuse from Excues.
 * ThrowBomb - Send Field where to throw bomb.
 * DiscussTarget - Send message to another Student. Include: Who and where to attack or run and direction.
-* TakeHit - Amount of Hit Points lost by agent in attack. 
+* TakeHit - Amount of Hit Points lost by agent in attack. Resopd with new Hit Points.
