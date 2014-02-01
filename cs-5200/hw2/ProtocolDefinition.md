@@ -14,13 +14,13 @@ This document defines the communication protocol to be used in the *Brilliant St
 
 ### Basic Components
 
-* Playing Field
-* Clock Tower
-* Brilliant Student
-* Excuse Generator
-* Whining Spinner
-* Monitor
-* Zombie Professor
+* Playing Field (Field)
+* Clock Tower (Clock)
+* Brilliant Student (Student)
+* Excuse Generator (Excuse)
+* Whining Spinner (Whine)
+* Monitor (Monitor)
+* Zombie Professor (Zombie)
 
 The communication between the actors and the basic components will be described.
 
@@ -32,28 +32,19 @@ Table 1 lists the possible types of conversations involved in the system. It des
 
 ### Table 1 - Converstations and Protocols
 
-Protocol/Conversation | Initiator     | Recipients      | Pattern       |
---------------------- | ------------- | --------------- | ------------- |
-CreateGame            | Promoter      |
-GetParameters         | All           | Game            | Request-Reply |
-EditParameters        | Promoter      | Game            | Request-Reply |
-AnnounceGame          | Promoter      | Players         | One Way       |
-Register              | Real Player   | Game            | Request-Reply |
-StopGame              | Referee       | Game            | Request-Reply |
-RemoveAgent           | Referee       | Game            | Request-Reply |
-GetPlayingField       | Student       | Game            | Request-Reply |
-GetLayout             | Student       | PlayingField    | Request-Reply |
-ZombieList            | PlayingField  | PlayingField    | Request-Reply |
-StudentList           | Student       | PlayingField    | Request-Reply |
-ExcuseGeneratorList   | Student       | PlayingField    | Request-Reply |
-WhiningSpinnerList    | Student       | PlayingField    | Request-Reply |
-GetExcuse             | Student       | ExcuseGenerator | Request-Reply |
-GetTwine              | Student       | WhiningSpinner  | Request-Reply |
-ThrowBomb             | Student       | PlayingField    | Request-Reply |
-Move                  | Student       | PlayingField    | Request-Reply |
-ExchangeInfo          | Student       | Student         | Request-Reply |
-Die                   | PlayingField  | Student         | Request-Reply |
-CreateZombie          | Game          | Zombie          | Request-Reply |
-HitZombie             | Game          | Zombie          | Request-Reply |
-Eat                   | Zombie        | Game            | Request-Reply |
-Eat                   | Game          | Student,WhiningSpinner,ExcuseGenerator | Request-Reply |
+ID | Protocol/Conversation | Initiator | Recipients    | Pattern       |
+---| --------------------- | --------- | ------------- | ------------- |
+01 | Register              | Any       | Field         | Request-Reply |
+02 | ClockTick             | Clock     | All           | One-Way       |
+03 | Move                  | Student   | Field         | Request-Reply |
+04 | GetParameters         | Any       | Field         | Request-Reply |
+05 | GetField              | Student   | Field         | Request-Reply |
+06 | GetLayout             | Student   | Field         | Request-Reply |
+07 | ListZombies           | Student   | Field         | Request-Reply |
+08 | ListStudents          | Student   | Field         | Request-Reply |
+09 | ListExcuses           | Student   | Field         | Request-Reply |
+10 | ListWhines            | Student   | Field         | Request-Reply |
+11 | GetResource           | Student   | Excuse,Whine  | Request-Reply |
+12 | ThrowBomb             | Student   | Field         | Request-Reply |
+13 | DiscussTarget         | Student   | Student       | Request-Reply |
+14 | TakeHit               | Field     | Student       | Request-Reply |
