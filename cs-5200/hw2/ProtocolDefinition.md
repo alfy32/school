@@ -12,15 +12,17 @@ This document defines the communication protocol to be used in the *Brilliant St
 * Game Player
 * Game Referee
 
-### Basic Components
+### Basic Components (Agents)
 
-* Playing Field (Field)
-* Clock Tower (Clock)
-* Brilliant Student (Student)
-* Excuse Generator (Excuse)
-* Whining Spinner (Whine)
-* Monitor (Monitor)
-* Zombie Professor (Zombie)
+Code    | Name
+------- | ----
+Field   | Playing Field
+Clock   | Clock Tower
+Student | Brilliant Student
+Excuswe | Excuse Generator
+Whine   | Whining Spinner
+Monitor | Monitor
+Zombie  | Zombie Professor
 
 The communication between the actors and the basic components will be described.
 
@@ -34,10 +36,10 @@ Table 1 lists the possible types of conversations involved in the system. It des
 
 ID | Protocol/Conversation | Initiator | Recipients    | Pattern       |
 ---| --------------------- | --------- | ------------- | ------------- |
-01 | Register              | Any       | Field         | Request-Reply |
-02 | ClockTick             | Clock     | All           | One-Way       |
-03 | Move                  | Student   | Field         | Request-Reply |
-04 | GetParameters         | Any       | Field         | Request-Reply |
+01 | Register              | Any Agent | Field         | Request-Reply |
+02 | ClockTick             | Clock     | All Agents    | One-Way       |
+03 | Move                  | Stud      | Field         | Request-Reply |
+04 | GetParameters         | Any Agent | Field         | Request-Reply |
 05 | GetField              | Student   | Field         | Request-Reply |
 06 | GetLayout             | Student   | Field         | Request-Reply |
 07 | ListZombies           | Student   | Field         | Request-Reply |
@@ -47,4 +49,4 @@ ID | Protocol/Conversation | Initiator | Recipients    | Pattern       |
 11 | GetResource           | Student   | Excuse,Whine  | Request-Reply |
 12 | ThrowBomb             | Student   | Field         | Request-Reply |
 13 | DiscussTarget         | Student   | Student       | Request-Reply |
-14 | TakeHit               | Field     | Student       | Request-Reply |
+14 | TakeHit               | Field     | All Agents    | Request-Reply |
