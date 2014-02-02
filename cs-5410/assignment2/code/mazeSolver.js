@@ -1,3 +1,4 @@
+
 var MazeSolver = (function () {
   'use strict';
 
@@ -17,7 +18,7 @@ var MazeSolver = (function () {
     RIGHT: 3
   };
 
-  function Cell(row, col) {
+  function makeCell(row, col) {
     var that = {
       row: row,
       col: col
@@ -42,7 +43,7 @@ var MazeSolver = (function () {
 
     that.pickWall = function (wall) {
       return that.notPicked.splice(wall, 1)[0];
-    }
+    };
 
     return that;
   }
@@ -65,7 +66,7 @@ var MazeSolver = (function () {
     for(var row = 0; row < height; row++) {
       mazeGrid[row] = [];
       for(var col = 0; col < width; col++) {
-        mazeGrid[row][col] = Cell(row, col);
+        mazeGrid[row][col] = makeCell(row, col);
       }
     }
 
@@ -90,7 +91,9 @@ var MazeSolver = (function () {
     currentWall.row = Math.floor(Math.random() * height);
     currentWall.col = Math.floor(Math.random() * width);
 
-    if(currentWall.edge = mazeGrid[currentWall.row][currentWall.col].pickRandomWall()){
+    currentWall.edge = mazeGrid[currentWall.row][currentWall.col].pickRandomWall();
+
+    if(currentWall.edge){
       return true;
     } else {
       return getRandomWall();
@@ -123,14 +126,14 @@ var MazeSolver = (function () {
         return mazeGrid[currentWall.row][currentWall.col-1];
       case 'RIGHT':
         return mazeGrid[currentWall.row][currentWall.col+1];
-    };
+    }
   }
 
   function removeCurrentWall() {
     var cellA = getCurrentCell();
     var cellB = getCellOverWall();
 
-    console.log(cellB.row, cellB.col, currentWall);
+    // console.log(cellB.row, cellB.col, currentWall);
 
     var edge = currentWall.edge;
     var oppositeEdge = getOppositeEdge(edge);
@@ -171,7 +174,7 @@ var MazeSolver = (function () {
       var rowString = '';
       row.forEach(function (cell, colIndex) {
         rowString = rowIndex + ' ' +  colIndex + ' ' + JSON.stringify(cell.edges);
-        console.log(rowString);
+        // console.log(rowString);
       });
       // console.log(rowString);
     });
