@@ -1,25 +1,54 @@
 package messages;
 
+import common.ByteList;
+import messages.request.Register;
+
 public abstract class Request extends Message {
 
-    public RequestType requestType;
+  //<editor-fold desc="Static Variables" defaultstate="collapsed">
+  public static final int REQUEST_TYPE_SIZE = 2;
 
-    public static enum RequestType {
+  public static enum RequestType {
 
-        TYPE1
+    REGISTER_REQUEST,
+    MOVE_REQUEST
+  }
+  //</editor-fold>
+
+  public RequestType requestType;
+
+  public Request(RequestType requestType) {
+    super(MessageType.REQUEST);
+
+    this.requestType = requestType;
+  }
+
+  //<editor-fold desc="Create Functions" defaultstate="collapsed">
+  public static Message create(ByteList byteList) throws Exception {
+    int type = byteList.readInt(REQUEST_TYPE_SIZE);
+    RequestType requestType = RequestType.values()[type];
+
+    switch (requestType) {
+      case REGISTER_REQUEST:
+        return Register.create(byteList);
+      default:
+        throw new Exception("Invalid message type.", null);
     }
+  }
+  //</editor-fold>
 
-    @Override
-    public void Encode(Byte[] bytes) {
-        super.Encode(bytes);
+  @Override
+  public void encode(ByteList byteList) {
+    super.encode(byteList);
 
-        // encode request stuff
-    }
+    byteList.writeInt(requestType.ordinal(), REQUEST_TYPE_SIZE);
+  }
 
-    @Override
-    public void Decode(Byte[] bytes) {
-        super.Decode(bytes);
+  @Override
+  public void decode(ByteList byteList) {
+    super.decode(byteList);
 
-        // decode request stuff
-    }
+    int type = byteList.readInt(REQUEST_TYPE_SIZE);
+    this.requestType = RequestType.values()[type];
+  }
 }

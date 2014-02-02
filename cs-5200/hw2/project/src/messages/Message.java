@@ -1,58 +1,65 @@
 package messages;
 
+import common.ByteList;
+import common.SequenceTracker;
+
 public abstract class Message {
 
-    private int messageNumber;
-    private int conversationId;
-    
-    private static final int CLASS_ID = 1;
+  //<editor-fold desc="Static Variables" defaultstate="collapsed">
+  public static final int MESSAGE_TYPE_SIZE = 1;
 
-    public static enum MessageType {
+  public static enum MessageType {
 
-        REQUEST, REPLY
-    };
+    REQUEST, REPLY
+  };
+  //</editor-fold>
 
-    public static Message create(Byte[] bytes) {
-        MessageType type = MessageType.valueOf("1");
+  public MessageType messageType;
+  public SequenceTracker converstationId = SequenceTracker.create();
+  public SequenceTracker messageId = SequenceTracker.create();
 
-        if (type == MessageType.REQUEST) {
-            return Request.create(bytes);
-        } else if (type == MessageType.REPLY) {
-            return Reply.create(bytes);
-        } else {
-            throw new EnumConstantNotPresentException(MessageType.class, "Invalid message type");
-        }
+  public Message(MessageType messageType) {
+    this.messageType = messageType;
+  }
+
+  //<editor-fold desc="Create Functions" defaultstate="collapsed">
+  public static Message create(ByteList byteList) throws Exception {
+    int type = byteList.readInt(MESSAGE_TYPE_SIZE);
+    MessageType messageType = MessageType.values()[type];
+
+    switch (messageType) {
+      case REQUEST:
+        return Request.create(byteList);
+      case REPLY:
+        return Reply.create(byteList);
+      default:
+        throw new Exception("Invalid message type.", null);
     }
+  }
+  //</editor-fold>
 
-    public void Encode(Byte[] bytes) {
-        // add message data
-        
-        bytes[0] = CLASS_ID;
-        
-        // add message number
-        
-        // add conversation id
-        
-        
-    }
+  public void encode(ByteList byteList) {
+    byteList.writeInt(messageType.ordinal(), MESSAGE_TYPE_SIZE);
 
-    public void Decode(Byte[] bytes) {
-        // read message data
-    }
+    converstationId.encode(byteList);
+    messageId.encode(byteList);
+  }
 
-    public int getMessageNumber() {
-        return messageNumber;
-    }
+  public void decode(ByteList byteList) {
+    int type = byteList.readInt(MESSAGE_TYPE_SIZE);
+    messageType = MessageType.values()[type];
 
-    public void setMessageNumber(int messageNumber) {
-        this.messageNumber = messageNumber;
-    }
+    converstationId.decode(byteList);
+    messageId.decode(byteList);
+  }
 
-    public int getConversationId() {
-        return conversationId;
-    }
+  //<editor-fold desc="Getters/Setters" defaultstate="collapsed">
+  public String getConverstationId() {
+    return converstationId.getID();
+  }
 
-    public void setConversationId(int conversationId) {
-        this.conversationId = conversationId;
-    }
+  public String getMessageId() {
+    return messageId.getID();
+  }
+  //</editor-fold>
 }
