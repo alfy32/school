@@ -71,10 +71,40 @@ ID | Protocol       | Initiator | Recipients    | Pattern       | Request Class 
 * TakeHit - Amount of Hit Points lost by agent in attack. Resopd with new Hit Points.
 
 
-=== Figure 1 - Message Classes
+### Figure 01 - Message Classes for Word Guessing
 
-![Class Diagrams](Figure 01 - Message Classes for Word Guessing.jpg)
+![Figure 01 - Message Classes for Word Guessing](Figure 01 - Message Classes for Word Guessing.png)
 
-=== Figure 02 - Successful Request-Reply Communication Pattern
+### Figure 02 - Successful Request-Reply Communication Pattern
 
-![Figure 02 - Successful Request-Reply Communication Pattern](Figure 02 - Successful Request-Reply Communication Pattern)
+![(Figure 02 - Successful Request-Reply Communication Pattern.png](Figure 02 - Successful Request-Reply Communication Pattern.png)
+
+### Figure 03 - General Timeout Situtation
+
+![Figure 03 - General Timeout Situtation](Figure 03 - General Timeout Situtation.png)
+
+### Figure 04 - Abort Situation
+
+![Figure 04 - Abort Situation](Figure 04 - Abort Situation.png)
+
+### Figure 05 - One-Way Communication Pattern
+
+![Figure 05 - One-Way Communication Pattern](Figure 05 - One-Way Communication Pattern.png)
+
+Message Encoding/Decoding
+-------------------------
+
+A message will be decoded in the following way.
+
+Each message will be derived from the abstract class message. Then it will be recursively defined through the class hierarchy. The message class will ass the message and conversation ids. Each class including the message class will add a number to define which base class is to be used next to decode the mesage. All messages will be decoded using the ByteList class.
+
+### Encoding Scheme
+
+All values will be converted to their string representations then converted to bytes.
+
+* Integers - Each integer is written in ascii format. The number of bytes is decided by the possible values.
+* Char - Encoded in ascii. One Byte.
+* String - Two byte integer to encode the length. Then followed by ascii character values.
+* Boolean - One byte true(1) or false(0).
+* Array - Two byte count followed by each element is written using it's primitive value's encoding.
+* Object - Encoded recursively as the Message Class.
