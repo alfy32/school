@@ -30,7 +30,7 @@ The communication between the actors and the basic components will be described.
 Conversations, Communication Patterns, and Messages
 ---------------------------------------------------
 
-Table 1 lists the possible types of conversations involved in the system. It describes the protocol, initiator, participants, and pattern involved in the conversations. Figures 2-4 illustrate the *Request-Reply* pattern.
+Table 1 lists the possible types of conversations involved in the system. It describes the protocol, initiator, participants, and pattern involved in the conversations. Figures 2-4 illustrate the *Request-Reply* pattern. Figure 5 illustates the *One-Way* pattern.
 
 ### Table 1 - Converstations and Protocols
 
@@ -38,7 +38,7 @@ ID | Protocol       | Initiator | Recipients    | Pattern       | Request Class 
 ---| -------------- | --------- | ------------- | ------------- | ------------- | -----------
 01 | Register       | Any Agent | Game          | Request-Reply | Register      | Assignment
 02 | ClockTick      | Clock     | All Agents    | One-Way       | ClockTick     | N/A
-03 | Move           | Stud      | Field         | Request-Reply | Move          | NewLocation
+03 | Move           | Student   | Field         | Request-Reply | Move          | NewLocation
 04 | GetParameters  | Any Agent | Game          | Request-Reply | GetParameters | ParameterList
 05 | GetField       | Student   | Game          | Request-Reply | GetField      | Field
 06 | GetLayout      | Student   | Field         | Request-Reply | GetLayout     | Layout
