@@ -1,6 +1,5 @@
 package common;
 
-import java.nio.ByteBuffer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -64,5 +63,51 @@ public class ByteListTest {
 
     assertEquals(value1, instance.readString());
     assertEquals(value2, instance.readString());
+  }
+
+  @Test
+  public void testBool() throws Exception {
+    ByteList byteList = new ByteList();
+
+    boolean testBool = true;
+
+    byteList.writeBool(testBool);
+    byteList.goToStart();
+    boolean readBool = byteList.readBool();
+
+    assertEquals(testBool, readBool);
+  }
+
+  @Test
+  public void testBoolRead() throws Exception {
+    ByteList byteList = new ByteList();
+
+    byteList.setBytes("0");
+    byteList.goToStart();
+
+    assertFalse(byteList.readBool());
+  }
+
+  @Test
+  public void testChar() throws Exception {
+    ByteList byteList = new ByteList();
+
+    char testChar = 'A';
+
+    byteList.writeChar(testChar);
+    byteList.goToStart();
+    char readChar = byteList.readChar();
+
+    assertEquals(testChar, readChar);
+  }
+
+  @Test
+  public void testCharRead() throws Exception {
+    ByteList byteList = new ByteList();
+    
+    byteList.setBytes("F");
+    byteList.goToStart();
+
+    assertEquals('F', byteList.readChar());
   }
 }

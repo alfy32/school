@@ -4,14 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/alan/git/school/cs-5200/hw2/project/src/common/SequenceTracker.java</file>
-            <file>file:/home/alan/git/school/cs-5200/hw2/project/src/messages/Message.java</file>
+            <file>file:/home/alan/git/school/cs-5200/hw2/project/src/common/Coordinate.java</file>
             <file>file:/home/alan/git/school/cs-5200/hw2/project/test/common/SequenceTrackerTest.java</file>
-            <file>file:/home/alan/git/school/cs-5200/hw2/project/src/messages/Request.java</file>
+            <file>file:/home/alan/git/school/cs-5200/hw2/project/src/common/ClockTick.java</file>
             <file>file:/home/alan/git/school/cs-5200/hw2/project/test/messages/request/RegisterTest.java</file>
             <file>file:/home/alan/git/school/cs-5200/hw2/project/src/messages/request/Register.java</file>
             <file>file:/home/alan/git/school/cs-5200/hw2/project/test/messages/MessageTest.java</file>
             <file>file:/home/alan/git/school/cs-5200/hw2/project/src/common/ByteList.java</file>
-            <file>file:/home/alan/git/school/cs-5200/hw2/project/test/messages/request/MoveTest.java</file>
             <file>file:/home/alan/git/school/cs-5200/hw2/project/src/messages/request/Move.java</file>
             <file>file:/home/alan/git/school/cs-5200/hw2/project/test/messages/RequestTest.java</file>
             <file>file:/home/alan/git/school/cs-5200/hw2/project/src/messages/request/GetParameters.java</file>
