@@ -11,7 +11,10 @@ public abstract class Request extends Message {
   public static enum RequestType {
 
     REGISTER_REQUEST,
-    MOVE_REQUEST
+    MOVE_REQUEST,
+    GET_PARAMETERS_REQUEST,
+    GET_FIELD_REQUEST,
+    GET_LAUOI
   }
   //</editor-fold>
 
