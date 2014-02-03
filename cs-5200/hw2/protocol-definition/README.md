@@ -71,25 +71,25 @@ ID | Protocol       | Initiator | Recipients    | Pattern       | Request Class 
 * TakeHit - Amount of Hit Points lost by agent in attack. Resopd with new Hit Points.
 
 
-### Figure 01 - Message Classes for Word Guessing
+### Figure 01 - Message Classes for Brilliant Students VS Zombie Professors
 
-![Figure 01 - Message Classes for Word Guessing](Figure 01 - Message Classes for Word Guessing.png)
+![Figure 01](Figure 01.png)
 
 ### Figure 02 - Successful Request-Reply Communication Pattern
 
-![(Figure 02 - Successful Request-Reply Communication Pattern.png](Figure 02 - Successful Request-Reply Communication Pattern.png)
+![(Figure 02](Figure 02.png)
 
 ### Figure 03 - General Timeout Situtation
 
-![Figure 03 - General Timeout Situtation](Figure 03 - General Timeout Situtation.png)
+![Figure 03](Figure 03.png)
 
 ### Figure 04 - Abort Situation
 
-![Figure 04 - Abort Situation](Figure 04 - Abort Situation.png)
+![Figure 04](Figure 04.png)
 
 ### Figure 05 - One-Way Communication Pattern
 
-![Figure 05 - One-Way Communication Pattern](Figure 05 - One-Way Communication Pattern.png)
+![Figure 05](Figure 05.png)
 
 Message Encoding/Decoding
 -------------------------
