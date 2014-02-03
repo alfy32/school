@@ -68,13 +68,13 @@ ID | Protocol       | Initiator | Recipients    | Pattern       | Request Class 
 * GetResource - Get Whinig Twine From Whine or Excuse from Excues.
 * ThrowBomb - Send Field where to throw bomb.
 * DiscussTarget - Send message to another Student. Include: Who and where to attack or run and direction.
-* TakeHit - Amount of Hit Points lost by agent in attack. Resopd with new Hit Points. 
+* TakeHit - Amount of Hit Points lost by agent in attack. Resopd with new Hit Points.
 
 
 === Figure 1 - Message Classes
 
-![Class Diagrams](/protocol-definition/Figure 01 - Message Classes for Word Guessing.jpg)
+![Class Diagrams](Figure 01 - Message Classes for Word Guessing.jpg)
 
 === Figure 02 - Successful Request-Reply Communication Pattern
 
-![Figure 02 - Successful Request-Reply Communication Pattern](/protocol-definition/Figure 02 - Successful Request-Reply Communication Pattern)
+![Figure 02 - Successful Request-Reply Communication Pattern](Figure 02 - Successful Request-Reply Communication Pattern)
