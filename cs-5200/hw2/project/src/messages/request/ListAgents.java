@@ -3,23 +3,25 @@ package messages.request;
 import common.ByteList;
 import messages.Request;
 
-public class GetParameters extends Request {
+public class ListAgents extends Request {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
   //</editor-fold>
   //<editor-fold desc="Static Functions" defaultstate="collapsed">
   //</editor-fold>
   private String id;
+  private String who;
 
-  public GetParameters() {
-    super(RequestType.GET_PARAMETERS_REQUEST);
+  public ListAgents() {
+    super(RequestType.LIST_AGENTS_REQUST);
     
     this.id = "";
+    this.who = "";
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
-  public static GetParameters create(ByteList byteList) throws Exception {
-    GetParameters register = new GetParameters();
+  public static ListAgents create(ByteList byteList) throws Exception {
+    ListAgents register = new ListAgents();
 
     register.decode(byteList);
 
@@ -32,6 +34,7 @@ public class GetParameters extends Request {
     super.encode(byteList);
 
     byteList.writeString(id);
+    byteList.writeString(who);
   }
 
   @Override
@@ -39,6 +42,7 @@ public class GetParameters extends Request {
     super.decode(byteList);
 
     this.id = byteList.readString();
+    this.who = byteList.readString();
   }
 
   //<editor-fold desc="Getter/Setter" defaultstate="collapsed">
@@ -48,6 +52,14 @@ public class GetParameters extends Request {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public String getWho() {
+    return who;
+  }
+
+  public void setWho(String who) {
+    this.who = who;
   }
   //</editor-fold>
 }

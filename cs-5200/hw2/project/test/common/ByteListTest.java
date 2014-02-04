@@ -9,7 +9,7 @@ public class ByteListTest {
   }
 
   @Test
-  public void testReadWriteInt() {
+  public void testReadWriteInt() throws Exception {
     int value = 13;
     int size = 4;
 
@@ -22,7 +22,7 @@ public class ByteListTest {
   }
 
   @Test
-  public void testMultipleReadWriteInt() {
+  public void testMultipleReadWriteInt() throws Exception {
     int value1 = 1;
     int value2 = 203;
     int size1 = 1;
@@ -39,7 +39,7 @@ public class ByteListTest {
   }
 
   @Test
-  public void testReadWriteString() {
+  public void testReadWriteString() throws Exception {
     String value = "Hi mom!";
 
     ByteList instance = new ByteList();
@@ -51,7 +51,7 @@ public class ByteListTest {
   }
 
   @Test
-  public void testMultipleReadWriteString() {
+  public void testMultipleReadWriteString() throws Exception {
     String value1 = "Hi mom!";
     String value2 = "ok";
 
@@ -104,7 +104,7 @@ public class ByteListTest {
   @Test
   public void testCharRead() throws Exception {
     ByteList byteList = new ByteList();
-    
+
     byteList.setBytes("F");
     byteList.goToStart();
 

@@ -1,25 +1,30 @@
 package messages.request;
 
+import common.Agent;
 import common.ByteList;
 import messages.Request;
 
-public class GetParameters extends Request {
+public class DiscussTarget extends Request {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
   //</editor-fold>
   //<editor-fold desc="Static Functions" defaultstate="collapsed">
   //</editor-fold>
   private String id;
+  private Agent target;
+  private String action;
 
-  public GetParameters() {
-    super(RequestType.GET_PARAMETERS_REQUEST);
+  public DiscussTarget() {
+    super(RequestType.DISCUSS_TARGET_REQUEST);
     
     this.id = "";
+    this.target = new Agent();
+    this.action = "";
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
-  public static GetParameters create(ByteList byteList) throws Exception {
-    GetParameters register = new GetParameters();
+  public static DiscussTarget create(ByteList byteList) throws Exception {
+    DiscussTarget register = new DiscussTarget();
 
     register.decode(byteList);
 
@@ -32,6 +37,8 @@ public class GetParameters extends Request {
     super.encode(byteList);
 
     byteList.writeString(id);
+    target.encode(byteList);
+    byteList.writeString(action);
   }
 
   @Override
@@ -39,6 +46,8 @@ public class GetParameters extends Request {
     super.decode(byteList);
 
     this.id = byteList.readString();
+    target.decode(byteList);
+    this.action = byteList.readString();
   }
 
   //<editor-fold desc="Getter/Setter" defaultstate="collapsed">
@@ -48,6 +57,22 @@ public class GetParameters extends Request {
 
   public void setId(String id) {
     this.id = id;
+  }
+
+  public Agent getTarget() {
+    return target;
+  }
+
+  public void setTarget(Agent target) {
+    this.target = target;
+  }
+
+  public String getAction() {
+    return action;
+  }
+
+  public void setAction(String action) {
+    this.action = action;
   }
   //</editor-fold>
 }

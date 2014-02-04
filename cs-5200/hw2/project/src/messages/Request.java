@@ -14,7 +14,12 @@ public abstract class Request extends Message {
     MOVE_REQUEST,
     GET_PARAMETERS_REQUEST,
     GET_FIELD_REQUEST,
-    GET_LAUOI
+    GET_LAYOUT_REQUEST,
+    LIST_AGENTS_REQUST,
+    GET_RESOURCE_REQUEST,
+    THROW_BOMB_REQUEST,
+    DISCUSS_TARGET_REQUEST,
+    TAKE_HIT_REQUEST
   }
   //</editor-fold>
 
@@ -48,7 +53,7 @@ public abstract class Request extends Message {
   }
 
   @Override
-  public void decode(ByteList byteList) {
+  public void decode(ByteList byteList) throws Exception {
     super.decode(byteList);
 
     int type = byteList.readInt(REQUEST_TYPE_SIZE);

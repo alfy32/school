@@ -3,7 +3,7 @@ package messages.request;
 import common.ByteList;
 import messages.Request;
 
-public class GetParameters extends Request {
+public class GetField extends Request {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
   //</editor-fold>
@@ -11,15 +11,15 @@ public class GetParameters extends Request {
   //</editor-fold>
   private String id;
 
-  public GetParameters() {
-    super(RequestType.GET_PARAMETERS_REQUEST);
+  public GetField() {
+    super(RequestType.GET_FIELD_REQUEST);
     
     this.id = "";
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
-  public static GetParameters create(ByteList byteList) throws Exception {
-    GetParameters register = new GetParameters();
+  public static GetField create(ByteList byteList) throws Exception {
+    GetField register = new GetField();
 
     register.decode(byteList);
 

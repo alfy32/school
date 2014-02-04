@@ -42,7 +42,7 @@ public class RequestTest {
   }
 
   @Test
-  public void testDecode() {
+  public void testDecode() throws Exception {
     MessageType messageType = MessageType.REQUEST;
     int requestType = 0;
     int PID = 2345;

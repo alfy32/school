@@ -11,15 +11,15 @@ public class MessageTest {
   public void testGetMessageId() {
     int PID = 2345;
     int sequenceNum = 6789;
-    
+
     Message instance = new MessageImpl();
 
     SequenceTracker converstationId = SequenceTracker.create(PID, sequenceNum);
     SequenceTracker messageId = SequenceTracker.create(PID, sequenceNum);
-    
+
     instance.converstationId = converstationId;
     instance.messageId = messageId;
-            
+
     String expResult = "" + PID + sequenceNum;
     String result = instance.getMessageId();
 
@@ -27,7 +27,7 @@ public class MessageTest {
   }
 
   @Test
-  public void testEncodeDecode() {
+  public void testEncodeDecode() throws Exception {
     int messageType = Message.MessageType.REQUEST.ordinal();
     int PID = 2345;
     int sequenceNum = 6789;
@@ -83,7 +83,7 @@ public class MessageTest {
   }
 
   @Test
-  public void testDecode() {
+  public void testDecode() throws Exception {
     int messageType = Message.MessageType.REQUEST.ordinal();
     int PID = 2345;
     int sequenceNum = 6789;

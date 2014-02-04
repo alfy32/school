@@ -45,7 +45,7 @@ public abstract class Message {
     messageId.encode(byteList);
   }
 
-  public void decode(ByteList byteList) {
+  public void decode(ByteList byteList) throws Exception {
     int type = byteList.readInt(MESSAGE_TYPE_SIZE);
     messageType = MessageType.values()[type];
 

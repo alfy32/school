@@ -1,29 +1,23 @@
 package messages.request;
 
 import common.ByteList;
+import common.EndPoint;
 import messages.Request;
 
 public class Register extends Request {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
-  private static final int PORT_SIZE = 4;
-  private static final int ADDRESS_SIZE = 4;
   //</editor-fold>
-
+  //<editor-fold desc="Static Functions" defaultstate="collapsed">
+  //</editor-fold>
   private String name;
-  private int port;
-  private int address;
+  private EndPoint endPoint;
 
   public Register() {
     super(RequestType.REGISTER_REQUEST);
-  }
-  
-  public Register(String name, int port, int address) {
-    super(RequestType.REGISTER_REQUEST);
     
-    this.name = name;
-    this.port = port;
-    this.address = address;
+    this.name = "";
+    this.endPoint = new EndPoint();
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
@@ -41,17 +35,15 @@ public class Register extends Request {
     super.encode(byteList);
 
     byteList.writeString(name);
-    byteList.writeInt(port, PORT_SIZE);
-    byteList.writeInt(address, ADDRESS_SIZE);
+    endPoint.encode(byteList);
   }
 
   @Override
-  public void decode(ByteList byteList) {
+  public void decode(ByteList byteList) throws Exception {
     super.decode(byteList);
 
     this.name = byteList.readString();
-    this.port = byteList.readInt(PORT_SIZE);
-    this.address = byteList.readInt(ADDRESS_SIZE);
+    endPoint.decode(byteList);
   }
 
   //<editor-fold desc="Getter/Setter" defaultstate="collapsed">
@@ -63,20 +55,12 @@ public class Register extends Request {
     this.name = name;
   }
 
-  public int getPort() {
-    return port;
+  public EndPoint getEndPoint() {
+    return endPoint;
   }
 
-  public void setPort(int port) {
-    this.port = port;
-  }
-
-  public int getAddress() {
-    return address;
-  }
-
-  public void setAddress(int address) {
-    this.address = address;
+  public void setEndPoint(EndPoint endPoint) {
+    this.endPoint = endPoint;
   }
   //</editor-fold>  
 }

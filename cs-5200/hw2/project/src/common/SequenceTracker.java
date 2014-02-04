@@ -37,7 +37,7 @@ public class SequenceTracker {
     return sequenceTracker;
   }
 
-  public static SequenceTracker create(ByteList byteList) {
+  public static SequenceTracker create(ByteList byteList) throws Exception {
     SequenceTracker sequenceTracker = new SequenceTracker();
 
     sequenceTracker.decode(byteList);
@@ -60,7 +60,7 @@ public class SequenceTracker {
     byteList.writeInt(sequenceNumber, SEQUENCE_NUMBER_SIZE);
   }
 
-  public void decode(ByteList byteList) {
+  public void decode(ByteList byteList) throws Exception {
     processID = byteList.readInt(PROCESS_ID_SIZE);
     sequenceNumber = byteList.readInt(SEQUENCE_NUMBER_SIZE);
   }

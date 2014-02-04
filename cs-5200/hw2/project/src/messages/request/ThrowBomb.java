@@ -5,29 +5,28 @@ import common.Coordinate;
 import common.ClockTick;
 import messages.Request;
 
-public class Move extends Request {
+public class ThrowBomb extends Request {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
+  private static final int TICK_COUNT_SIZE = 2;
   //</editor-fold>
-  
+
   //<editor-fold desc="Static Functions" defaultstate="collapsed">
   //</editor-fold>
-
   private String id;
   private Coordinate coordinate;
-  private ClockTick clockTick;
+  private ClockTick[] clockTicks;
 
-  public Move() {
-    super(RequestType.MOVE_REQUEST);
+  public ThrowBomb() {
+    super(RequestType.THROW_BOMB_REQUEST);
     
     this.id = "";
     this.coordinate = new Coordinate();
-    this.clockTick = new ClockTick();
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
-  public static Move create(ByteList byteList) throws Exception {
-    Move register = new Move();
+  public static ThrowBomb create(ByteList byteList) throws Exception {
+    ThrowBomb register = new ThrowBomb();
 
     register.decode(byteList);
 
@@ -41,7 +40,10 @@ public class Move extends Request {
 
     byteList.writeString(id);
     coordinate.encode(byteList);
-    clockTick.encode(byteList);
+    byteList.writeInt(clockTicks.length, TICK_COUNT_SIZE);
+    for (ClockTick clockTick : clockTicks) {
+      clockTick.encode(byteList);
+    }
   }
 
   @Override
@@ -49,8 +51,12 @@ public class Move extends Request {
     super.decode(byteList);
 
     this.id = byteList.readString();
-    coordinate.decode(byteList);
-    clockTick.decode(byteList);
+    int ticks = byteList.readInt(TICK_COUNT_SIZE);
+    clockTicks = new ClockTick[ticks];
+    for (ClockTick clockTick : clockTicks) {
+      clockTick = new ClockTick();
+      clockTick.decode(byteList);
+    }
   }
 
   //<editor-fold desc="Getter/Setter" defaultstate="collapsed">
@@ -70,12 +76,12 @@ public class Move extends Request {
     this.coordinate = coordinate;
   }
 
-  public ClockTick getClockTick() {
-    return clockTick;
+  public ClockTick[] getClockTicks() {
+    return clockTicks;
   }
 
-  public void setClockTick(ClockTick clockTick) {
-    this.clockTick = clockTick;
+  public void setClockTicks(ClockTick[] clockTicks) {
+    this.clockTicks = clockTicks;
   }
-  //</editor-fold> 
+  //</editor-fold>
 }

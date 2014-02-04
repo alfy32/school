@@ -39,7 +39,7 @@ public abstract class Reply extends Message {
   }
 
   @Override
-  public void decode(ByteList byteList) {
+  public void decode(ByteList byteList) throws Exception {
     super.decode(byteList);
   }
 }

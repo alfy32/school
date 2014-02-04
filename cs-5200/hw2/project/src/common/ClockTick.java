@@ -23,7 +23,7 @@ public class ClockTick {
     return new ClockTick();
   }
 
-  public static ClockTick create(ByteList byteList) {
+  public static ClockTick create(ByteList byteList) throws Exception {
     ClockTick clockTick = new ClockTick();
 
     clockTick.decode(byteList);
@@ -44,7 +44,17 @@ public class ClockTick {
     byteList.writeString(tickHash);
   }
 
-  public void decode(ByteList byteList) {
+  public void decode(ByteList byteList) throws Exception {
     tickHash = byteList.readString();
   }
+
+  //<editor-fold desc="Getters/Setters" defaultstate="collapsed">
+  public String getTickHash() {
+    return tickHash;
+  }
+
+  public void setTickHash(String tickHash) {
+    this.tickHash = tickHash;
+  }
+  //</editor-fold>
 }

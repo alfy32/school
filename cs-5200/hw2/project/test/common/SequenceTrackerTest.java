@@ -5,125 +5,125 @@ import static org.junit.Assert.*;
 
 public class SequenceTrackerTest {
 
-    public SequenceTrackerTest() {
-    }
+  public SequenceTrackerTest() {
+  }
 
-    @Test
-    public void testCreate_0args() {
-        int processId = 1;
-        int sequenceNumber = 1;
-        
-        SequenceTracker sequenceTracker = SequenceTracker.create();
+  @Test
+  public void testCreate_0args() {
+    int processId = 1;
+    int sequenceNumber = 1;
 
-        assertEquals(processId, sequenceTracker.getProcessID());
-        assertEquals(sequenceNumber, sequenceTracker.getSequenceNumber());
-    }
+    SequenceTracker sequenceTracker = SequenceTracker.create();
 
-    @Test
-    public void testCreate_ByteList() {
-        int processId = 12;
-        int sequenceNumber = 41;
+    assertEquals(processId, sequenceTracker.getProcessID());
+    assertEquals(sequenceNumber, sequenceTracker.getSequenceNumber());
+  }
 
-        ByteList byteList = new ByteList();
-        byteList.writeInt(processId, SequenceTracker.PROCESS_ID_SIZE);
-        byteList.writeInt(sequenceNumber, SequenceTracker.SEQUENCE_NUMBER_SIZE);
-        
-        byteList.goToStart();
+  @Test
+  public void testCreate_ByteList() throws Exception {
+    int processId = 12;
+    int sequenceNumber = 41;
 
-        SequenceTracker sequenceTracker = SequenceTracker.create(byteList);
+    ByteList byteList = new ByteList();
+    byteList.writeInt(processId, SequenceTracker.PROCESS_ID_SIZE);
+    byteList.writeInt(sequenceNumber, SequenceTracker.SEQUENCE_NUMBER_SIZE);
 
-        assertEquals(processId, sequenceTracker.getProcessID());
-        assertEquals(sequenceNumber, sequenceTracker.getSequenceNumber());
-    }
+    byteList.goToStart();
 
-    @Test
-    public void testCreate_int_int() {
-        int processId = 12;
-        int sequenceNumber = 41;
+    SequenceTracker sequenceTracker = SequenceTracker.create(byteList);
 
-        SequenceTracker sequenceTracker = SequenceTracker.
-                create(processId, sequenceNumber);
+    assertEquals(processId, sequenceTracker.getProcessID());
+    assertEquals(sequenceNumber, sequenceTracker.getSequenceNumber());
+  }
 
-        assertEquals(processId, sequenceTracker.getProcessID());
-        assertEquals(sequenceNumber, sequenceTracker.getSequenceNumber());
-    }
+  @Test
+  public void testCreate_int_int() {
+    int processId = 12;
+    int sequenceNumber = 41;
 
-    @Test
-    public void testEncode() {
-        int processId = 12;
-        int sequenceNumber = 41;
+    SequenceTracker sequenceTracker = SequenceTracker.
+            create(processId, sequenceNumber);
 
-        ByteList byteList = new ByteList();
+    assertEquals(processId, sequenceTracker.getProcessID());
+    assertEquals(sequenceNumber, sequenceTracker.getSequenceNumber());
+  }
 
-        SequenceTracker sequenceTracker = SequenceTracker.
-                create(processId, sequenceNumber);
+  @Test
+  public void testEncode() throws Exception {
+    int processId = 12;
+    int sequenceNumber = 41;
 
-        sequenceTracker.encode(byteList);
-        
-        byteList.goToStart();
+    ByteList byteList = new ByteList();
 
-        assertEquals(processId, byteList.readInt(SequenceTracker.PROCESS_ID_SIZE));
-        assertEquals(sequenceNumber, byteList.readInt(SequenceTracker.SEQUENCE_NUMBER_SIZE));
-    }
+    SequenceTracker sequenceTracker = SequenceTracker.
+            create(processId, sequenceNumber);
 
-    @Test
-    public void testDecode() {
-        int processId = 12;
-        int sequenceNumber = 41;
+    sequenceTracker.encode(byteList);
 
-        ByteList byteList = new ByteList();
-        byteList.writeInt(processId, SequenceTracker.PROCESS_ID_SIZE);
-        byteList.writeInt(sequenceNumber, SequenceTracker.SEQUENCE_NUMBER_SIZE);
-        
-        byteList.goToStart();
+    byteList.goToStart();
 
-        SequenceTracker sequenceTracker = new SequenceTracker();
+    assertEquals(processId, byteList.readInt(SequenceTracker.PROCESS_ID_SIZE));
+    assertEquals(sequenceNumber, byteList.readInt(SequenceTracker.SEQUENCE_NUMBER_SIZE));
+  }
 
-        sequenceTracker.decode(byteList);
+  @Test
+  public void testDecode() throws Exception {
+    int processId = 12;
+    int sequenceNumber = 41;
 
-        assertEquals(processId, sequenceTracker.getProcessID());
-        assertEquals(sequenceNumber, sequenceTracker.getSequenceNumber());
-    }
+    ByteList byteList = new ByteList();
+    byteList.writeInt(processId, SequenceTracker.PROCESS_ID_SIZE);
+    byteList.writeInt(sequenceNumber, SequenceTracker.SEQUENCE_NUMBER_SIZE);
 
-    @Test
-    public void testProcessIDGetterSetter() {
-        int processId = 50;
-        
-        SequenceTracker instance = new SequenceTracker();
-        instance.setProcessID(processId);
+    byteList.goToStart();
 
-        int expResult = processId;
-        int result = instance.getProcessID();
+    SequenceTracker sequenceTracker = new SequenceTracker();
 
-        assertEquals(expResult, result);
-    }
-    
-    @Test
-    public void testGetID() {
-        int processId = 50;
-        int sequenceNumber = 10;
-        
-        SequenceTracker instance = new SequenceTracker();
-        instance.setProcessID(processId);
-        instance.setSequenceNumber(sequenceNumber);
+    sequenceTracker.decode(byteList);
 
-        String expResult = "00500010";
-        String result = instance.getID();
-        
-        assertEquals(expResult, result);
-    }
+    assertEquals(processId, sequenceTracker.getProcessID());
+    assertEquals(sequenceNumber, sequenceTracker.getSequenceNumber());
+  }
 
-    @Test
-    public void testSequenceNumberGetterSetter() {
-        int sequenceNumber = 10;
+  @Test
+  public void testProcessIDGetterSetter() {
+    int processId = 50;
 
-        SequenceTracker instance = new SequenceTracker();
-        instance.setSequenceNumber(sequenceNumber);
+    SequenceTracker instance = new SequenceTracker();
+    instance.setProcessID(processId);
 
-        int expResult = sequenceNumber;
-        int result = instance.getSequenceNumber();
+    int expResult = processId;
+    int result = instance.getProcessID();
 
-        assertEquals(expResult, result);
-    }
+    assertEquals(expResult, result);
+  }
+
+  @Test
+  public void testGetID() {
+    int processId = 50;
+    int sequenceNumber = 10;
+
+    SequenceTracker instance = new SequenceTracker();
+    instance.setProcessID(processId);
+    instance.setSequenceNumber(sequenceNumber);
+
+    String expResult = "00500010";
+    String result = instance.getID();
+
+    assertEquals(expResult, result);
+  }
+
+  @Test
+  public void testSequenceNumberGetterSetter() {
+    int sequenceNumber = 10;
+
+    SequenceTracker instance = new SequenceTracker();
+    instance.setSequenceNumber(sequenceNumber);
+
+    int expResult = sequenceNumber;
+    int result = instance.getSequenceNumber();
+
+    assertEquals(expResult, result);
+  }
 
 }

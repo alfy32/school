@@ -17,7 +17,7 @@ public class ByteList {
   public void setBytes(byte[] bytes) {
     message = new String(bytes);
   }
-  
+
   public void setBytes(String bytes) {
     message = bytes;
   }
@@ -26,7 +26,7 @@ public class ByteList {
     this.currentPosition = 0;
   }
 
-  public int readInt(int bytes) {
+  public int readInt(int bytes) throws Exception {
     if (currentPosition + bytes <= message.length()) {
       String value = message.substring(currentPosition, currentPosition + bytes);
 
@@ -34,7 +34,7 @@ public class ByteList {
 
       return Integer.parseInt(value);
     } else {
-      throw new IndexOutOfBoundsException("The message is not that long.");
+      throw new Exception("The message is not that long.");
     }
   }
 
@@ -46,7 +46,7 @@ public class ByteList {
     currentPosition += bytes;
   }
 
-  public String readString() throws IndexOutOfBoundsException {
+  public String readString() throws Exception {
     int bytes = this.readInt(STRING_LENGTH_DIGITS);
 
     if (currentPosition + bytes <= message.length()) {
@@ -56,7 +56,7 @@ public class ByteList {
 
       return value;
     } else {
-      throw new IndexOutOfBoundsException("The message is not that long.");
+      throw new Exception("The message is not that long.");
     }
   }
 
@@ -90,13 +90,13 @@ public class ByteList {
     currentPosition++;
   }
 
-  public char readChar() {
+  public char readChar() throws Exception {
     if (currentPosition < message.length()) {
       char bool = message.charAt(currentPosition);
       currentPosition++;
       return bool;
     }
-    throw new IndexOutOfBoundsException("The message is not that long.");
+    throw new Exception("The message is not that long.");
   }
 
   public void writeChar(char value) {
