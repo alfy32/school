@@ -26,6 +26,8 @@ Assignment 2
 
 9. Submit your graphs and report, data files containing your raw data and your commented code along with instructions to run the code.
 
+================================================================================================
+
 
 The split step where two smaller DP problems are created and solved using the 2 column technique
 
