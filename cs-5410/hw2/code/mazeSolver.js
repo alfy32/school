@@ -3,7 +3,10 @@ var MazeSolver = (function () {
   'use strict';
 
   var mazeGrid = [[]];
-  var width = 1, height = 1;
+  var width = 1;
+  var height = 1;
+
+  var wallList = [];
 
   var currentWall = {
     row: 0,
@@ -36,9 +39,12 @@ var MazeSolver = (function () {
     that.notPicked = ['UP', 'DOWN', 'LEFT', 'RIGHT'];
 
     that.pickRandomWall = function () {
-      var random = Math.floor(Math.random() * that.notPicked.length);
+      if(that.notPicked.length) {
+        var random = Math.floor(Math.random() * that.notPicked.length);
 
-      return that.notPicked.splice(random, 1)[0];
+        return that.notPicked.splice(random, 1)[0];
+      }
+      return false;
     };
 
     that.pickWall = function (wall) {
@@ -49,16 +55,18 @@ var MazeSolver = (function () {
   }
 
   function generate(w, h) {
-    width = w || 1;
-    height = h || 1;
+    width = +w || 2;
+    height = +h || 2;
 
     makeGrid();
+    makeWallList();
 
     while(getRandomWall()) {
       if(cellsInDistinctSets()) {
         removeCurrentWall();
         joinCurrentRoomSets();
       }
+      printGrid();
     }
   }
 
@@ -81,28 +89,45 @@ var MazeSolver = (function () {
       mazeGrid[height-1][col].pickWall(WALL.DOWN);
     }
 
-    for(row = 0; row < width; row++) {
+    for(row = 0; row < height; row++) {
       mazeGrid[row][0].pickWall(WALL.LEFT);
       mazeGrid[row][width-1].pickWall(WALL.RIGHT);
     }
   }
 
-  function getRandomWall() {
-    currentWall.row = Math.floor(Math.random() * height);
-    currentWall.col = Math.floor(Math.random() * width);
-
-    currentWall.edge = mazeGrid[currentWall.row][currentWall.col].pickRandomWall();
-
-    if(currentWall.edge){
-      return true;
-    } else {
-      return getRandomWall();
+  function makeWallList() {
+    for(var row = 0; row < height; row++) {
+      for(var col = 0; col < width; col++) {
+        if(col < width-1) {
+          wallList.push({
+            cellA: mazeGrid[row][col],
+            cellB: mazeGrid[row][col+1],
+            edge: 'RIGHT'
+          });
+        }
+        if(row < height-1) {
+          wallList.push({
+            cellA: mazeGrid[row][col],
+            cellB: mazeGrid[row+1][col],
+            edge: 'DOWN'
+          });
+        }
+      }
     }
   }
 
+  function getRandomWall() {
+    if(wallList.length === 0) return false;
+
+    var random = Math.floor(Math.random() * wallList.length);
+    currentWall = wallList.splice(random, 1)[0];
+
+    return true;
+  }
+
   function cellsInDistinctSets() {
-    var cellA = getCurrentCell();
-    var cellB = getCellOverWall();
+    var cellA = currentWall.cellA;
+    var cellB = currentWall.cellB;
 
     for(var i in cellA.group) {
       if(cellA.group[i] == cellB)
@@ -112,28 +137,9 @@ var MazeSolver = (function () {
     return true;
   }
 
-  function getCurrentCell() {
-    return mazeGrid[currentWall.row][currentWall.col];
-  }
-
-  function getCellOverWall() {
-    switch(currentWall.edge) {
-      case 'UP':
-        return mazeGrid[currentWall.row-1][currentWall.col];
-      case 'DOWN':
-        return mazeGrid[currentWall.row+1][currentWall.col];
-      case 'LEFT':
-        return mazeGrid[currentWall.row][currentWall.col-1];
-      case 'RIGHT':
-        return mazeGrid[currentWall.row][currentWall.col+1];
-    }
-  }
-
   function removeCurrentWall() {
-    var cellA = getCurrentCell();
-    var cellB = getCellOverWall();
-
-    // console.log(cellB.row, cellB.col, currentWall);
+    var cellA = currentWall.cellA;
+    var cellB = currentWall.cellB;
 
     var edge = currentWall.edge;
     var oppositeEdge = getOppositeEdge(edge);
@@ -157,8 +163,8 @@ var MazeSolver = (function () {
   }
 
   function joinCurrentRoomSets() {
-    var cellA = getCurrentCell();
-    var cellB = getCellOverWall();
+    var cellA = currentWall.cellA;
+    var cellB = currentWall.cellB;
 
     var groupA = cellA.group;
     var groupB = cellB.group;
@@ -170,14 +176,24 @@ var MazeSolver = (function () {
   }
 
   function printGrid() {
+    var mazeString = '';
     mazeGrid.forEach(function (row, rowIndex) {
+      var topWallString = '';
+      var bottomWallString = '';
       var rowString = '';
       row.forEach(function (cell, colIndex) {
-        rowString = rowIndex + ' ' +  colIndex + ' ' + JSON.stringify(cell.edges);
-        // console.log(rowString);
+        rowString += cell.edges.LEFT ? ' |' : '  ';
+        rowString += '' + rowIndex + colIndex;
+        rowString += cell.edges.RIGHT ? '| ' : '  ';
+
+        topWallString += cell.edges.UP ? '  --  ' : '      ';
+        bottomWallString += cell.edges.DOWN ? '  --  ' : '      ';
       });
-      // console.log(rowString);
+      mazeString += topWallString + '\n' +
+                    rowString + '\n' +
+                    bottomWallString + '\n';
     });
+    console.log(mazeString);
   }
 
   return {
@@ -188,8 +204,8 @@ var MazeSolver = (function () {
 
 
 
-MazeSolver.generate(5,5);
-MazeSolver.print();
+// MazeSolver.generate(5,5);
+// MazeSolver.print();
 
 
 
