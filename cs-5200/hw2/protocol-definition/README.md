@@ -45,8 +45,8 @@ ID | Protocol       | Initiator | Recipients    | Pattern       | Request Class 
 05 | GetField       | Student   | Game          | Request-Reply | GetField      | Field
 06 | GetLayout      | Student   | Field         | Request-Reply | GetLayout     | Layout
 07 | ListAgents     | Student   | Field         | Request-Reply | ListAgents    | AgentList
-08 | GetResource    | Student   | Excuse,Whine  | Request-Reply | GetResource   | Recource
-09 | ThrowBomb      | Student   | Field         | Request-Reply | ThrowBomb     | Acknowledge
+08 | GetResource    | Student   | Excuse,Whine  | Request-Reply | GetResource   | Resource
+09 | ThrowBomb      | Student   | Field         | Request-Reply | ThrowBomb     | DamageDone
 10 | DiscussTarget  | Student   | Student       | Request-Reply | DiscussTarget | TargetStrategy
 11 | TakeHit        | Field     | Any Agent     | Request-Reply | TakeHit       | ImHit
 
@@ -60,7 +60,7 @@ ID | Protocol       | Initiator | Recipients    | Pattern       | Request Class 
 * GetLayout - Get Field layout. Includes: width, height.
 * ListAgents - Send id, and which. The wich is Zombies, Students, Excuses, Whines, or All. Get a list of the desired Agents.
 * GetResource - Get Whinig Twine From Whine or Excuse from Excuse.
-* ThrowBomb - Send valid ClockTicks and Coordinate to Field to throw bomb.
+* ThrowBomb - Send valid ClockTicks and Coordinate to Field to throw bomb. Get who was damaged.
 * DiscussTarget - Send message to another Student. Include: Who and where to attack or run and direction.
 * TakeHit - Amount of Hit Points lost by agent in attack and who attacked. Respond with new Hit Points.
 
