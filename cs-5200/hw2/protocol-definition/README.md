@@ -44,31 +44,25 @@ ID | Protocol       | Initiator | Recipients    | Pattern       | Request Class 
 04 | GetParameters  | Any Agent | Game          | Request-Reply | GetParameters | ParameterList
 05 | GetField       | Student   | Game          | Request-Reply | GetField      | Field
 06 | GetLayout      | Student   | Field         | Request-Reply | GetLayout     | Layout
-07 | ListZombies    | Student   | Field         | Request-Reply | ListZombies   | ZombieList
-08 | ListStudents   | Student   | Field         | Request-Reply | ListStudents  | StudentList
-09 | ListExcuses    | Student   | Field         | Request-Reply | ListExcuses   | ExcuseList
-10 | ListWhines     | Student   | Field         | Request-Reply | ListWhines    | WhineList
-11 | GetResource    | Student   | Excuse,Whine  | Request-Reply | GetResource   | Recource
-12 | ThrowBomb      | Student   | Field         | Request-Reply | ThrowBomb     | Acknowledge
-13 | DiscussTarget  | Student   | Student       | Request-Reply | DiscussTarget | TargetStrategy
-14 | TakeHit        | Field     | Any Agent     | Request-Reply | TakeHit       | ImHit
+07 | ListAgents     | Student   | Field         | Request-Reply | ListAgents    | AgentList
+08 | GetResource    | Student   | Excuse,Whine  | Request-Reply | GetResource   | Recource
+09 | ThrowBomb      | Student   | Field         | Request-Reply | ThrowBomb     | Acknowledge
+10 | DiscussTarget  | Student   | Student       | Request-Reply | DiscussTarget | TargetStrategy
+11 | TakeHit        | Field     | Any Agent     | Request-Reply | TakeHit       | ImHit
 
 ### Protocol Description
 
 * Register - Send endPoint, type, and A-Number to Game.
 * ClockTick - The clock tower sends out ticks to all agents as a resource.
-* Move - Submit move to Field. Recieve new Location.
+* Move - Send id, valid ClockTick, and coordinate. Recieve NewLocation.
 * GetParameters - Get Game configuration parameters as a list.
 * GetField - Get Field endPoint.
 * GetLayout - Get Field layout. Includes: width, height.
-* ListZombies - Get a list of all Zombies on the field. Includes: ID, endpoint, location, hitPoints, speed.
-* ListStudents - Get a list of all Students on the field. Includes: ID, endpoint, location, hitPoints, speed.
-* ListExcuses - Get a list of all Excuses on the field. Includes: ID, endpoint, location, hitPoints, speed.
-* ListWhines - Get a list of all Whines on the field. Includes: ID, endpoint, location, hitPoints, speed.
-* GetResource - Get Whinig Twine From Whine or Excuse from Excues.
-* ThrowBomb - Send Field where to throw bomb.
+* ListAgents - Send id, and which. The wich is Zombies, Students, Excuses, Whines, or All. Get a list of the desired Agents.
+* GetResource - Get Whinig Twine From Whine or Excuse from Excuse.
+* ThrowBomb - Send valid ClockTicks and Coordinate to Field to throw bomb.
 * DiscussTarget - Send message to another Student. Include: Who and where to attack or run and direction.
-* TakeHit - Amount of Hit Points lost by agent in attack. Resopd with new Hit Points.
+* TakeHit - Amount of Hit Points lost by agent in attack and who attacked. Respond with new Hit Points.
 
 
 ### Figure 01 - Message Classes for Brilliant Students VS Zombie Professors
