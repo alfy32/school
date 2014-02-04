@@ -1,32 +1,32 @@
 package messages.reply;
 
 import common.ByteList;
-import common.Coordinate;
 import messages.Reply;
 
-public class Assignment extends Reply {
+public class ImHit extends Reply {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
+  private static final int HP_SIZE = 4;
   //</editor-fold>
   //<editor-fold desc="Static Functions" defaultstate="collapsed">
   //</editor-fold>
   private String id;
-  private Coordinate startPosition;
+  private int currentHitPoints;
 
-  public Assignment() {
+  public ImHit() {
     super(ReplyType.ASSIGNMENT_REPLY);
 
     this.id = "";
-    this.startPosition = new Coordinate();
+    this.currentHitPoints = 0;
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
-  public static Assignment create(ByteList byteList) throws Exception {
-    Assignment assignment = new Assignment();
+  public static ImHit create(ByteList byteList) throws Exception {
+    ImHit imHit = new ImHit();
 
-    assignment.decode(byteList);
+    imHit.decode(byteList);
 
-    return assignment;
+    return imHit;
   }
   //</editor-fold>
 
@@ -35,7 +35,7 @@ public class Assignment extends Reply {
     super.encode(byteList);
 
     byteList.writeString(id);
-    startPosition.encode(byteList);
+    byteList.writeInt(currentHitPoints, HP_SIZE);
   }
 
   @Override
@@ -43,7 +43,7 @@ public class Assignment extends Reply {
     super.decode(byteList);
 
     this.id = byteList.readString();
-    startPosition.decode(byteList);
+    this.currentHitPoints = byteList.readInt(HP_SIZE);
   }
 
   //<editor-fold desc="Getter/Setter" defaultstate="collapsed">
@@ -55,12 +55,12 @@ public class Assignment extends Reply {
     this.id = id;
   }
 
-  public Coordinate getStartPosition() {
-    return startPosition;
+  public int getCurrentHitPoints() {
+    return currentHitPoints;
   }
 
-  public void setStartPosition(Coordinate startPosition) {
-    this.startPosition = startPosition;
+  public void setCurrentHitPoints(int currentHitPoints) {
+    this.currentHitPoints = currentHitPoints;
   }
   //</editor-fold>
 }

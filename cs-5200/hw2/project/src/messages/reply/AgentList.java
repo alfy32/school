@@ -19,11 +19,11 @@ public class AgentList extends Reply {
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
   public static AgentList create(ByteList byteList) throws Exception {
-    AgentList register = new AgentList();
+    AgentList agentList = new AgentList();
 
-    register.decode(byteList);
+    agentList.decode(byteList);
 
-    return register;
+    return agentList;
   }
   //</editor-fold>
 

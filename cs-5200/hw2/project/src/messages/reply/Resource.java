@@ -1,30 +1,29 @@
 package messages.reply;
 
 import common.ByteList;
-import common.EndPoint;
 import messages.Reply;
 
-public class Field extends Reply {
+public class Resource extends Reply {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
   //</editor-fold>
   //<editor-fold desc="Static Functions" defaultstate="collapsed">
   //</editor-fold>
-  private EndPoint endPoint;
+  private String resourceId;
 
-  public Field() {
-    super(ReplyType.ASSIGNMENT_REPLY);
+  public Resource() {
+    super(ReplyType.RESOURCE_REPLY);
 
-    this.endPoint = new EndPoint();
+    this.resourceId = "";
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
-  public static Field create(ByteList byteList) throws Exception {
-    Field field = new Field();
+  public static Resource create(ByteList byteList) throws Exception {
+    Resource resource = new Resource();
 
-    field.decode(byteList);
+    resource.decode(byteList);
 
-    return field;
+    return resource;
   }
   //</editor-fold>
 
@@ -32,23 +31,23 @@ public class Field extends Reply {
   public void encode(ByteList byteList) {
     super.encode(byteList);
 
-    endPoint.encode(byteList);
+    byteList.writeString(resourceId);
   }
 
   @Override
   public void decode(ByteList byteList) throws Exception {
     super.decode(byteList);
 
-    endPoint.decode(byteList);
+    this.resourceId = byteList.readString();
   }
 
   //<editor-fold desc="Getter/Setter" defaultstate="collapsed">
-  public EndPoint getEndPoint() {
-    return endPoint;
+  public String getId() {
+    return resourceId;
   }
 
-  public void setEndPoint(EndPoint endPoint) {
-    this.endPoint = endPoint;
+  public void setId(String id) {
+    this.resourceId = id;
   }
-  //</editor-fold>  
+  //</editor-fold>
 }

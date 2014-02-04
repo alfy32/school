@@ -1,30 +1,29 @@
 package messages.reply;
 
 import common.ByteList;
-import common.EndPoint;
 import messages.Reply;
 
-public class Field extends Reply {
+public class ClockTickReply extends Reply {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
   //</editor-fold>
   //<editor-fold desc="Static Functions" defaultstate="collapsed">
   //</editor-fold>
-  private EndPoint endPoint;
+  private ClockTickReply tick;
 
-  public Field() {
+  public ClockTickReply() {
     super(ReplyType.ASSIGNMENT_REPLY);
 
-    this.endPoint = new EndPoint();
+    this.tick = new ClockTickReply();
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
-  public static Field create(ByteList byteList) throws Exception {
-    Field field = new Field();
+  public static ClockTickReply create(ByteList byteList) throws Exception {
+    ClockTickReply assignment = new ClockTickReply();
 
-    field.decode(byteList);
+    assignment.decode(byteList);
 
-    return field;
+    return assignment;
   }
   //</editor-fold>
 
@@ -32,23 +31,23 @@ public class Field extends Reply {
   public void encode(ByteList byteList) {
     super.encode(byteList);
 
-    endPoint.encode(byteList);
+    tick.encode(byteList);
   }
 
   @Override
   public void decode(ByteList byteList) throws Exception {
     super.decode(byteList);
 
-    endPoint.decode(byteList);
+    tick.decode(byteList);
   }
 
   //<editor-fold desc="Getter/Setter" defaultstate="collapsed">
-  public EndPoint getEndPoint() {
-    return endPoint;
+  public ClockTickReply getTick() {
+    return tick;
   }
 
-  public void setEndPoint(EndPoint endPoint) {
-    this.endPoint = endPoint;
+  public void setTick(ClockTickReply tick) {
+    this.tick = tick;
   }
-  //</editor-fold>  
+  //</editor-fold>
 }

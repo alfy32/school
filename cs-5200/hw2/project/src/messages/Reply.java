@@ -41,7 +41,7 @@ public abstract class Reply extends Message {
       case ASSIGNMENT_REPLY:
         return Assignment.create(byteList);
       case CLOCK_TICK_REPLY:
-        return ClockTick.create(byteList);
+        return ClockTickReply.create(byteList);
       case NEW_LOCATION_REPLY:
         return NewLocation.create(byteList);
       case PARAMETER_LIST_REPLY:
@@ -51,7 +51,7 @@ public abstract class Reply extends Message {
       case LAYOUT_REPLY:
         return Layout.create(byteList);
       case AGENTS_LIST_REPLY:
-        return AgentsList.create(byteList);
+        return AgentList.create(byteList);
       case RESOURCE_REPLY:
         return Resource.create(byteList);
       case DAMAGE_DONE_REPLY:

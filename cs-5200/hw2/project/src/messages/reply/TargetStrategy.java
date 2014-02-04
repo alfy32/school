@@ -1,32 +1,34 @@
 package messages.reply;
 
 import common.ByteList;
-import common.Coordinate;
+import common.Agent;
 import messages.Reply;
 
-public class Assignment extends Reply {
+public class TargetStrategy extends Reply {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
   //</editor-fold>
   //<editor-fold desc="Static Functions" defaultstate="collapsed">
   //</editor-fold>
   private String id;
-  private Coordinate startPosition;
+  private Agent target;
+  private String action;
 
-  public Assignment() {
+  public TargetStrategy() {
     super(ReplyType.ASSIGNMENT_REPLY);
 
     this.id = "";
-    this.startPosition = new Coordinate();
+    this.target = new Agent();
+    this.action = "";
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
-  public static Assignment create(ByteList byteList) throws Exception {
-    Assignment assignment = new Assignment();
+  public static TargetStrategy create(ByteList byteList) throws Exception {
+    TargetStrategy targetStrategy = new TargetStrategy();
 
-    assignment.decode(byteList);
+    targetStrategy.decode(byteList);
 
-    return assignment;
+    return targetStrategy;
   }
   //</editor-fold>
 
@@ -35,7 +37,8 @@ public class Assignment extends Reply {
     super.encode(byteList);
 
     byteList.writeString(id);
-    startPosition.encode(byteList);
+    target.encode(byteList);
+    byteList.writeString(action);
   }
 
   @Override
@@ -43,7 +46,8 @@ public class Assignment extends Reply {
     super.decode(byteList);
 
     this.id = byteList.readString();
-    startPosition.decode(byteList);
+    target.decode(byteList);
+    this.action = byteList.readString();
   }
 
   //<editor-fold desc="Getter/Setter" defaultstate="collapsed">
@@ -55,12 +59,20 @@ public class Assignment extends Reply {
     this.id = id;
   }
 
-  public Coordinate getStartPosition() {
-    return startPosition;
+  public Agent getTarget() {
+    return target;
   }
 
-  public void setStartPosition(Coordinate startPosition) {
-    this.startPosition = startPosition;
+  public void setTarget(Agent target) {
+    this.target = target;
+  }
+
+  public String getAction() {
+    return action;
+  }
+
+  public void setAction(String action) {
+    this.action = action;
   }
   //</editor-fold>
 }

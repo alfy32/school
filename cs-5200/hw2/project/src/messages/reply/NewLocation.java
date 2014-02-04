@@ -20,11 +20,11 @@ public class NewLocation extends Reply {
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
   public static NewLocation create(ByteList byteList) throws Exception {
-    NewLocation register = new NewLocation();
+    NewLocation newLocation = new NewLocation();
 
-    register.decode(byteList);
+    newLocation.decode(byteList);
 
-    return register;
+    return newLocation;
   }
   //</editor-fold>
 
