@@ -6,7 +6,7 @@ import messages.reply.*;
 public abstract class Reply extends Message {
 
   //<editor-fold desc="Static Variables" defaultstate="collapsed">
-  private static final int REPLY_TYPE_SIZE = 2;
+  public static final int REPLY_TYPE_SIZE = 2;
 
   public static enum ReplyType {
 
