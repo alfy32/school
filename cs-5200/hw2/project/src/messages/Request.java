@@ -1,7 +1,8 @@
 package messages;
 
+import messages.reply.Assignment;
 import common.ByteList;
-import messages.request.Register;
+import messages.request.*;
 
 public abstract class Request extends Message {
 
@@ -39,6 +40,24 @@ public abstract class Request extends Message {
     switch (requestType) {
       case REGISTER_REQUEST:
         return Register.create(byteList);
+      case MOVE_REQUEST:
+        return Move.create(byteList);
+      case GET_PARAMETERS_REQUEST:
+        return GetParameters.create(byteList);
+      case GET_FIELD_REQUEST:
+        return GetField.create(byteList);
+      case GET_LAYOUT_REQUEST:
+        return GetLayout.create(byteList);
+      case LIST_AGENTS_REQUST:
+        return ListAgents.create(byteList);
+      case GET_RESOURCE_REQUEST:
+        return GetResources.create(byteList);
+      case THROW_BOMB_REQUEST:
+        return ThrowBomb.create(byteList);
+      case DISCUSS_TARGET_REQUEST:
+        return Assignment.create(byteList);
+      case TAKE_HIT_REQUEST:
+        return TakeHit.create(byteList);
       default:
         throw new Exception("Invalid message type.", null);
     }

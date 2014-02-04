@@ -1,6 +1,7 @@
 package messages;
 
 import common.ByteList;
+import messages.reply.*;
 
 public abstract class Reply extends Message {
 
@@ -9,14 +10,26 @@ public abstract class Reply extends Message {
 
   public static enum ReplyType {
 
-    REGISTER_REPLY
+    ASSIGNMENT_REPLY,
+    CLOCK_TICK_REPLY,
+    NEW_LOCATION_REPLY,
+    PARAMETER_LIST_REPLY,
+    FIELD_REPLY,
+    LAYOUT_REPLY,
+    AGENTS_LIST_REPLY,
+    RESOURCE_REPLY,
+    DAMAGE_DONE_REPLY,
+    TARGET_STRATEGY_REPLY,
+    IM_HIT_REPLY
   }
   //</editor-fold>
 
   public ReplyType replyType;
 
-  public Reply() {
+  public Reply(ReplyType replyType) {
     super(MessageType.REPLY);
+
+    this.replyType = replyType;
   }
 
   //<editor-fold desc="Create Functions" defaultstate="collapsed">
@@ -25,8 +38,28 @@ public abstract class Reply extends Message {
     ReplyType replyType = ReplyType.values()[type];
 
     switch (replyType) {
-      case REGISTER_REPLY:
-        return Reply.create(byteList);
+      case ASSIGNMENT_REPLY:
+        return Assignment.create(byteList);
+      case CLOCK_TICK_REPLY:
+        return ClockTick.create(byteList);
+      case NEW_LOCATION_REPLY:
+        return NewLocation.create(byteList);
+      case PARAMETER_LIST_REPLY:
+        return ParameterList.create(byteList);
+      case FIELD_REPLY:
+        return Field.create(byteList);
+      case LAYOUT_REPLY:
+        return Layout.create(byteList);
+      case AGENTS_LIST_REPLY:
+        return AgentsList.create(byteList);
+      case RESOURCE_REPLY:
+        return Resource.create(byteList);
+      case DAMAGE_DONE_REPLY:
+        return DamageDone.create(byteList);
+      case TARGET_STRATEGY_REPLY:
+        return TargetStrategy.create(byteList);
+      case IM_HIT_REPLY:
+        return ImHit.create(byteList);
       default:
         throw new Exception("Invalid message type.", null);
     }
@@ -36,10 +69,15 @@ public abstract class Reply extends Message {
   @Override
   public void encode(ByteList byteList) {
     super.encode(byteList);
+    
+    byteList.writeInt(replyType.ordinal(), REPLY_TYPE_SIZE);
   }
 
   @Override
   public void decode(ByteList byteList) throws Exception {
     super.decode(byteList);
+    
+    int type = byteList.readInt(REPLY_TYPE_SIZE);
+    this.replyType = ReplyType.values()[type];
   }
 }

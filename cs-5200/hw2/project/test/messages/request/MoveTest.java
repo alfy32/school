@@ -64,47 +64,6 @@ public class MoveTest {
     assertEquals(move2.getClockTick().getTickHash(), move1.getClockTick().getTickHash());
   }
 
-  @Test
-  public void testEncode() throws Exception {
-    ByteList byteList = new ByteList();
-
-    Coordinate coordinate = new Coordinate();
-    coordinate.setX(2222);
-    coordinate.setY(3333);
-    ClockTick clockTick = new ClockTick();
-    clockTick.setTickHash("CLOCK TICK HASH");
-
-    Move move = new Move();
-    move.setId("ID String");
-    move.setCoordinate(coordinate);
-    move.setClockTick(clockTick);
-
-    move.encode(byteList);
-
-    String messageStuff = "0000100010001000201";
-    String moveStuff = "09" + "ID String" + 2222 + 3333 + "15" + "CLOCK TICK HASH";
-
-    assertEquals(messageStuff + moveStuff, byteList.toString());
-  }
-
-  @Test
-  public void testDecode() throws Exception {
-    String messageStuff = "0000100010001000201";
-    String moveStuff = "09" + "ID String" + 2222 + 3333 + "15" + "CLOCK TICK HASH";
-
-    ByteList byteList = new ByteList();
-    byteList.setBytes(messageStuff + moveStuff);
-    byteList.goToStart();
-
-    Move move = new Move();
-    move.decode(byteList);
-
-    assertEquals("ID String", move.getId());
-    assertEquals(2222, move.getCoordinate().getX());
-    assertEquals(3333, move.getCoordinate().getY());
-    assertEquals("CLOCK TICK HASH", move.getClockTick().getTickHash());
-  }
-
   public void addMessageStuff(ByteList byteList) {
     // junk values to fill space.
     int messageType = Message.MessageType.REQUEST.ordinal();

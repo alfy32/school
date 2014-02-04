@@ -1,6 +1,7 @@
 package messages.request;
 
 import common.ByteList;
+import common.EndPoint;
 import common.SequenceTracker;
 import messages.Message;
 import messages.Request;
@@ -12,95 +13,54 @@ public class RegisterTest {
   public RegisterTest() {
   }
 
-//  @Test
-//  public void testCreate_byteList() throws Exception {
-//    String name = "Alan";
-//    int port = 3333;
-//    int address = 2222;
-//
-//    ByteList byteList = new ByteList();
-//
-//    addMessageStuff(byteList);
-//
-//    byteList.writeString(name);
-//    byteList.writeInt(port, 4);
-//    byteList.writeInt(address, 4);
-//
-//    byteList.goToStart();
-//
-//    Register register = Register.create(byteList);
-//
-//    assertEquals(name, register.getName());
-//    assertEquals(port, register.getPort());
-//    assertEquals(address, register.getAddress());
-//  }
-//
-//  @Test
-//  public void testEncodeDecode() throws Exception {
-//    String name = "Alan";
-//    int port = 300;
-//    int address = 200;
-//
-//    ByteList byteList = new ByteList();
-//
-//    Register register1 = new Register(name, port, address);
-//
-//    register1.encode(byteList);
-//
-//    byteList.goToStart();
-//
-//    Register register2 = new Register(name, port, address);
-//
-//    register2.decode(byteList);
-//
-//    assertEquals(register1.getName(), register2.getName());
-//    assertEquals(register1.getPort(), register2.getPort());
-//    assertEquals(register1.getAddress(), register2.getAddress());
-//  }
-//
-//  @Test
-//  public void testEncode() throws Exception {
-//    String name = "Alan";
-//    int port = 300;
-//    int address = 200;
-//
-//    ByteList byteList = new ByteList();
-//
-//    Register register = new Register(name, port, address);
-//
-//    register.encode(byteList);
-//
-//    assertEquals(name, register.getName());
-//    assertEquals(port, register.getPort());
-//    assertEquals(address, register.getAddress());
-//  }
-//
-//  @Test
-//  public void testDecode() {
-//    String name = "Alan";
-//    int port = 3333;
-//    int address = 2222;
-//
-//    ByteList byteList = new ByteList();
-//
-//    addMessageStuff(byteList);
-//
-//    byteList.writeString(name);
-//    byteList.writeInt(port, 4);
-//    byteList.writeInt(address, 4);
-//
-//    Register register = new Register(name, port, address);
-//
-//    byteList.goToStart();
-//
-//    register.decode(byteList);
-//
-//    System.out.println(byteList.toString());
-//
-//    assertEquals(name, register.getName());
-//    assertEquals(port, register.getPort());
-//    assertEquals(address, register.getAddress());
-//  }
+  @Test
+  public void testCreate_byteList() throws Exception {
+    String name = "Alan";
+    EndPoint endPoint = new EndPoint();
+    endPoint.setId("The ID");
+    endPoint.setAddress(2222);
+    endPoint.setPort(3333);
+
+    ByteList byteList = new ByteList();
+
+    addMessageStuff(byteList, Request.RequestType.REGISTER_REQUEST);
+
+    byteList.writeString(name);
+    endPoint.encode(byteList);
+
+    byteList.goToStart();
+
+    Register register = Register.create(byteList);
+
+    assertEquals(name, register.getName());
+    assertEquals("The ID", register.getEndPoint().getId());
+    assertEquals(2222, register.getEndPoint().getAddress());
+    assertEquals(3333, register.getEndPoint().getPort());
+  }
+
+  @Test
+  public void testEncodeDecode() throws Exception {
+    String name = "Alan";
+    EndPoint endPoint = new EndPoint();
+    endPoint.setPort(3333);
+    endPoint.setAddress(2222);
+
+    ByteList byteList = new ByteList();
+
+    Register register1 = new Register();
+    register1.setName(name);
+    register1.setEndPoint(endPoint);
+
+    register1.encode(byteList);
+    byteList.goToStart();
+
+    Register register2 = new Register();
+    register2.decode(byteList);
+
+    assertEquals(register1.getName(), register2.getName());
+    assertEquals(register1.getEndPoint().getPort(), register2.getEndPoint().getPort());
+    assertEquals(register1.getEndPoint().getAddress(), register2.getEndPoint().getAddress());
+  }
 
   public void addMessageStuff(ByteList byteList, Request.RequestType requestType) {
     // junk values to fill space.
