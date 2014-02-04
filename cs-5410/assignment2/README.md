@@ -41,6 +41,22 @@ Player movement is controlled by using the arrow keys and WASD/IJKL keys.  For t
 * Path to finish toggle : Keyboard P
 * Score toggle : Keyboard Y
 
+Technical Notes
+---------------
+
+Your code must have a game loop that follows the pattern learned from the first assignment.  It should loop something like...
+
+```javascript
+function gameLoop() {
+    //...compute elapsed time...
+    update(elapsedTime);
+    render(elapsedTime);
+    requestAnimationFrame(gameLoop);
+}
+```
+
+Once again, all of your game code should be placed inside of a namespace or module named MazeGame.  You may spread your code over multiple .js files if you like.
+
 Development Notes
 -----------------
 
@@ -49,3 +65,8 @@ At the time this assignment is given, I have not yet presented lectures on how t
 This is going to be a fairly big JavaScript program, even if you have been doing web development previously, this might still be the largest single JavaScript program you've written.
 
 JavaScript is different from C++/C#/Java, and the way you think about and organize your code should be different.  Take the time to "think" in JavaScript and code accordingly.  Again, I don't expect perfection on this assignment, but looking to see progress made.
+
+Sample Gameplay Screenshot
+--------------------------
+
+![screenshot](screenshot.png)
