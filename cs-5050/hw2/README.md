@@ -31,7 +31,7 @@ Assignment 2
 
 The split step where two smaller DP problems are created and solved using the 2 column technique
 
-![split 1](assigment/split1.png)
+![split 1](assignment/split1.png)
 
 Once the k-1, k and k+1 columns are computed, then find the crossing point (bestSize) and whether the kth object should be used.
 
