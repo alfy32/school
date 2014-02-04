@@ -69,4 +69,4 @@ JavaScript is different from C++/C#/Java, and the way you think about and organi
 Sample Gameplay Screenshot
 --------------------------
 
-![screenshot](screenshot.png)
+![screenshot](assignment/screenshot.png)
