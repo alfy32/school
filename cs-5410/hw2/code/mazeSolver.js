@@ -7,14 +7,13 @@ var MazeSolver = (function () {
   var height = 1;
 
   var wallList = [];
+  var wallCount;
 
   var currentWall = {
     row: 0,
     col: 0,
     edge: ''
   };
-
-  var WALL = { 'UP': 0, 'DOWN': 1, 'LEFT': 2, 'RIGHT': 3 };
 
   function makeCell(row, col) {
     var that = {};
@@ -24,13 +23,11 @@ var MazeSolver = (function () {
     that.group = [that];
 
     that.edges = {
-      UP: true,
-      DOWN: true,
-      LEFT: true,
-      RIGHT: true
+      'UP': true,
+      'LEFT': true
     };
 
-    that.notPicked = ['UP', 'DOWN', 'LEFT', 'RIGHT'];
+    that.notPicked = ['UP', 'LEFT'];
 
     that.pickRandomWall = function () {
       if(that.notPicked.length === 0) return false;
@@ -50,9 +47,6 @@ var MazeSolver = (function () {
     width = +w || 2;
     height = +h || 2;
 
-    makeGrid();
-    makeWallList();
-
     while(getRandomWall()) {
       if(cellsInDistinctSets()) {
         removeCurrentWall();
@@ -62,58 +56,47 @@ var MazeSolver = (function () {
     return mazeGrid;
   }
 
-  function makeGrid() {
-    mazeGrid = [];
+  function makeWallList(w, h) {
+    width = +w || 2;
+    height = +h || 2;
 
+    wallCount = 0;
+    mazeGrid = [];
     for(var row = 0; row < height; row++) {
       mazeGrid[row] = [];
       for(var col = 0; col < width; col++) {
         mazeGrid[row][col] = makeCell(row, col);
+        if(col > 0) addLeftWall(row, col);
+        if(row > 0) addUpWall(row, col);
       }
-    }
-
-    pickOutsideWalls();
-  }
-
-  function pickOutsideWalls() {
-
-    for(var col = 0; col < width; col++) {
-      mazeGrid[0][col].pickWall(WALL.UP);
-      mazeGrid[height-1][col].pickWall(WALL.DOWN);
-    }
-
-    for(var row = 0; row < height; row++) {
-      mazeGrid[row][0].pickWall(WALL.LEFT);
-      mazeGrid[row][width-1].pickWall(WALL.RIGHT);
     }
   }
 
-  function makeWallList() {
-    for(var row = 0; row < height; row++) {
-      for(var col = 0; col < width; col++) {
-        if(col < width-1) {
-          wallList.push({
-            cellA: mazeGrid[row][col],
-            cellB: mazeGrid[row][col+1],
-            edge: 'RIGHT'
-          });
-        }
-        if(row < height-1) {
-          wallList.push({
-            cellA: mazeGrid[row][col],
-            cellB: mazeGrid[row+1][col],
-            edge: 'DOWN'
-          });
-        }
-      }
-    }
+  function addLeftWall(row, col) {
+    wallList.push({
+      cellA: mazeGrid[row][col],
+      cellB: mazeGrid[row][col-1],
+      edge: 'LEFT'
+    });
+    wallCount++;
+  }
+
+  function addUpWall(row, col) {
+    wallList.push({
+      cellA: mazeGrid[row][col],
+      cellB: mazeGrid[row-1][col],
+      edge: 'UP'
+    });
+    wallCount++;
   }
 
   function getRandomWall() {
-    if(wallList.length === 0) return false;
+    if(wallCount === 0) return false;
 
-    var random = Math.floor(Math.random() * wallList.length);
+    var random = Math.floor(Math.random() * wallCount);
     currentWall = wallList.splice(random, 1)[0];
+
+    wallCount--;
 
     return true;
   }
@@ -131,27 +114,8 @@ var MazeSolver = (function () {
 
   function removeCurrentWall() {
     var cellA = currentWall.cellA;
-    var cellB = currentWall.cellB;
-
     var edge = currentWall.edge;
-    var oppositeEdge = getOppositeEdge(edge);
-
     cellA.edges[edge] = false;
-    cellB.edges[oppositeEdge] = false;
-    cellB.pickWall(WALL[oppositeEdge]);
-  }
-
-  function getOppositeEdge(edge) {
-    switch(edge) {
-      case 'UP':
-        return 'DOWN';
-      case 'DOWN':
-        return 'UP';
-      case 'LEFT':
-        return 'RIGHT';
-      case 'RIGHT':
-        return 'LEFT';
-    }
   }
 
   function joinCurrentRoomSets() {
@@ -167,29 +131,8 @@ var MazeSolver = (function () {
     }
   }
 
-  function printGrid() {
-    var mazeString = '';
-    mazeGrid.forEach(function (row, rowIndex) {
-      var topWallString = '';
-      var bottomWallString = '';
-      var rowString = '';
-      row.forEach(function (cell, colIndex) {
-        rowString += cell.edges.LEFT ? ' |' : '  ';
-        rowString += '' + rowIndex + colIndex;
-        rowString += cell.edges.RIGHT ? '| ' : '  ';
-
-        topWallString += cell.edges.UP ? '  --  ' : '      ';
-        bottomWallString += cell.edges.DOWN ? '  --  ' : '      ';
-      });
-      mazeString += topWallString + '\n' +
-                    rowString + '\n' +
-                    bottomWallString + '\n';
-    });
-    console.log(mazeString);
-  }
-
   return {
     generate: generate,
-    print: printGrid
+    makeMaze: makeWallList
   };
 }());

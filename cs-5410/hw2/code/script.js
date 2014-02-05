@@ -9,6 +9,7 @@ function keyDown(e) {
 function generateClick() {
   var width = +document.getElementById('width').value;
 
+  MazeSolver.makeMaze(width, width);
   var maze = MazeSolver.generate(width, width);
 
   drawMaze(maze, width, width);
