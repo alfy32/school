@@ -14,19 +14,13 @@ var MazeSolver = (function () {
     edge: ''
   };
 
-  var WALL = {
-    UP: 0,
-    DOWN: 1,
-    LEFT: 2,
-    RIGHT: 3
-  };
+  var WALL = { 'UP': 0, 'DOWN': 1, 'LEFT': 2, 'RIGHT': 3 };
 
   function makeCell(row, col) {
-    var that = {
-      row: row,
-      col: col
-    };
+    var that = {};
 
+    that.row = row;
+    that.col = col;
     that.group = [that];
 
     that.edges = {
@@ -39,12 +33,10 @@ var MazeSolver = (function () {
     that.notPicked = ['UP', 'DOWN', 'LEFT', 'RIGHT'];
 
     that.pickRandomWall = function () {
-      if(that.notPicked.length) {
-        var random = Math.floor(Math.random() * that.notPicked.length);
+      if(that.notPicked.length === 0) return false;
 
-        return that.notPicked.splice(random, 1)[0];
-      }
-      return false;
+      var random = Math.floor(Math.random() * that.notPicked.length);
+      return that.notPicked.splice(random, 1)[0];
     };
 
     that.pickWall = function (wall) {
@@ -66,11 +58,13 @@ var MazeSolver = (function () {
         removeCurrentWall();
         joinCurrentRoomSets();
       }
-      printGrid();
     }
+    return mazeGrid;
   }
 
   function makeGrid() {
+    mazeGrid = [];
+
     for(var row = 0; row < height; row++) {
       mazeGrid[row] = [];
       for(var col = 0; col < width; col++) {
@@ -82,14 +76,13 @@ var MazeSolver = (function () {
   }
 
   function pickOutsideWalls() {
-    var row = 0, col = 0;
 
-    for(col = 0; col < width; col++) {
+    for(var col = 0; col < width; col++) {
       mazeGrid[0][col].pickWall(WALL.UP);
       mazeGrid[height-1][col].pickWall(WALL.DOWN);
     }
 
-    for(row = 0; row < height; row++) {
+    for(var row = 0; row < height; row++) {
       mazeGrid[row][0].pickWall(WALL.LEFT);
       mazeGrid[row][width-1].pickWall(WALL.RIGHT);
     }
@@ -130,8 +123,7 @@ var MazeSolver = (function () {
     var cellB = currentWall.cellB;
 
     for(var i in cellA.group) {
-      if(cellA.group[i] == cellB)
-        return false;
+      if(cellA.group[i] == cellB) return false;
     }
 
     return true;
@@ -201,220 +193,3 @@ var MazeSolver = (function () {
     print: printGrid
   };
 }());
-
-
-
-// MazeSolver.generate(5,5);
-// MazeSolver.print();
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-Initial State
-
-xxxxx
-x1x2x
-xxxxx
-x3x4x
-xxxxx
-
-*/
-
-// function union(wallA, wallB) {
-//   if(wallA == sets[wallA]) {
-
-//   }
-// }
-
-// function distinct(a, b) {
-//   for(var i = 0; i < a.length; i++) {
-//     for(var j = 0; j < b.length; j++) {
-//       if(a[i] == b[j])
-//         return false;
-//     }
-//   }
-
-//   return true;
-// }
-
-// var walls = [
-//   [1,2],
-//   [1,3],
-//   [2,4],
-//   [3,4]
-// ];
-
-// var sets = [0,1,2,3,4];
-
-// while(walls.length) {
-//   var wall = walls.pop();
-
-//   console.log('wall, set', JSON.stringify(wall), JSON.stringify(sets))
-//   if(sets[wall[0]] != sets[wall[1]]) {
-//     union(wall[0], wall[1]);
-//   }
-
-// }
-
-// sets
-// walls
-
-// var maze = [
-//   [
-//     { name: 'A', right: true, down: true},
-//     { name: 'B', right: true, down: true},
-//     { name: 'C', right: false, down: true}
-//   ],
-//   [
-//     { name: 'D', right: true, down: true},
-//     { name: 'E', right: true, down: true},
-//     { name: 'F', right: false, down: true}
-//   ],
-//   [
-//     { name: 'G', right: true, down: false},
-//     { name: 'H', right: true, down: false},
-//     { name: 'I', right: true, down: false}
-//   ],
-// ];
-
-
-
-
-
-// function getRandom(range) {
-//   return Math.floor(Math.random() * range);
-// }
-
-// function generate(w, h) {
-//   var width = w || 1;
-//   var height = h || 1;
-
-//   var grid = [];
-//   for(var row = 0; row < height; row++) {
-//     grid[row] = [];
-//     for(var col = 0; col < width; col++) {
-//       grid[row][col] = Cell();
-//     }
-//   }
-
-//   do {
-//     var row = getRandom(height);
-//     var col = getRandom(width);
-//     var c1 = grid[row][col];
-//     var edge = c1.pickEdge();
-
-
-
-//   } while ();
-// }
-
-
-//   // randomly hop around in the grid removing random walls until
-//   // there is exactly one path from any cell to any other cell.
-//   var done = false;
-//   while(!done) {
-//     var row = this.pickRow(h);
-//     var cell = this.pickColumn(w);
-//     var edge = this.pickEdge();
-
-//     // get a reference to the cell object we've chosen.
-//     var c1 = this.at(cell, row);
-//     var c2;
-
-//     switch(edge) {
-//     case 0: // up
-//       // if we're in the top row it does not make
-//       // sense to remove the top wall of the cell. as
-//       // long as we are not in row 0:
-//       //  - check if the cell above is in the same
-//       //  group as this cell.
-//       //  - if not, remove the top wall of the
-//       //  cell and merge the cells into the same
-//       //  group.
-//       //
-//       // follow this process for each of the other
-//       // cases.
-//       if(row > 0) {
-//         c2 = this.at(cell, row - 1);
-//         if(!c1.grp.contains(c2)) {
-//           c1.edges[0] = false;
-//           c2.edges[2] = false;
-//           this.merge(c1, c2);
-//         }
-//       }
-//       break;
-//     case 1: // right
-//       // if we're in the last column we can't go right
-//       if(cell < w - 1) {
-//         c2 = this.at(cell + 1, row);
-//         if(!c1.grp.contains(c2)) {
-//           c1.edges[1] = false;
-//           c2.edges[3] = false;
-//           this.merge(c1, c2);
-//         }
-//       }
-//       break;
-//     case 2: // down
-//       // if we're in the last row we can't go down
-//       if(row < h - 1) {
-//         c2 = this.at(cell, row + 1);
-//         if(!c1.grp.contains(c2)) {
-//           c1.edges[2] = false;
-//           c2.edges[0] = false;
-//           this.merge(c1, c2);
-//         }
-//       }
-//       break;
-//     case 3: // left
-//       // if we're in the first column we can't go left
-//       if(cell > 0) {
-//         c2 = this.at(cell - 1, row);
-//         if(!c1.grp.contains(c2)) {
-//           c1.edges[3] = false;
-//           c2.edges[1] = false;
-//           this.merge(c1, c2);
-//         }
-//       }
-//       break;
-//     }
-
-//     // if all the cells are in the same group we are done.
-//     if(c1.grp.length == w * h)
-//       done = true;
-//   }
-
-//   // because there is exactly one path from any node to any other
-//   // node, it does not matter where we chose to enter the maze or
-//   // exit the maze. randomly choose a start and finish.
-//   this.start = this.pickRow(h);
-//   this.finish = this.pickRow(h);
-// }
-
-// this.merge = function(c1, c2) {
-//     // get the current cell groups.
-//     var grp1 = c1.grp;
-//     var grp2 = c2.grp;
-
-//     // add each cell in group 2 to group 1
-//     var i = grp2.length;
-//     while(i--)
-//     {
-//       // assign the group 1 array to each cell in group 2.
-//       grp2[i].grp = grp1;
-//       // add each cell in group 2 to the end of the group 1
-//       // array.
-//       grp1.push(grp2[i]);
-//     }
-
-//     // this method is much faster than using the Array concat()
-//     // method, though concat() would probably be more readable.
-//   }
