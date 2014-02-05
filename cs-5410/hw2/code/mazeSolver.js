@@ -2,12 +2,7 @@
 var MazeSolver = (function () {
   'use strict';
 
-  var mazeGrid = [[]];
-  var width = 1;
-  var height = 1;
-
-  var wallList = [];
-  var wallCount;
+  var walls;
 
   var currentWall = {
     row: 0,
@@ -15,37 +10,8 @@ var MazeSolver = (function () {
     edge: ''
   };
 
-  function makeCell(row, col) {
-    var that = {};
-
-    that.row = row;
-    that.col = col;
-    that.group = [that];
-
-    that.edges = {
-      'UP': true,
-      'LEFT': true
-    };
-
-    that.notPicked = ['UP', 'LEFT'];
-
-    that.pickRandomWall = function () {
-      if(that.notPicked.length === 0) return false;
-
-      var random = Math.floor(Math.random() * that.notPicked.length);
-      return that.notPicked.splice(random, 1)[0];
-    };
-
-    that.pickWall = function (wall) {
-      return that.notPicked.splice(wall, 1)[0];
-    };
-
-    return that;
-  }
-
-  function generate(w, h) {
-    width = +w || 2;
-    height = +h || 2;
+  function generate(maze) {
+    walls = maze.walls;
 
     while(getRandomWall()) {
       if(cellsInDistinctSets()) {
@@ -53,50 +19,13 @@ var MazeSolver = (function () {
         joinCurrentRoomSets();
       }
     }
-    return mazeGrid;
-  }
-
-  function makeWallList(w, h) {
-    width = +w || 2;
-    height = +h || 2;
-
-    wallCount = 0;
-    mazeGrid = [];
-    for(var row = 0; row < height; row++) {
-      mazeGrid[row] = [];
-      for(var col = 0; col < width; col++) {
-        mazeGrid[row][col] = makeCell(row, col);
-        if(col > 0) addLeftWall(row, col);
-        if(row > 0) addUpWall(row, col);
-      }
-    }
-  }
-
-  function addLeftWall(row, col) {
-    wallList.push({
-      cellA: mazeGrid[row][col],
-      cellB: mazeGrid[row][col-1],
-      edge: 'LEFT'
-    });
-    wallCount++;
-  }
-
-  function addUpWall(row, col) {
-    wallList.push({
-      cellA: mazeGrid[row][col],
-      cellB: mazeGrid[row-1][col],
-      edge: 'UP'
-    });
-    wallCount++;
   }
 
   function getRandomWall() {
-    if(wallCount === 0) return false;
+    if(walls.length === 0) return false;
 
-    var random = Math.floor(Math.random() * wallCount);
-    currentWall = wallList.splice(random, 1)[0];
-
-    wallCount--;
+    var random = Math.floor(Math.random() * walls.length);
+    currentWall = walls.splice(random, 1)[0];
 
     return true;
   }
@@ -132,7 +61,6 @@ var MazeSolver = (function () {
   }
 
   return {
-    generate: generate,
-    makeMaze: makeWallList
+    generate: generate
   };
 }());
