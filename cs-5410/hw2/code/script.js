@@ -1,128 +1,144 @@
-/* global MazeSolver, Maze, requestAnimationFrame */
+/* globals console, performance */
 'use strict';
 
-function keyDown(e) {
-  if(e.which === 13)
-    generateClick();
+function createCell(location) {
+  var that = {};
+
+  that.location = location;
+  that.set = {};
+  that.set[that.location] = that;
+
+  that.walls = {
+    up: true,
+    left: true
+  };
+
+  that.sameSet = function(otherCell) {
+    return that.location in otherCell.set;
+  };
+
+  that.removeWall = function(otherCell) {
+    if(that.location - otherCell.location > 1) {
+      that.walls.up = false;
+    } else {
+      that.walls.left = false;
+    }
+  };
+
+  that.unionSet = function(otherCell) {
+    var groupA = that.set;
+    var groupB = otherCell.set;
+
+    for(var i in groupB) {
+      groupB[i].set = groupA;
+      groupA[groupB[i].location] = groupB[i];
+
+      // that.set[i].set = otherCell.set;
+      // otherCell.set[that.set[i].location].set = that.set[i];
+    }
+  };
+
+   // for(var i = 0; i < groupB.length; i++) {
+   //    groupB[i].group = groupA;
+   //    groupA.push(groupB[i]);
+   //  }
+
+  return that;
+}
+
+function shuffle(arr) {
+  for(var i in arr) {
+    var rand = Math.floor(Math.random() * arr.length);
+
+    var temp = arr[i];
+    arr[i] = arr[rand];
+    arr[rand] = temp;
+  }
+}
+
+function generate(w, h) {
+  var start = performance.now();
+  var cellNum = 0;
+  var walls = [];
+  var maze = [[]];
+
+  for(var row = 0; row < h; row++) {
+    maze[row] = [];
+    for(var col = 0; col < w; col++) {
+      maze[row][col] = createCell(cellNum);
+
+      if(cellNum % w !== 0) {
+        walls.push({
+          currCell: maze[row][col],
+          prevCell: maze[row][col-1]
+        });
+      }
+      if(cellNum >= w) {
+        walls.push({
+          currCell: maze[row][col],
+          prevCell: maze[row-1][col],
+        });
+      }
+
+      cellNum++;
+    }
+  }
+
+  shuffle(walls);
+
+  console.log('make', performance.now() - start);
+
+  for(var i in walls) {
+    var currCell = walls[i].currCell;
+    var prevCell = walls[i].prevCell;
+
+    if(!currCell.sameSet(prevCell)) {
+      currCell.removeWall(prevCell);
+      currCell.unionSet(prevCell);
+    }
+  }
+
+  console.log('generate', performance.now() - start);
+
+  return maze;
+}
+
+var canvas = document.getElementById('maze-canvas');
+var context = canvas.getContext('2d');
+
+var CELL_WIDTH = 10;
+var CELL_HEIGHT = CELL_WIDTH;
+
+function draw(maze) {
+  canvas.width = canvas.height = CELL_WIDTH * maze.length + 100;
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  for(var row in maze) {
+    for(var col in maze[row]) {
+      drawCell(+row, +col, maze[row][col]);
+    }
+  }
+}
+
+function drawCell(row, col, cell) {
+  if(cell.walls.up) {
+    context.beginPath();
+    context.moveTo(col * CELL_WIDTH, row * CELL_HEIGHT);
+    context.lineTo((col+1) * CELL_WIDTH, row * CELL_HEIGHT);
+    context.stroke();
+  }
+  if(cell.walls.left) {
+    context.beginPath();
+    context.moveTo(col * CELL_WIDTH, row * CELL_HEIGHT);
+    context.lineTo(col * CELL_WIDTH, (row+1) * CELL_HEIGHT);
+    context.stroke();
+  }
+
 }
 
 function generateClick() {
-  width = +document.getElementById('width').value;
+  var size = +document.getElementById('width').value;
 
-  maze = Maze.create(width, width);
-  maze.init();
-  MazeSolver.generate(maze);
-
-  init();
-  gameLoop(Date.now());
-}
-
-var eventQueue = [];
-
-window.addEventListener('keydown', function (e) {
-  e.cancelBubble = true;
-
-  if(e.which === 37) {// Left
-    eventQueue.push('LEFT');
-  } else if(e.which === 38) {// UP
-    eventQueue.push('UP');
-  } else if(e.which === 39) {// Right
-    eventQueue.push('RIGHT');
-  } else if(e.which === 40) {// Down
-    eventQueue.push('DOWN');
-  }
-
-  switch(String.fromCharCode(e.which)) {
-    case 'A':
-      eventQueue.push('LEFT');
-      break;
-    case 'S':
-      eventQueue.push('DOWN');
-      break;
-    case 'D':
-      eventQueue.push('RIGHT');
-      break;
-    case 'W':
-      eventQueue.push('UP');
-      break;
-  }
-
-  return true;
-
-  // console.log(String.fromCharCode(e.which), e.which);
-});
-
-var maze;
-var width;
-var lastTime = Date.now();
-
-function init() {
-  MazeSolver.render.init(width, width, 'black');
-}
-
-function gameLoop(time) {
-  update(time - lastTime);
-  render();
-  requestAnimationFrame(gameLoop);
-}
-
-function update(deltaTime) {
-  while(eventQueue.length) {
-    var move = eventQueue.pop();
-
-    if(canMove(move)) makeMove(move);
-  }
-}
-
-function render() {
-  MazeSolver.render.drawMaze(maze);
-}
-
-function canMove(move) {
-  var player = MazeSolver.render.player;
-  var x = player.x;
-  var y = player.y;
-
-  if(move == 'UP') {
-
-    if(y === 0) return false;
-    if(maze.cells[y][x].edges.UP) return false;
-
-  } else if(move == 'DOWN') {
-
-    if(y === maze.height-1) return false;
-    if(maze.cells[y+1][x].edges.UP) return false;
-
-  } else if(move == 'LEFT') {
-
-    if(x === 0) return false;
-    if(maze.cells[y][x].edges.LEFT) return false;
-
-  } else if(move == 'RIGHT') {
-
-    if(x === maze.width-1) return false;
-    if(maze.cells[y][x+1].edges.LEFT) return false;
-
-  }
-
-  return true;
-}
-
-function makeMove(move) {
-  var player = MazeSolver.render.player;
-
-  switch(move) {
-    case 'UP':
-      player.y -= 1;
-      break;
-    case 'DOWN':
-      player.y += 1;
-      break;
-    case 'LEFT':
-      player.x -= 1;
-      break;
-    case 'RIGHT':
-      player.x += 1;
-      break;
-  }
+  var maze = generate(size, size);
+  draw(maze);
 }
