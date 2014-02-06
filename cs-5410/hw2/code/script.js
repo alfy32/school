@@ -50,7 +50,11 @@ var MazeSolver = (function(){
     }
   }
 
+  var width, height;
+
   function generate(w, h) {
+    width = w;
+    height = h;
     var start = performance.now();
     var cellNum = 0;
     var walls = [];
@@ -242,7 +246,7 @@ var MazeSolver = (function(){
 
     } else if(move == 'DOWN') {
 
-      if(y === maze.height-1) return false;
+      if(y === height-1) return false;
       if(maze[y+1][x].walls.up) return false;
 
     } else if(move == 'LEFT') {
@@ -252,7 +256,7 @@ var MazeSolver = (function(){
 
     } else if(move == 'RIGHT') {
 
-      if(x === maze.width-1) return false;
+      if(x === width-1) return false;
       if(maze[y][x+1].walls.left) return false;
     }
 
