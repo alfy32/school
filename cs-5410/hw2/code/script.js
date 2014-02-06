@@ -26,22 +26,14 @@ function createCell(location) {
   };
 
   that.unionSet = function(otherCell) {
-    var groupA = that.set;
-    var groupB = otherCell.set;
+    var set = that.set;
+    var otherSet = otherCell.set;
 
-    for(var i in groupB) {
-      groupB[i].set = groupA;
-      groupA[groupB[i].location] = groupB[i];
-
-      // that.set[i].set = otherCell.set;
-      // otherCell.set[that.set[i].location].set = that.set[i];
+    for(var i in otherSet) {
+      otherSet[i].set = set;
+      set[otherSet[i].location] = otherSet[i];
     }
   };
-
-   // for(var i = 0; i < groupB.length; i++) {
-   //    groupB[i].group = groupA;
-   //    groupA.push(groupB[i]);
-   //  }
 
   return that;
 }
@@ -141,4 +133,8 @@ function generateClick() {
 
   var maze = generate(size, size);
   draw(maze);
+}
+
+function keyDown(e) {
+  if(e.which === 13) generateClick();
 }
