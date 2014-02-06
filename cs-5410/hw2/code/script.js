@@ -121,6 +121,7 @@ var MazeSolver = (function(){
     }
 
     drawPlayer();
+    drawPath();
   }
 
   function drawCell(row, col, cell) {
@@ -136,7 +137,31 @@ var MazeSolver = (function(){
       context.lineTo(col * CELL_WIDTH, (row+1) * CELL_HEIGHT);
       context.stroke();
     }
+    if(cell.visited) drawVisited(col*CELL_WIDTH, row*CELL_HEIGHT);
+    if(cell.path) drawPath(col*CELL_WIDTH, row*CELL_HEIGHT);
+  }
 
+  function drawPath(x,y) {
+    x += CELL_WIDTH/2;
+    y += CELL_HEIGHT/2;
+
+    context.beginPath();
+    context.arc(x, y, CELL_WIDTH/4, 0*Math.PI, 2*Math.PI);
+    context.fill();
+  }
+
+  function drawVisited(x,y) {
+    x += CELL_WIDTH/2;
+    y += CELL_HEIGHT/2;
+
+    var fillStyle = context.fillStyle;
+    context.fillStyle = 'blue';
+
+    context.beginPath();
+    context.arc(x, y, CELL_WIDTH/4, 0*Math.PI, 2*Math.PI);
+    context.fill();
+
+    context.fillStyle = fillStyle;
   }
 
   var player = {
@@ -280,9 +305,147 @@ var MazeSolver = (function(){
     }
   }
 
+  var solver = (function() {
+    var row = 0, col = 0;
+
+    var maze;
+
+    function solve(theMaze) {
+      maze = theMaze;
+
+      if(atExit()) return true;
+      else return goUp() || goDown() || goLeft() || goRight();
+    }
+
+    function atExit() {
+      return row == 19 && col == 19;
+    }
+
+    function inMaze(x, y) {
+      console.log(x, y);
+      return x >= 0 && x < width && y >= 0 && y < height;
+    }
+
+    function markPath(x,y) {
+      maze[y][x].path = true;
+    }
+
+    function unMarkPath(x,y) {
+      maze[y][x].path = false;
+    }
+
+    function visitSquare(x, y) {
+      maze[y][x].visited = true;
+    }
+
+    function visited(x, y) {
+      return maze[y][x].visited;
+    }
+
+    function goUp() {
+      var x = row;
+      var y = col-1;
+      console.log('goUp', x, y);
+
+      if(!inMaze(x,y)) return false;
+      if(visited(x,y)) return false;
+      visitSquare(x,y);
+
+      console.log('moving');
+
+      col--;
+
+      markPath(x,y);
+
+      if(atExit(x,y)) return true;
+      else if(goUp() || goDown() || goLeft() || goRight()) return true;
+
+      col++;
+
+      unMarkPath(x, y);
+    }
+
+    function goDown() {
+      var x = row;
+      var y = col+1;
+      console.log('goDown', x, y);
+
+      if(!inMaze(x,y)) return false;
+      if(visited(x,y)) return false;
+      visitSquare(x,y);
+
+      console.log('moving');
+
+      col++;
+
+      markPath(x,y);
+
+      if(atExit(x,y)) return true;
+      else if(goUp() || goDown() || goLeft() || goRight()) return true;
+
+      col--;
+
+      unMarkPath(x, y);
+    }
+
+    function goLeft() {
+      var x = row-1;
+      var y = col;
+      console.log('goLeft', x, y);
+
+      if(!inMaze(x,y)) return false;
+      if(visited(x,y)) return false;
+      visitSquare(x,y);
+
+      console.log('moving');
+
+      row--;
+
+      markPath(x,y);
+
+      if(atExit(x,y)) return true;
+      else if(goUp() || goDown() || goLeft() || goRight()) return true;
+
+      row++;
+
+      unMarkPath(x, y);
+    }
+
+    function goRight() {
+      var x = row+1;
+      var y = col;
+      console.log('goRight', x, y);
+
+      if(!inMaze(x,y)) return false;
+      if(visited(x,y)) return false;
+      visitSquare(x,y);
+
+      console.log('moving');
+
+      row++;
+
+      markPath(x,y);
+
+      if(atExit(x,y)) return true;
+      else if(goUp() || goDown() || goLeft() || goRight()) return true;
+
+      row--;
+
+      unMarkPath(x, y);
+    }
+
+    return solve;
+
+  }());
+
+  function solve() {
+    solver(maze);
+  }
+
   return {
     generateClick: generateClick,
-    keyDown: keyDown
+    keyDown: keyDown,
+    solve: solve
   };
 
 }());
