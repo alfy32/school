@@ -6,11 +6,11 @@
 <body>
   <h3>Maze Generator</h3>
 
-  <input type="text" id="width" value="20" onkeydown="keyDown(event)">
-  <button onclick="generateClick()">Generate</button>
+  <input type="text" id="width" value="20" onkeydown="MazeSolver.keyDown(event)">
+  <button onclick="MazeSolver.generateClick()">Generate</button>
 
   <div>
-    <canvas id="maze-canvas" style="height:600px;"></canvas>
+    <canvas id="maze-canvas" style="width:100%"></canvas>
   </div>
 
   <script type="text/javascript" src="Maze.js"></script>
