@@ -202,6 +202,17 @@ var MazeSolver = (function(){
     if(e.which === 13) generateClick();
   }
 
+  function generateMobile(width, height) {
+    maze = generate(width, height);
+    draw(maze);
+
+    gameLoop(performance.now());
+  }
+
+  function moveMobile(move) {
+    eventQueue.push(move);
+  }
+
   var eventQueue = [];
 
   window.addEventListener('keydown', function (e) {
@@ -445,7 +456,9 @@ var MazeSolver = (function(){
   return {
     generateClick: generateClick,
     keyDown: keyDown,
-    solve: solve
+    solve: solve,
+    generateMobile: generateMobile,
+    moveMobile: moveMobile
   };
 
 }());

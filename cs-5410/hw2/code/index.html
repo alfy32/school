@@ -2,15 +2,27 @@
 <html>
 <head>
   <title>Maze Generator</title>
+  <script type="text/javascript">
+  function goMobile(width, height) {
+    window.location = 'mobile.html' + '#/maze/' + width + '/' + height;
+  }
+  </script>
 </head>
 <body>
   <h3>Maze Generator</h3>
+
+  <div><button onclick="goMobile(5,5)">5x5</button></div>
+  <div><button onclick="goMobile(10,10)">10x10</button></div>
+  <div><button onclick="goMobile(15,15)">15x15</button></div>
+  <div><button onclick="goMobile(20,20)">20x20</button></div>
+  <div><button onclick="goMobile(25,25)">25x25</button></div>
+  <div><button onclick="goMobile(30,30)">30x30</button></div>
 
   <input type="text" id="width" value="20" onkeydown="MazeSolver.keyDown(event)">
   <button onclick="MazeSolver.generateClick()">Generate</button>
 
   <div>
-    <canvas id="maze-canvas" style="width:100%"></canvas>
+    <canvas id="maze-canvas"></canvas>
   </div>
 
   <script type="text/javascript" src="Maze.js"></script>
