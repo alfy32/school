@@ -21,15 +21,11 @@
 
   MazeSolver.start();
 
-  //MazeSolver.solve();
-
   window.addEventListener('touchstart', function (e) {
     var touch = e.targetTouches[0];
 
     var x = +touch.pageX - +$('#maze-canvas').position().left;
     var y = +touch.pageY - +$('#maze-canvas').position().top;
-
-    console.log(x,y, canvas.width(), canvas.height());
 
     if(y >= 0 && y < canvas.height()) MazeSolver.addEvent(getDirection(x,y));
 

@@ -13,6 +13,7 @@ var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(f
   that.start = function () {
     that.time = 0;
     lastTime = performance.now();
+    that.solve();
     requestAnimationFrame(gameLoop);
   };
 

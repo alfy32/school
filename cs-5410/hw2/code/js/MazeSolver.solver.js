@@ -23,6 +23,11 @@
     if(solved(x,y)) return true;
     if(alreadyBeenThere(x,y)) return false;
 
+    var tempPos = {
+      x: pos.x,
+      y: pos.y
+    };
+
     pos.x = x;
     pos.y = y;
     that.path[x + ',' + y] = true;
@@ -30,6 +35,8 @@
     if(solve(x+1,y) || solve(x-1, y) || solve(x,y+1) || solve(x,y-1))
       return true;
 
+    pos.x = tempPos.x;
+    pos.y = tempPos.y;
     that.path[x + ',' + y] = false;
     return false;
   }
@@ -39,9 +46,9 @@
     if(y < 0 || y >= that.height) return true;
 
     if(x-pos.x === 1 && that.maze[y][x].walls.left) return true;
-    if(pos.x-x === 1 && that.maze[y][x+1].walls.left) return true;
+    if(pos.x-x === 1 && that.maze[pos.y][pos.x].walls.left) return true;
     if(y-pos.y === 1 && that.maze[y][x].walls.up) return true;
-    if(pos.y-y === 1 && that.maze[y+1][x].walls.up) return true;
+    if(pos.y-y === 1 && that.maze[pos.y][pos.x].walls.up) return true;
 
     return false;
   }
