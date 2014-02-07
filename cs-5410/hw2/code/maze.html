@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maze</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="css/maze.css">
+</head>
+<body>
+  <div class="maze-outer">
+    <div class="maze-inner">
+      <div class="maze-timer">2:45</div>
+
+      <div>
+        <canvas id="maze-canvas" width="500"></canvas>
+      </div>
+
+      <div class="footer"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="js/MazeSolver.js"></script>
+  <script type="text/javascript" src="js/MazeSolver.gameLoop.js"></script>
+  <script type="text/javascript" src="js/MazeSolver.moves.js"></script>
+  <script type="text/javascript" src="js/MazeSolver.render.js"></script>
+  <script type="text/javascript" src="js/maze.js"></script>
+</body>
+</html>

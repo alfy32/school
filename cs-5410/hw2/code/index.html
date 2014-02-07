@@ -2,32 +2,24 @@
 <html>
 <head>
   <title>Maze Generator</title>
-  <script type="text/javascript">
-  function goMobile(width, height) {
-    window.location = 'mobile.html' + '#/maze/' + width + '/' + height;
-  }
-  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-  <h3>Maze Generator</h3>
+  <div class="index-main">
+    <div class="main-inner">
+      <h3 class="main-title">Alfy's Mazes</h3>
 
-  <div><button onclick="goMobile(5,5)">5x5</button></div>
-  <div><button onclick="goMobile(10,10)">10x10</button></div>
-  <div><button onclick="goMobile(15,15)">15x15</button></div>
-  <div><button onclick="goMobile(20,20)">20x20</button></div>
-  <div><button onclick="goMobile(25,25)">25x25</button></div>
-  <div><button onclick="goMobile(30,30)">30x30</button></div>
-
-  <input type="text" id="width" value="20" onkeydown="MazeSolver.keyDown(event)">
-  <button onclick="MazeSolver.generateClick()">Generate</button>
-
-  <div>
-    <canvas id="maze-canvas"></canvas>
+      <button class="main-buttons">5x6</button>
+      <button class="main-buttons">10x12</button>
+      <button class="main-buttons">15x18</button>
+      <button class="main-buttons">20x24</button>
+      <button class="main-buttons">25x30</button>
+    </div>
   </div>
 
-  <script type="text/javascript" src="Maze.js"></script>
-  <script type="text/javascript" src="mazeSolver.js"></script>
-  <script type="text/javascript" src="render.js"></script>
-  <script type="text/javascript" src="script.js"></script>
+  <!-- JavaScript -->
+  <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>
