@@ -1,132 +1,57 @@
-/* globals MazeSolver, console */
+/* globals MazeSolver */
 'use strict';
 
 (function(that){
 
-  var row = 0, col = 0;
+  var pos = { x: 0, y: 0 };
 
-  that.solve = function (theMaze) {
-    that.maze = theMaze;
+  that.path = {};
 
-    if(atExit()) return true;
-    else return goUp() || goDown() || goLeft() || goRight();
+  that.solve = function () {
+    that.path = {};
+
+    pos.x = 0;
+    pos.y = 0;
+
+    solve(0,0);
+
+    that.path[(that.width-1) + ',' + (that.height-1)] = true;
   };
 
-  function atExit() {
-    return row == 19 && col == 19;
+  function solve(x, y) {
+    if(cantMove(x,y)) return false;
+    if(solved(x,y)) return true;
+    if(alreadyBeenThere(x,y)) return false;
+
+    pos.x = x;
+    pos.y = y;
+    that.path[x + ',' + y] = true;
+
+    if(solve(x+1,y) || solve(x-1, y) || solve(x,y+1) || solve(x,y-1))
+      return true;
+
+    that.path[x + ',' + y] = false;
+    return false;
   }
 
-  function inMaze(x, y) {
-    console.log(x, y);
-    return x >= 0 && x < that.width && y >= 0 && y < that.height;
+  function cantMove(x,y) {
+    if(x < 0 || x >= that.width) return true;
+    if(y < 0 || y >= that.height) return true;
+
+    if(x-pos.x === 1 && that.maze[y][x].walls.left) return true;
+    if(pos.x-x === 1 && that.maze[y][x+1].walls.left) return true;
+    if(y-pos.y === 1 && that.maze[y][x].walls.up) return true;
+    if(pos.y-y === 1 && that.maze[y+1][x].walls.up) return true;
+
+    return false;
   }
 
-  function markPath(x,y) {
-    that.maze[y][x].path = true;
+  function solved(x,y) {
+    if(x === that.width-1 && y === that.height-1) return true;
   }
 
-  function unMarkPath(x,y) {
-    that.maze[y][x].path = false;
-  }
-
-  function visitSquare(x, y) {
-    that.maze[y][x].visited = true;
-  }
-
-  function visited(x, y) {
-    return that.maze[y][x].visited;
-  }
-
-  function goUp() {
-    var x = row;
-    var y = col-1;
-    console.log('goUp', x, y);
-
-    if(!inMaze(x,y)) return false;
-    if(visited(x,y)) return false;
-    visitSquare(x,y);
-
-    console.log('moving');
-
-    col--;
-
-    markPath(x,y);
-
-    if(atExit(x,y)) return true;
-    else if(goUp() || goDown() || goLeft() || goRight()) return true;
-
-    col++;
-
-    unMarkPath(x, y);
-  }
-
-  function goDown() {
-    var x = row;
-    var y = col+1;
-    console.log('goDown', x, y);
-
-    if(!inMaze(x,y)) return false;
-    if(visited(x,y)) return false;
-    visitSquare(x,y);
-
-    console.log('moving');
-
-    col++;
-
-    markPath(x,y);
-
-    if(atExit(x,y)) return true;
-    else if(goUp() || goDown() || goLeft() || goRight()) return true;
-
-    col--;
-
-    unMarkPath(x, y);
-  }
-
-  function goLeft() {
-    var x = row-1;
-    var y = col;
-    console.log('goLeft', x, y);
-
-    if(!inMaze(x,y)) return false;
-    if(visited(x,y)) return false;
-    visitSquare(x,y);
-
-    console.log('moving');
-
-    row--;
-
-    markPath(x,y);
-
-    if(atExit(x,y)) return true;
-    else if(goUp() || goDown() || goLeft() || goRight()) return true;
-
-    row++;
-
-    unMarkPath(x, y);
-  }
-
-  function goRight() {
-    var x = row+1;
-    var y = col;
-    console.log('goRight', x, y);
-
-    if(!inMaze(x,y)) return false;
-    if(visited(x,y)) return false;
-    visitSquare(x,y);
-
-    console.log('moving');
-
-    row++;
-
-    markPath(x,y);
-
-    if(atExit(x,y)) return true;
-    else if(goUp() || goDown() || goLeft() || goRight()) return true;
-
-    row--;
-
-    unMarkPath(x, y);
+  function alreadyBeenThere(x,y) {
+    return that.path[x + ',' + y];
   }
 
 }(MazeSolver));

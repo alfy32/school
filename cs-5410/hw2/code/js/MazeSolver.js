@@ -17,6 +17,13 @@ var MazeSolver = (function(){
     y: 0
   };
 
+  that.controls = {
+    HINT: false,
+    BREAD: false,
+    PATH: false,
+    SCORE: false
+  };
+
   function createCell(location) {
     var that = {};
 

@@ -14,8 +14,6 @@
     canvas = 'object' === typeof idOrObject ? idOrObject : document.getElementById(idOrObject);
     context = canvas.getContext('2d');
 
-    window.scrollTo(0, 1);
-
     canvas.width = CELL_WIDTH * that.width;
     canvas.height = CELL_HEIGHT* that.height;
     context.clearRect(0, 0, canvas.width, canvas.height);
@@ -29,8 +27,9 @@
       }
     }
 
+    if(that.controls.PATH) drawPath();
+
     drawPlayer();
-    drawPath();
   };
 
   function drawCell(row, col, cell) {
@@ -50,13 +49,21 @@
     if(cell.path) drawPath(col*CELL_WIDTH, row*CELL_HEIGHT);
   }
 
-  function drawPath(x,y) {
-    x += CELL_WIDTH/2;
-    y += CELL_HEIGHT/2;
+  function drawPath() {
+    for(var i in that.path) {
+      if(that.path[i]) {
+        var coords = i.split(',');
+        var col = coords[0];
+        var row = coords[1];
 
-    context.beginPath();
-    context.arc(x, y, CELL_WIDTH/4, 0*Math.PI, 2*Math.PI);
-    context.fill();
+        var x = col * CELL_WIDTH + CELL_WIDTH/2;
+        var y = row * CELL_HEIGHT +  CELL_HEIGHT/2;
+
+        context.beginPath();
+        context.arc(x, y, CELL_WIDTH/4, 0*Math.PI, 2*Math.PI);
+        context.fill();
+      }
+    }
   }
 
   function drawVisited(x,y) {

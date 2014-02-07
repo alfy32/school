@@ -3,8 +3,8 @@
 
 (function(that){
 
-  that.move = function (move) {
-    that.eventQueue.push(move);
+  that.addEvent = function (newEvent) {
+    that.eventQueue.push(newEvent);
   };
 
   that.canMove = function (move) {
@@ -50,6 +50,13 @@
         that.player.x += 1;
         break;
     }
+  };
+
+  that.toggleControl = function(control) {
+    if(control == 'HINT')   that.controls.HINT   = !that.controls.HINT;
+    if(control == 'BREAD')  that.controls.BREAD  = !that.controls.BREAD;
+    if(control == 'PATH')   that.controls.PATH   = !that.controls.PATH;
+    if(control == 'SCORE')  that.controls.SCORE  = !that.controls.SCORE;
   };
 
 }(MazeSolver));

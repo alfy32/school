@@ -32,9 +32,16 @@ var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(f
     that.time += deltaTime;
 
     while(that.eventQueue.length) {
-      var move = that.eventQueue.pop();
+      var theEvent = that.eventQueue.pop();
 
-      if(that.canMove(move)) that.makeMove(move);
+      if(
+        theEvent === 'UP' || theEvent === 'DOWN' ||
+        theEvent === 'LEFT' || theEvent === 'RIGHT'
+      ) {
+        if(that.canMove(theEvent)) that.makeMove(theEvent);
+      } else {
+        that.toggleControl(theEvent);
+      }
 
       if(win()) won = true;
     }

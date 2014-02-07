@@ -3,16 +3,18 @@
 
 (function() {
 
-  $('button').on('touchend', function (e) {
-    e.stopPropagation();
+  $(document).ready(function() {
+    $('#new').click(goTo('size.html'));
 
-    var button = $(e.target);
+    $('#scores').click(goTo('scores.html'));
 
-    var size = button.html().split('x');
-    var width = size[0] || 5;
-    var height = size[1] || 5;
-
-    window.location = 'maze.html' + '#/' + width + '/' + height;
+    $('#credits').click(goTo('credits.html'));
   });
+
+  function goTo(page) {
+    return function() {
+      window.location = page;
+    };
+  }
 
 }());

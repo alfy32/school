@@ -15,10 +15,9 @@
 
   MazeSolver.generate(mazeWidth, mazeHeight);
 
-  var canvas = $('#maze-canvas');
+  MazeSolver.solve();
 
-  var width = canvas.width();
-  var height = canvas.height();
+  var canvas = $('#maze-canvas');
 
   MazeSolver.draw(canvas[0]);
 
@@ -73,35 +72,45 @@
 
   window.addEventListener('keydown', function (e) {
     e.cancelBubble = true;
+    var keyNum = e.which;
+    var keyChar = String.fromCharCode(e.which);
 
-    if(e.which === 37) {// Left
-      MazeSolver.move('LEFT');
-    } else if(e.which === 38) {// UP
-      MazeSolver.move('UP');
-    } else if(e.which === 39) {// Right
-      MazeSolver.move('RIGHT');
-    } else if(e.which === 40) {// Down
-      MazeSolver.move('DOWN');
-    }
+    if     (keyNum === 37) MazeSolver.addEvent('LEFT');
+    else if(keyNum === 38) MazeSolver.addEvent('UP');
+    else if(keyNum === 39) MazeSolver.addEvent('RIGHT');
+    else if(keyNum === 40) MazeSolver.addEvent('DOWN');
 
-    switch(String.fromCharCode(e.which)) {
-      case 'A':
-        MazeSolver.move('LEFT');
-        break;
-      case 'S':
-        MazeSolver.move('DOWN');
-        break;
-      case 'D':
-        MazeSolver.move('RIGHT');
-        break;
-      case 'W':
-        MazeSolver.move('UP');
-        break;
-    }
+    else if(keyChar === 'A') MazeSolver.addEvent('LEFT');
+    else if(keyChar === 'W') MazeSolver.addEvent('UP');
+    else if(keyChar === 'D') MazeSolver.addEvent('RIGHT');
+    else if(keyChar === 'S') MazeSolver.addEvent('DOWN');
+
+    else if(keyChar === 'J') MazeSolver.addEvent('LEFT');
+    else if(keyChar === 'I') MazeSolver.addEvent('UP');
+    else if(keyChar === 'L') MazeSolver.addEvent('RIGHT');
+    else if(keyChar === 'K') MazeSolver.addEvent('DOWN');
+
+    else if(keyChar === 'H') MazeSolver.addEvent('HINT');
+    else if(keyChar === 'B') MazeSolver.addEvent('BREAD');
+    else if(keyChar === 'P') MazeSolver.addEvent('PATH');
+    else if(keyChar === 'Y') MazeSolver.addEvent('DOWN');
 
     return true;
 
     // console.log(String.fromCharCode(e.which), e.which);
   });
+
+  /////////////// buttons //////////////////////
+
+  $('#HINT').click(addEvent('HINT'));
+  $('#BREAD').click(addEvent('BREAD'));
+  $('#PATH').click(addEvent('PATH'));
+  $('#SCORE').click(addEvent('SCORE'));
+
+  function addEvent(event) {
+    return function() {
+      MazeSolver.addEvent(event);
+    };
+  }
 
 }());
