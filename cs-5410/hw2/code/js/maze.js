@@ -29,7 +29,9 @@
     var x = +touch.pageX - +$('#maze-canvas').position().left;
     var y = +touch.pageY - +$('#maze-canvas').position().top;
 
-    if(y > canvas.height) MazeSolver.addEvent(getDirection(x,y));
+    console.log(x,y, canvas.width(), canvas.height());
+
+    if(y >= 0 && y < canvas.height()) MazeSolver.addEvent(getDirection(x,y));
 
     // console.log(x,y, width, height, getDirection(x,y));
 
