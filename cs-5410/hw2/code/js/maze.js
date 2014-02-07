@@ -15,13 +15,13 @@
 
   MazeSolver.generate(mazeWidth, mazeHeight);
 
-  MazeSolver.solve();
-
   var canvas = $('#maze-canvas');
 
   MazeSolver.draw(canvas[0]);
 
   MazeSolver.start();
+
+  //MazeSolver.solve();
 
   window.addEventListener('touchstart', function (e) {
     var touch = e.targetTouches[0];
