@@ -3,6 +3,9 @@
 
 (function(that){
 
+  that.path = {};
+  that.bread = { '0,0': true };
+
   that.addEvent = function (newEvent) {
     that.eventQueue.push(newEvent);
   };
@@ -50,6 +53,8 @@
         that.player.x += 1;
         break;
     }
+
+    that.bread[that.player.x + ',' + that.player.y] = true;
   };
 
   that.toggleControl = function(control) {

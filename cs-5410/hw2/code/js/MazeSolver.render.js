@@ -27,6 +27,7 @@
       }
     }
 
+    if(that.controls.BREAD) drawBread();
     if(that.controls.PATH) drawPath();
 
     drawPlayer();
@@ -50,6 +51,9 @@
   }
 
   function drawPath() {
+    var fillStyle = context.fillStyle;
+    context.fillStyle = 'green';
+
     for(var i in that.path) {
       if(that.path[i]) {
         var coords = i.split(',');
@@ -64,6 +68,28 @@
         context.fill();
       }
     }
+    context.fillStyle = fillStyle
+  }
+
+  function drawBread() {
+    var fillStyle = context.fillStyle;
+    context.fillStyle = 'red';
+
+    for(var i in that.bread) {
+      if(that.bread[i]) {
+        var coords = i.split(',');
+        var col = coords[0];
+        var row = coords[1];
+
+        var x = col * CELL_WIDTH + CELL_WIDTH/2;
+        var y = row * CELL_HEIGHT +  CELL_HEIGHT/2;
+
+        context.beginPath();
+        context.arc(x, y, CELL_WIDTH/4, 0*Math.PI, 2*Math.PI);
+        context.fill();
+      }
+    }
+    context.fillStyle = fillStyle
   }
 
   function drawVisited(x,y) {
