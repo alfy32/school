@@ -27,7 +27,7 @@ void CacheRegular::set(int row, int col, int value) {
 void CacheRegular::print() {
   for(std::vector<int> row : cache) {
     for(int value : row) {
-      std::cout << value << ' ';
+      std::cout << value << '\t';
     }
     std::cout << std::endl;
   }

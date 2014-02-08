@@ -5,7 +5,7 @@ clean:
 	rm -r -f knapsack
 	rm -r -f *.o
 
-cacheRegular: CacheRegular.hpp CacheRegular.cpp
+cacheRegular: CacheRegular.hpp CacheRegular.cpp Cache.hpp
 	g++ -std=c++11 -c CacheRegular.cpp -o cacheRegular.o
 
 knapsack: Knapsack.hpp Knapsack.cpp

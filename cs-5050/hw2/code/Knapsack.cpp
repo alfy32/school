@@ -11,6 +11,14 @@ Knapsack::~Knapsack() {
   delete cache;
 }
 
+void Knapsack::initSizes(std::vector<int> sizes) {
+  size = sizes;
+}
+
+void Knapsack::initValues(std::vector<int> values) {
+  value = values;
+}
+
 void Knapsack::initSizes(int min, int max) {
   std::generate(size.begin(), size.end(), [=](){
     return rand() % (max - min + 1) + min;
@@ -95,6 +103,30 @@ int Knapsack::fillBagDynamic(int n, int bagSize) {
   }
 
   return cache->get(n, bagSize);
+}
+
+std::vector<bool> Knapsack::getItemsUsed(int n, int bagSize) {
+  std::vector<bool> used(n+1, false);
+
+  findUsed(n, bagSize, used);
+
+  return used;
+}
+
+void Knapsack::findUsed(int n, int bagSize, std::vector<bool>& used) {
+  if(n == 0) return;
+  if(bagSize < 0) return;
+
+  if(cache->get(n, bagSize) == cache->get(n-1, bagSize) ||
+     !cache->seen(n-1, bagSize)) {
+    
+    used[n] = false;
+  } else {
+    used[n] = true;
+    bagSize -= getSize(n);
+  }
+
+  findUsed(n-1, bagSize, used);
 }
 
 void Knapsack::print() {
