@@ -69,8 +69,12 @@ int Knapsack::fillBagCaching(int n, int bagSize) {
 }
 
 int Knapsack::fillBagDynamic(int n, int bagSize) {
-  for(int col = 0; col < bagSize; ++col) {
+  for(int col = 0; col < bagSize+1; ++col) {
     cache->set(0, col, 0);
+  }
+
+  for(int row = 0; row < n+1; ++row) {
+    cache->set(row, 0, 0);
   }
   
   for(int item = 1; item <= n; item++) {
