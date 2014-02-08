@@ -84,7 +84,7 @@ int Knapsack::fillBagDynamic(int n, int bagSize) {
   for(int row = 0; row < n+1; ++row) {
     cache->set(row, 0, 0);
   }
-  
+
   for(int item = 1; item <= n; item++) {
     for(int curSize = 1; curSize <= bagSize; curSize++) {
 
@@ -118,8 +118,8 @@ void Knapsack::findUsed(int n, int bagSize, std::vector<bool>& used) {
   if(bagSize < 0) return;
 
   if(cache->get(n, bagSize) == cache->get(n-1, bagSize) ||
-     !cache->seen(n-1, bagSize)) {
-    
+     !cache->seen(n-1, bagSize) || cache->get(n-1, bagSize) == 0) {
+
     used[n] = false;
   } else {
     used[n] = true;
