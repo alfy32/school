@@ -4,17 +4,20 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <utility>
 
 #include "Cache.hpp"
+#include "CacheLinear.hpp"
 
 class Knapsack {
-protected: 
+protected:
   std::vector<int> size, value;
   Cache* cache;
 
   void findUsed(int n, int bagSize, std::vector<bool>& used);
+  void fillBagLD(int start, int end, int bagSize, Cache*);
 
-public: 
+public:
 
   Knapsack(int n);
   ~Knapsack();
@@ -27,16 +30,18 @@ public:
   void setCache(Cache*);
 
   int getValue(int);
-  int getSize(int);  
+  int getSize(int);
   Cache* getCache();
 
   int fillBagRecursive(int, int);
   int fillBagCaching(int, int);
   int fillBagDynamic(int, int);
 
-  std::vector<bool> getItemsUsed(int n, int bagSize);  
+  std::pair<int,int> linear(int start, int end, int mid, int bagSize);
 
-  void print(); 
+  std::vector<bool> getItemsUsed(int n, int bagSize);
+
+  void print();
 };
 
 #endif

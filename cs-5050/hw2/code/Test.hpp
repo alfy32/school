@@ -5,6 +5,7 @@
 
 #include "Knapsack.hpp"
 #include "CacheRegular.hpp"
+#include "CacheLinear.hpp"
 
 class Test {
 
@@ -13,6 +14,7 @@ public:
   static void correctValues();
   static void traceback();
   static void showTraceback(int n = 0, int bagSize = 0);
+  static void linear();
 };
 
 #endif

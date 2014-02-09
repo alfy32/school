@@ -4,12 +4,15 @@ void Test::run(std::string which) {
   if(which == "All") {
     correctValues();
     traceback();
+    linear();
   } else if(which == "values") {
     correctValues();
   } else if(which == "traceback") {
     traceback();
-  } else if(which == "random") {
+  } else if(which == "given") {
     showTraceback();
+  } else if(which == "linear") {
+    linear();
   }
 }
 
@@ -112,7 +115,10 @@ void Test::showTraceback(int n, int bagSize) {
 
   knapsack.print();
 
-  int recursiveValue = knapsack.fillBagRecursive(n, bagSize);
+  int recursiveValue;
+
+  if(n < 20)
+    recursiveValue = knapsack.fillBagRecursive(n, bagSize);
 
   knapsack.setCache(cachingCache);
   int cachingValue = knapsack.fillBagCaching(n, bagSize);
@@ -122,9 +128,14 @@ void Test::showTraceback(int n, int bagSize) {
   int dynamicValue = knapsack.fillBagDynamic(n, bagSize);
   std::vector<bool> usedDynamic = knapsack.getItemsUsed(n, bagSize);
 
-  std::cout << "Recursive Answer: " << recursiveValue << std::endl;
-  std::cout << "Caching Answer: " << recursiveValue << std::endl;
+  int linearValue = knapsack.linear(1, n, n/2, bagSize).first;
+
+  if(n < 20)
+    std::cout << "Recursive Answer: " << recursiveValue << std::endl;
+
+  std::cout << "Caching Answer: " << cachingValue << std::endl;
   std::cout << "Dynamic Answer: " << dynamicValue << std::endl;
+  std::cout << "Linear Answer: " << linearValue << std::endl;
 
   std::cout << std::endl;
 
@@ -137,4 +148,50 @@ void Test::showTraceback(int n, int bagSize) {
   cachingCache->print();
   std::cout << "Dynamic Cache:" << std::endl;
   dynamicCache->print();
+}
+
+void Test::linear() {
+  std::cout << "Testing Linear...." << std::endl;
+
+  { // Test 1
+    int n = 5;
+    int bagSize = 10;
+
+    int mid = 3;
+
+    int s[] = {0,6, 4, 3, 5, 5};
+    int v[] = {0,12,60,15,16,70};
+
+    Knapsack knapsack(n);
+    knapsack.initSizes(std::vector<int>(s, s+n+1));
+    knapsack.initValues(std::vector<int>(v, v+n+1));
+
+    int size = knapsack.linear(1, n, mid, bagSize).first;
+
+    if(size == 4)
+      std::cout << "Passed Test 1" << std::endl;
+    else
+      std::cout << "Failed Test 1" << std::endl;
+  }
+
+  { // Test 2
+    int n = 6;
+    int bagSize = 20;
+
+    int mid = 2;
+
+    int s[] = {0,6, 4, 3, 5, 5, 8};
+    int v[] = {0,17,60,15,16,70,13};
+
+    Knapsack knapsack(n);
+    knapsack.initSizes(std::vector<int>(s, s+n+1));
+    knapsack.initValues(std::vector<int>(v, v+n+1));
+
+    int size = knapsack.linear(1, n, mid, bagSize).first;
+
+    if(size == 10)
+      std::cout << "Passed Test 2" << std::endl;
+    else
+      std::cout << "Failed Test 2" << std::endl;
+  }
 }

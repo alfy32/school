@@ -1,7 +1,5 @@
 #include <string>
 
-#include "Knapsack.hpp"
-#include "CacheRegular.hpp"
 #include "Test.hpp"
 
 int main(int argc, char** argv) {

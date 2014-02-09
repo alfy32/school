@@ -5,10 +5,13 @@ Knapsack::Knapsack(int n) {
 
   size = std::vector<int>(n+1, 0);
   value = std::vector<int>(n+1, 0);
+
+  cache = NULL;
 }
 
 Knapsack::~Knapsack() {
-  delete cache;
+  if(cache != NULL)
+    delete cache;
 }
 
 void Knapsack::initSizes(std::vector<int> sizes) {
@@ -77,32 +80,80 @@ int Knapsack::fillBagCaching(int n, int bagSize) {
 }
 
 int Knapsack::fillBagDynamic(int n, int bagSize) {
-  for(int col = 0; col < bagSize+1; ++col) {
-    cache->set(0, col, 0);
+  for(int size = 0; size < bagSize+1; ++size) {
+    cache->set(0, size, 0);
   }
 
-  for(int row = 0; row < n+1; ++row) {
-    cache->set(row, 0, 0);
+  for(int item = 0; item < n+1; ++item) {
+    cache->set(item, 0, 0);
   }
 
   for(int item = 1; item <= n; item++) {
-    for(int curSize = 1; curSize <= bagSize; curSize++) {
+    for(int size = 1; size <= bagSize; size++) {
 
       int with;
 
-      if(curSize - size[item] < 0) {
+      if(size - getSize(item) < 0) {
         with = 0;
       } else {
-        with = getValue(item) + cache->get(item-1,curSize - getSize(item));
+        with = getValue(item) + cache->get(item-1,size - getSize(item));
       }
 
-      int without = cache->get(item-1, curSize);
+      int without = cache->get(item-1, size);
 
-      cache->set(item, curSize, with > without ? with : without);
+      cache->set(item, size, with > without ? with : without);
     }
   }
 
   return cache->get(n, bagSize);
+}
+
+void Knapsack::fillBagLD(int start, int end, int bagSize, Cache* lCache) {
+  for(int size = 0; size <= bagSize; ++size) {
+    lCache->set(0, size, 0);
+    lCache->set(1, size, 0);
+  }
+
+  for(int item = start; (end > start) ? item <= end : item >= end; (end > start) ? ++item : --item) {
+    for(int size = 1; size <= bagSize; ++size) {
+      int with, without;
+
+      if(size - getSize(item) < 0) {
+        with = 0;
+      } else {
+        with = getValue(item) + lCache->get(item-1, size - getSize(item));
+      }
+
+      without = lCache->get(item-1, size);
+
+      lCache->set(item, size, with > without ? with : without);
+    }
+  }
+}
+
+std::pair<int,int> Knapsack::linear(int start, int end, int mid, int bagSize) {
+  // if(start > end) return 0;
+  // if(bagSize == 0) return 0;
+
+  CacheLinear leftCache(2, bagSize+1);
+  CacheLinear rightCache(2, bagSize+1);
+
+  fillBagLD(start, mid, bagSize, &leftCache);
+  fillBagLD(end, mid+1, bagSize, &rightCache);
+
+  int bestValue = 0, bestSize = 0;
+
+  for(int size = 0; size <= bagSize; size++) {
+    int leftValue = leftCache.get(mid, size);
+    int rightValue = rightCache.get(mid+1, bagSize - size);
+
+    if(leftValue + rightValue > bestValue) {
+      bestValue = leftValue + rightValue;
+      bestSize = size;
+    }
+  }
+
+  return std::make_pair((int)bestValue, (int)bestSize);
 }
 
 std::vector<bool> Knapsack::getItemsUsed(int n, int bagSize) {
