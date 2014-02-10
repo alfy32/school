@@ -52,7 +52,7 @@ var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(f
     if(!won) {
       var ms = that.time % 1000;
       var seconds = Math.floor(that.time/1000 % 60);
-      var minutes = Math.floor(seconds/60);
+      var minutes = Math.floor(that.time/(1000*60) % 60);
 
       timeLabel = pad2Digits(minutes) + ':' + pad2Digits(seconds);
 

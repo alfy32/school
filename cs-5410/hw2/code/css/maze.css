@@ -1,13 +1,10 @@
 
-html {
-  height: 100%;
-}
-
 body {
-  background-color: gray;
+  background-color: #204a87;
   margin: 0px;
   padding: 0px;
-  height: 100%;
+  max-width: 400px;
+  margin: auto;
 }
 
 .maze-outer {
@@ -32,13 +29,6 @@ body {
   width: 100%;
 }
 
-.footer {
-  position: absolute;
-  bottom: 0px;
-  left: 0px;
-  width: 100%
-}
-
 .footer-ul {
   display: block;
   margin: 0px;
@@ -49,7 +39,6 @@ body {
   display: inline-block;
   width: calc(25% - 15px);
   padding: 5px;
-
 }
 
 .footer-ul button {
@@ -60,5 +49,5 @@ body {
   border: 3px solid #729fcf;
   border-radius: 10px;
   color: white;
-  font-size: 25px;
+  font-size: 14px;
 }
