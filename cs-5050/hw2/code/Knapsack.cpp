@@ -153,6 +153,14 @@ std::pair<int,int> Knapsack::linear(int start, int end, int mid, int bagSize) {
     }
   }
 
+  std::cout << std::endl;
+  print();
+  std::cout << std::endl << "left: " << std::endl;
+  leftCache.print();
+  std::cout << std::endl << "right: " << std::endl;
+  rightCache.print();
+  std::cout << std::endl;
+
   return std::make_pair((int)bestValue, (int)bestSize);
 }
 

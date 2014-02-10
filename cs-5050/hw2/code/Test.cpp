@@ -166,7 +166,7 @@ void Test::linear() {
     knapsack.initSizes(std::vector<int>(s, s+n+1));
     knapsack.initValues(std::vector<int>(v, v+n+1));
 
-    int size = knapsack.linear(1, n, mid, bagSize).first;
+    int size = knapsack.linear(1, n, mid, bagSize).second;
 
     if(size == 4)
       std::cout << "Passed Test 1" << std::endl;
@@ -187,7 +187,7 @@ void Test::linear() {
     knapsack.initSizes(std::vector<int>(s, s+n+1));
     knapsack.initValues(std::vector<int>(v, v+n+1));
 
-    int size = knapsack.linear(1, n, mid, bagSize).first;
+    int size = knapsack.linear(1, n, mid, bagSize).second;
 
     if(size == 10)
       std::cout << "Passed Test 2" << std::endl;
