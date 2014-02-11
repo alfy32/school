@@ -139,10 +139,11 @@ void Knapsack::initLinear(Cache* left, Cache* right, double split) {
 }
 
 int Knapsack::linear(int start, int end, int bagSize) {
-  if(end < start) return 0;
-  if(bagSize == 0) return 0;
-
-  std::cout << "start " << start << ' ' << end << ' ' << bagSize << std::endl;
+  if(bagSize <= 0) return 0;
+  if(end == start) {
+    used[start] = getSize(start) <= bagSize;
+    return getValue(start);
+  }
 
   int mid = (end-start)*split + start;
 
@@ -161,26 +162,8 @@ int Knapsack::linear(int start, int end, int bagSize) {
     }
   }
 
-std::cout << "best size" << bestSize << std::endl;
-std::cout << "left" << std::endl;
-leftCache->print();
-std::cout << "right" << std::endl;
-rightCache->print();
-
-  used[mid] = leftCache->get(mid, bestSize) != leftCache->get(mid-1, bestSize);
-  // used[mid+1] = rightCache->get(mid+1, bestSize) != rightCache->get(mid+2, bestSize);
-
-  std::cout << "before recursion " << start << ' ' << mid << ' ' << end << ' ' << bestSize << std::endl;
-
-  linear(start, mid-1, bestSize);
+  linear(start, mid, bestSize);
   linear(mid+1, end, bagSize - bestSize);
-  // std::cout << std::endl;
-  // print();
-  // std::cout << std::endl << "left: " << std::endl;
-  // leftCache->print();
-  // std::cout << std::endl << "right: " << std::endl;
-  // rightCache->print();
-  // std::cout << std::endl;
 
   return bestValue;
 }
@@ -201,8 +184,9 @@ void Knapsack::findUsed(int n, int bagSize, std::vector<bool>& used) {
   if(n == 0) return;
   if(bagSize < 0) return;
 
-  if(cache->get(n, bagSize) == cache->get(n-1, bagSize) ) {
-
+  if( (cache->get(n, bagSize) == cache->get(n-1, bagSize)) ||
+      (cache->get(n, bagSize) == 0 && cache->get(n-1, bagSize) == NOT_SEEN)
+    ) {
     used[n] = false;
   } else {
     used[n] = true;

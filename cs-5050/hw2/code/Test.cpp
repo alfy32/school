@@ -148,9 +148,25 @@ void Test::showTraceback(int n, int bagSize) {
 
   std::cout << std::endl;
 
-  std::cout << "Used" << '\t' << "Caching" << '\t' << "Dynamic" << '\t' << "Linear" << std::endl;
+  std::cout << "Used" << '\t'
+            << "Caching" << '\t'
+            << "Dynamic" << '\t'
+            << "Linear" << '\t'
+            << "Same"
+            << std::endl;
   for(int i = 1; i < usedCaching.size(); ++i) {
-    std::cout << i << '\t' << usedCaching[i] << '\t' << usedDynamic[i] << '\t' << usedLinear[i] << std::endl;
+    std::string passed = "Same";
+    if(usedCaching[i] == usedDynamic[i] && usedCaching[i] == usedLinear[i])
+      passed = "Same";
+    else
+      passed = "*** Failed ***";
+
+    std::cout << i << '\t'
+              << usedCaching[i] << '\t'
+              << usedDynamic[i] << '\t'
+              << usedLinear[i] << '\t'
+              << passed
+              << std::endl;
   }
 
   std::cout << "Caching Cache:" << std::endl;
