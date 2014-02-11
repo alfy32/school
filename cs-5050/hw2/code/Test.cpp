@@ -342,6 +342,9 @@ void Test::divideAndConquerAndDPTraceback() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
+
+      delete left;
+      delete right;
     }, runs);
 
     int dynamicRunTime = averageRuntime([&](){
@@ -355,6 +358,8 @@ void Test::divideAndConquerAndDPTraceback() {
 
       knapsack.fillBagDynamic(n, bagSize);
       knapsack.getItemsUsed(n, bagSize);
+
+      delete cache;
     }, runs);
 
     std::cout << n << '\t' << linearRunTime << '\t' << dynamicRunTime << std::endl;
@@ -388,6 +393,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
+
+      delete left;
+      delete right;
     }, runs);
 
     int r4 = averageRuntime([&](){
@@ -402,6 +410,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
+
+      delete left;
+      delete right;
     }, runs);
 
     int r8 = averageRuntime([&](){
@@ -416,6 +427,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
+
+      delete left;
+      delete right;
     }, runs);
 
     int r16 = averageRuntime([&](){
@@ -430,6 +444,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
+
+      delete left;
+      delete right;
     }, runs);
 
     int r32 = averageRuntime([&](){
@@ -444,6 +461,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
+
+      delete left;
+      delete right;
     }, runs);
 
     int r1 = averageRuntime([&](){
@@ -458,6 +478,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
+
+      delete left;
+      delete right;
     }, runs);
 
     std::cout << n << '\t' << r2 << '\t' << r4 << '\t' << r8 << '\t' << r16 << '\t' << r32 << '\t' << r1 << std::endl;
