@@ -14,8 +14,7 @@ Knapsack::Knapsack(int n) {
 }
 
 Knapsack::~Knapsack() {
-  if(cache != NULL)
-    delete cache;
+
 }
 
 void Knapsack::initSizes(std::vector<int> sizes) {

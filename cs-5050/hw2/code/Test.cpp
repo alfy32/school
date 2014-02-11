@@ -330,37 +330,40 @@ void Test::divideAndConquerAndDPTraceback() {
     minSize = 1;
     maxSize = bagSize/10;
 
-    int linearRunTime = averageRuntime([&](){
-      Cache* left = new CacheLinear(n, bagSize);
-      Cache* right = new CacheLinear(n, bagSize);
+    Cache* leftLinear = new CacheLinear(n, bagSize);
+    Cache* rightLinear = new CacheLinear(n, bagSize);
 
+    int linearRunTime = averageRuntime([&](){
       Knapsack knapsack(n);
       knapsack.initValues(minValue, maxValue);
       knapsack.initSizes(minSize, maxSize);
 
-      knapsack.initLinear(left, right);
+      knapsack.initLinear(leftLinear, rightLinear);
+      leftLinear->reset();
+      rightLinear->reset();
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
-
-      delete left;
-      delete right;
     }, runs);
 
-    int dynamicRunTime = averageRuntime([&](){
-      Cache* cache = new CacheRegular(n, bagSize);
+    delete leftLinear;
+    delete rightLinear;
 
+    Cache* dynamicCache = new CacheRegular(n, bagSize);
+
+    int dynamicRunTime = averageRuntime([&](){
       Knapsack knapsack(n);
       knapsack.initValues(minValue, maxValue);
       knapsack.initSizes(minSize, maxSize);
 
-      knapsack.setCache(cache);
+      knapsack.setCache(dynamicCache);
+      dynamicCache->reset();
 
       knapsack.fillBagDynamic(n, bagSize);
       knapsack.getItemsUsed(n, bagSize);
-
-      delete cache;
     }, runs);
+
+    delete dynamicCache;
 
     std::cout << n << '\t' << linearRunTime << '\t' << dynamicRunTime << std::endl;
   }
@@ -381,10 +384,10 @@ void Test::linearSplit() {
     minSize = 1;
     maxSize = bagSize/10;
 
-    int r2 = averageRuntime([&](){
-      Cache* left = new CacheLinear(n, bagSize);
-      Cache* right = new CacheLinear(n, bagSize);
+    Cache* left = new CacheLinear(n, bagSize);
+    Cache* right = new CacheLinear(n, bagSize);
 
+    int r2 = averageRuntime([&](){
       Knapsack knapsack(n);
       knapsack.initValues(minValue, maxValue);
       knapsack.initSizes(minSize, maxSize);
@@ -393,15 +396,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
-
-      delete left;
-      delete right;
     }, runs);
 
     int r4 = averageRuntime([&](){
-      Cache* left = new CacheLinear(n, bagSize);
-      Cache* right = new CacheLinear(n, bagSize);
-
       Knapsack knapsack(n);
       knapsack.initValues(minValue, maxValue);
       knapsack.initSizes(minSize, maxSize);
@@ -410,15 +407,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
-
-      delete left;
-      delete right;
     }, runs);
 
     int r8 = averageRuntime([&](){
-      Cache* left = new CacheLinear(n, bagSize);
-      Cache* right = new CacheLinear(n, bagSize);
-
       Knapsack knapsack(n);
       knapsack.initValues(minValue, maxValue);
       knapsack.initSizes(minSize, maxSize);
@@ -427,15 +418,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
-
-      delete left;
-      delete right;
     }, runs);
 
     int r16 = averageRuntime([&](){
-      Cache* left = new CacheLinear(n, bagSize);
-      Cache* right = new CacheLinear(n, bagSize);
-
       Knapsack knapsack(n);
       knapsack.initValues(minValue, maxValue);
       knapsack.initSizes(minSize, maxSize);
@@ -444,15 +429,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
-
-      delete left;
-      delete right;
     }, runs);
 
     int r32 = averageRuntime([&](){
-      Cache* left = new CacheLinear(n, bagSize);
-      Cache* right = new CacheLinear(n, bagSize);
-
       Knapsack knapsack(n);
       knapsack.initValues(minValue, maxValue);
       knapsack.initSizes(minSize, maxSize);
@@ -461,15 +440,9 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
-
-      delete left;
-      delete right;
     }, runs);
 
     int r1 = averageRuntime([&](){
-      Cache* left = new CacheLinear(n, bagSize);
-      Cache* right = new CacheLinear(n, bagSize);
-
       Knapsack knapsack(n);
       knapsack.initValues(minValue, maxValue);
       knapsack.initSizes(minSize, maxSize);
@@ -478,10 +451,10 @@ void Test::linearSplit() {
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
-
-      delete left;
-      delete right;
     }, runs);
+
+    delete left;
+    delete right;
 
     std::cout << n << '\t' << r2 << '\t' << r4 << '\t' << r8 << '\t' << r16 << '\t' << r32 << '\t' << r1 << std::endl;
   }
