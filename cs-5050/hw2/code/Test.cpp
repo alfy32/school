@@ -319,7 +319,7 @@ void Test::divideAndConquerAndDPTraceback() {
   int minN = 64, maxN = 1000000000;
   int minSize, maxSize;
   int minValue = 1, maxValue = 10;
-  int runs = 1;
+  int runs = 30;
 
   std::cout << "Linear" << std::endl
             << "N" << '\t' << "linear" << '\t' << "dp" << std::endl;
