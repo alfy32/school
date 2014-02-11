@@ -22,7 +22,9 @@ We can solve a problem that is much larger. With the dynamic programming we can 
 
 ------------------------------------------------
 
-I also compared the split size on the recursion to see if it is better to always split the problem in half. It tests where the problem is still split in two but it is split where on side is n x k and the other is n x (1-k). Where k= 1/2, 1/4, 1/8, 1/16, 1/32, 1. This is a test to see what difference it makes when we split the problem.
+### How is the runtime affected by splitting the problem into different sizes?
+
+I also compared the split size on the recursion to see if it is better to always split the problem in half. It tests where the problem is still split in two but it is split where one side is n x k and the other is n x (1-k). Where k= 1/2, 1/4, 1/8, 1/16, 1/32, 1. This is a test to see what difference it makes when we split the problem.
 
 ![linear split](linearSplit.png)
 
