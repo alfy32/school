@@ -8,4 +8,4 @@ This assignment compares the Divide and Conquer Linear-Space algorithm with the 
 
 Here are the results. I used problem sizes from 64 to as much as I can increasing the problem size by two. 
 
-![Linear VS DP](results/dynamicVSlinear.png)
+![Linear VS DP](dynamicVSlinear.png)
