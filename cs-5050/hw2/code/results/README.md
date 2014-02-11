@@ -9,3 +9,5 @@ This assignment compares the Divide and Conquer Linear-Space algorithm with the 
 Here are the results. I used problem sizes from 64 to as much as I can increasing the problem size by two. 
 
 ![Linear VS DP](dynamicVSlinear.png)
+
+This plots the average runtime vs problems size(Number of items available). I averaged the run times over 30 runs. The axis are both in log2 scale. The acutal data can be found in the file dynamicVSlinear. As we can see from the lines on the graph, the D&amp;C Linear Space algorithm is taking very close to twice as long. This is exactly what 
