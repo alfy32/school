@@ -7,7 +7,7 @@ Assignment 2
 
 1. Implement the trace-back routine that takes the 2D cache array and returns an assignment of true or false to each object in the problem description, where true means the object is selected.
 
-2. Implement the linear space knapsack algorithm described in the nodes and summarized below to solve the same problem statement as Assignment 1.  The linear-space divide and conquer algorithm should divide the problem in to equal halves (so k is n/2).
+2. Implement the linear space knapsack algorithm described in the notes and summarized below to solve the same problem statement as Assignment 1.  The linear-space divide and conquer algorithm should divide the problem in to equal halves (so k is n/2).
 
 3. For a set of small problem verify that the three algorithms (linear, standard DP and caching) produce the same answer.
 
