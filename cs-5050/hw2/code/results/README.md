@@ -26,3 +26,4 @@ I also compared the split size on the recursion to see if it is better to always
 
 ![linear split](linearSplit.png)
 
+It is very interesting to note that the difference between the differnt splits is a **constant** factor. Except k=1. This seems to be exponential. So spliting the problem even if the split is small makes a big difference on the runtime!
