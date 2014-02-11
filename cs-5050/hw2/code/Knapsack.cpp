@@ -7,6 +7,10 @@ Knapsack::Knapsack(int n) {
   value = std::vector<int>(n+1, 0);
 
   cache = NULL;
+
+  leftCache = rightCache = NULL;
+  used = std::vector<bool>(n+1, false);
+  split = 1.0/2.0;
 }
 
 Knapsack::~Knapsack() {
@@ -109,10 +113,7 @@ int Knapsack::fillBagDynamic(int n, int bagSize) {
 }
 
 void Knapsack::fillBagLD(int start, int end, int bagSize, Cache* lCache) {
-  for(int size = 0; size <= bagSize; ++size) {
-    lCache->set(0, size, 0);
-    lCache->set(1, size, 0);
-  }
+  lCache->reset();
 
   for(int item = start; (end > start) ? item <= end : item >= end; (end > start) ? ++item : --item) {
     for(int size = 1; size <= bagSize; ++size) {
@@ -131,21 +132,28 @@ void Knapsack::fillBagLD(int start, int end, int bagSize, Cache* lCache) {
   }
 }
 
-std::pair<int,int> Knapsack::linear(int start, int end, int mid, int bagSize) {
-  // if(start > end) return 0;
-  // if(bagSize == 0) return 0;
+void Knapsack::initLinear(Cache* left, Cache* right, double split) {
+  leftCache = left;
+  rightCache = right;
+  this->split = split;
+}
 
-  CacheLinear leftCache(2, bagSize+1);
-  CacheLinear rightCache(2, bagSize+1);
+int Knapsack::linear(int start, int end, int bagSize) {
+  if(end < start) return 0;
+  if(bagSize == 0) return 0;
 
-  fillBagLD(start, mid, bagSize, &leftCache);
-  fillBagLD(end, mid+1, bagSize, &rightCache);
+  std::cout << "start " << start << ' ' << end << ' ' << bagSize << std::endl;
+
+  int mid = (end-start)*split + start;
+
+  fillBagLD(start, mid, bagSize, leftCache);
+  fillBagLD(end, mid+1, bagSize, rightCache);
 
   int bestValue = 0, bestSize = 0;
 
   for(int size = 0; size <= bagSize; size++) {
-    int leftValue = leftCache.get(mid, size);
-    int rightValue = rightCache.get(mid+1, bagSize - size);
+    int leftValue = leftCache->get(mid, size);
+    int rightValue = rightCache->get(mid+1, bagSize - size);
 
     if(leftValue + rightValue > bestValue) {
       bestValue = leftValue + rightValue;
@@ -153,15 +161,32 @@ std::pair<int,int> Knapsack::linear(int start, int end, int mid, int bagSize) {
     }
   }
 
-  std::cout << std::endl;
-  print();
-  std::cout << std::endl << "left: " << std::endl;
-  leftCache.print();
-  std::cout << std::endl << "right: " << std::endl;
-  rightCache.print();
-  std::cout << std::endl;
+std::cout << "best size" << bestSize << std::endl;
+std::cout << "left" << std::endl;
+leftCache->print();
+std::cout << "right" << std::endl;
+rightCache->print();
 
-  return std::make_pair((int)bestValue, (int)bestSize);
+  used[mid] = leftCache->get(mid, bestSize) != leftCache->get(mid-1, bestSize);
+  // used[mid+1] = rightCache->get(mid+1, bestSize) != rightCache->get(mid+2, bestSize);
+
+  std::cout << "before recursion " << start << ' ' << mid << ' ' << end << ' ' << bestSize << std::endl;
+
+  linear(start, mid-1, bestSize);
+  linear(mid+1, end, bagSize - bestSize);
+  // std::cout << std::endl;
+  // print();
+  // std::cout << std::endl << "left: " << std::endl;
+  // leftCache->print();
+  // std::cout << std::endl << "right: " << std::endl;
+  // rightCache->print();
+  // std::cout << std::endl;
+
+  return bestValue;
+}
+
+std::vector<bool> Knapsack::getLinearUsed() {
+  return used;
 }
 
 std::vector<bool> Knapsack::getItemsUsed(int n, int bagSize) {
@@ -176,8 +201,7 @@ void Knapsack::findUsed(int n, int bagSize, std::vector<bool>& used) {
   if(n == 0) return;
   if(bagSize < 0) return;
 
-  if(cache->get(n, bagSize) == cache->get(n-1, bagSize) ||
-     !cache->seen(n-1, bagSize) || cache->get(n-1, bagSize) == 0) {
+  if(cache->get(n, bagSize) == cache->get(n-1, bagSize) ) {
 
     used[n] = false;
   } else {

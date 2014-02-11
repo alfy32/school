@@ -39,7 +39,12 @@ void Test::correctValues() {
   knapsack.setCache(dynamicCache);
   int dynamic = knapsack.fillBagDynamic(n, bagSize);
 
-  if(recursive == caching && recursive == dynamic) {
+  Cache* left = new CacheLinear(n, bagSize);
+  Cache* right = new CacheLinear(n, bagSize);
+  knapsack.initLinear(left, right);
+  int linear = knapsack.linear(1, n, bagSize);
+
+  if(recursive == caching && recursive == dynamic && recursive == linear) {
     std::cout << "All three values match." << std::endl;
   } else {
     std::cout << "Error: The values don't match" << std::endl;
@@ -128,7 +133,11 @@ void Test::showTraceback(int n, int bagSize) {
   int dynamicValue = knapsack.fillBagDynamic(n, bagSize);
   std::vector<bool> usedDynamic = knapsack.getItemsUsed(n, bagSize);
 
-  int linearValue = knapsack.linear(1, n, n/2, bagSize).first;
+  Cache* left = new CacheLinear(n, bagSize);
+  Cache* right = new CacheLinear(n, bagSize);
+  knapsack.initLinear(left, right);
+  int linearValue = knapsack.linear(1, n, bagSize);
+  std::vector<bool> usedLinear = knapsack.getLinearUsed();
 
   if(n < 20)
     std::cout << "Recursive Answer: " << recursiveValue << std::endl;
@@ -139,9 +148,9 @@ void Test::showTraceback(int n, int bagSize) {
 
   std::cout << std::endl;
 
-  std::cout << "Used" << '\t' << "Caching" << '\t' << "Dynamic" << std::endl;
+  std::cout << "Used" << '\t' << "Caching" << '\t' << "Dynamic" << '\t' << "Linear" << std::endl;
   for(int i = 1; i < usedCaching.size(); ++i) {
-    std::cout << i << '\t' << usedCaching[i] << '\t' << usedDynamic[i] << std::endl;
+    std::cout << i << '\t' << usedCaching[i] << '\t' << usedDynamic[i] << '\t' << usedLinear[i] << std::endl;
   }
 
   std::cout << "Caching Cache:" << std::endl;
@@ -157,18 +166,20 @@ void Test::linear() {
     int n = 5;
     int bagSize = 10;
 
-    int mid = 3;
-
     int s[] = {0,6, 4, 3, 5, 5};
     int v[] = {0,12,60,15,16,70};
+
+    Cache* left = new CacheLinear(n, bagSize);
+    Cache* right = new CacheLinear(n, bagSize);
 
     Knapsack knapsack(n);
     knapsack.initSizes(std::vector<int>(s, s+n+1));
     knapsack.initValues(std::vector<int>(v, v+n+1));
+    knapsack.initLinear(left, right);
 
-    int size = knapsack.linear(1, n, mid, bagSize).second;
+    int value = knapsack.linear(1, n, bagSize);
 
-    if(size == 4)
+    if(value == 130)
       std::cout << "Passed Test 1" << std::endl;
     else
       std::cout << "Failed Test 1" << std::endl;
@@ -178,18 +189,20 @@ void Test::linear() {
     int n = 6;
     int bagSize = 20;
 
-    int mid = 2;
-
     int s[] = {0,6, 4, 3, 5, 5, 8};
     int v[] = {0,17,60,15,16,70,13};
+
+    Cache* left = new CacheLinear(n, bagSize);
+    Cache* right = new CacheLinear(n, bagSize);
 
     Knapsack knapsack(n);
     knapsack.initSizes(std::vector<int>(s, s+n+1));
     knapsack.initValues(std::vector<int>(v, v+n+1));
+    knapsack.initLinear(left, right);
 
-    int size = knapsack.linear(1, n, mid, bagSize).second;
+    int value = knapsack.linear(1, n, bagSize);
 
-    if(size == 10)
+    if(value == 163)
       std::cout << "Passed Test 2" << std::endl;
     else
       std::cout << "Failed Test 2" << std::endl;

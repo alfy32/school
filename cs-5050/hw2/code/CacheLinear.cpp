@@ -1,14 +1,14 @@
 #include "CacheLinear.hpp"
 
 CacheLinear::CacheLinear(int n, int bagSize) {
-  cache[0] = std::vector<int>(bagSize+1, NOT_SEEN);
-  cache[1] = std::vector<int>(bagSize+1, NOT_SEEN);
+  cache[0] = std::vector<int>(bagSize+1, 0);
+  cache[1] = std::vector<int>(bagSize+1, 0);
 }
 
 void CacheLinear::reset() {
-  for(int bagSize = 0; bagSize < cache[0].size(); ++bagSize) {
-    cache[0][bagSize] = NOT_SEEN;
-    cache[1][bagSize] = NOT_SEEN;
+  for(int bagSize = 0; bagSize <= cache[0].size(); ++bagSize) {
+    cache[0][bagSize] = 0;
+    cache[1][bagSize] = 0;
   }
 }
 

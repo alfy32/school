@@ -1,7 +1,7 @@
 #include "CacheRegular.hpp"
 
 CacheRegular::CacheRegular(int n, int bagSize) {
-  cache = std::vector<std::vector<int> >(n+1, 
+  cache = std::vector<std::vector<int> >(n+1,
     std::vector<int>(bagSize+1, NOT_SEEN));
 }
 

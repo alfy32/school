@@ -14,6 +14,10 @@ protected:
   std::vector<int> size, value;
   Cache* cache;
 
+  Cache* leftCache,* rightCache;
+  std::vector<bool> used;
+  double split;
+
   void findUsed(int n, int bagSize, std::vector<bool>& used);
   void fillBagLD(int start, int end, int bagSize, Cache*);
 
@@ -37,7 +41,9 @@ public:
   int fillBagCaching(int, int);
   int fillBagDynamic(int, int);
 
-  std::pair<int,int> linear(int start, int end, int mid, int bagSize);
+  void initLinear(Cache*, Cache*, double split=0.5);
+  int linear(int start, int end, int bagSize);
+  std::vector<bool> getLinearUsed();
 
   std::vector<bool> getItemsUsed(int n, int bagSize);
 
