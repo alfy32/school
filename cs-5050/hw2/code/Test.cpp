@@ -19,6 +19,8 @@ void Test::run(std::string which) {
     divideAndConquer();
   } else if(which == "dpvsdc") {
     divideAndConquerAndDPTraceback();
+  } else if(which == "linearsplit") {
+    linearSplit();
   }
 }
 
@@ -314,7 +316,6 @@ void Test::DPTraceback() {
 }
 
 void Test::divideAndConquerAndDPTraceback() {
-  double leftSize = 1.0/2.0;
   int bagSize;
   int minN = 64, maxN = 1000000000;
   int minSize, maxSize;
@@ -324,12 +325,12 @@ void Test::divideAndConquerAndDPTraceback() {
   std::cout << "Linear" << std::endl
             << "N" << '\t' << "linear" << '\t' << "dp" << std::endl;
 
-  for(int n = minN; n <= maxN; n+=2) {
+  for(int n = minN; n <= maxN; n*=2) {
     bagSize = 10*n;
     minSize = 1;
     maxSize = bagSize/10;
 
-    double linearRunTime = averageRuntime([&](){
+    int linearRunTime = averageRuntime([&](){
       Cache* left = new CacheLinear(n, bagSize);
       Cache* right = new CacheLinear(n, bagSize);
 
@@ -337,13 +338,13 @@ void Test::divideAndConquerAndDPTraceback() {
       knapsack.initValues(minValue, maxValue);
       knapsack.initSizes(minSize, maxSize);
 
-      knapsack.initLinear(left, right, leftSize);
+      knapsack.initLinear(left, right);
 
       knapsack.linear(1, n, bagSize);
       knapsack.getLinearUsed();
     }, runs);
 
-    double dynamicRunTime = averageRuntime([&](){
+    int dynamicRunTime = averageRuntime([&](){
       Cache* cache = new CacheRegular(n, bagSize);
 
       Knapsack knapsack(n);
@@ -357,5 +358,108 @@ void Test::divideAndConquerAndDPTraceback() {
     }, runs);
 
     std::cout << n << '\t' << linearRunTime << '\t' << dynamicRunTime << std::endl;
+  }
+}
+
+void Test::linearSplit() {
+  int bagSize;
+  int minN = 32, maxN = 1000000000;
+  int minSize, maxSize;
+  int minValue = 1, maxValue = 10;
+  int runs = 30;
+
+  std::cout << "Linear Sizes" << std::endl
+            << "N" << '\t' << "1/2" << '\t' << "1/4" << '\t' << "1/8" << '\t' << "1/16" << '\t' << "1/32" << '\t' << "1" << std::endl;
+
+  for(int n = minN; n <= maxN; n*=2) {
+    bagSize = 10*n;
+    minSize = 1;
+    maxSize = bagSize/10;
+
+    int r2 = averageRuntime([&](){
+      Cache* left = new CacheLinear(n, bagSize);
+      Cache* right = new CacheLinear(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+
+      knapsack.initLinear(left, right, 1.0/2.0);
+
+      knapsack.linear(1, n, bagSize);
+      knapsack.getLinearUsed();
+    }, runs);
+
+    int r4 = averageRuntime([&](){
+      Cache* left = new CacheLinear(n, bagSize);
+      Cache* right = new CacheLinear(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+
+      knapsack.initLinear(left, right, 1.0/4.0);
+
+      knapsack.linear(1, n, bagSize);
+      knapsack.getLinearUsed();
+    }, runs);
+
+    int r8 = averageRuntime([&](){
+      Cache* left = new CacheLinear(n, bagSize);
+      Cache* right = new CacheLinear(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+
+      knapsack.initLinear(left, right, 1.0/8.0);
+
+      knapsack.linear(1, n, bagSize);
+      knapsack.getLinearUsed();
+    }, runs);
+
+    int r16 = averageRuntime([&](){
+      Cache* left = new CacheLinear(n, bagSize);
+      Cache* right = new CacheLinear(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+
+      knapsack.initLinear(left, right, 1.0/16.0);
+
+      knapsack.linear(1, n, bagSize);
+      knapsack.getLinearUsed();
+    }, runs);
+
+    int r32 = averageRuntime([&](){
+      Cache* left = new CacheLinear(n, bagSize);
+      Cache* right = new CacheLinear(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+
+      knapsack.initLinear(left, right, 1.0/32.0);
+
+      knapsack.linear(1, n, bagSize);
+      knapsack.getLinearUsed();
+    }, runs);
+
+    int r1 = averageRuntime([&](){
+      Cache* left = new CacheLinear(n, bagSize);
+      Cache* right = new CacheLinear(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+
+      knapsack.initLinear(left, right, 1.0/n);
+
+      knapsack.linear(1, n, bagSize);
+      knapsack.getLinearUsed();
+    }, runs);
+
+    std::cout << n << '\t' << r2 << '\t' << r4 << '\t' << r8 << '\t' << r16 << '\t' << r32 << '\t' << r1 << std::endl;
   }
 }

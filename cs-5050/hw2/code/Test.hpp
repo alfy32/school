@@ -24,6 +24,7 @@ public:
   static void DPTraceback();
 
   static void divideAndConquerAndDPTraceback();
+  static void linearSplit();
 };
 
 #endif
