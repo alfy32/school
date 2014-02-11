@@ -11,5 +11,5 @@ set title 'DP TraceBack VS D&C Linear Space'
 set term png
 set output 'dynamicVSlinear.png'
 
-plot 'dynamicVSlinear' using 1:2 title 'D&C Linear Space' with lines, \
-     'dynamicVSlinear' using 1:3 title 'Dynamic Progamming + Traceback' with lines;
+plot 'dynamicVSlinear' using 1:2 title 'D&C Linear Space' with linespoints, \
+     'dynamicVSlinear' using 1:3 title 'Dynamic Progamming Traceback' with linespoints;
