@@ -18,8 +18,12 @@ public:
 
   template<typename T>
   static double averageRuntime(T t, int);
+  static double avg(double[], int size);
 
+  static void divideAndConquer();
+  static void DPTraceback();
 
+  static void divideAndConquerAndDPTraceback();
 };
 
 #endif

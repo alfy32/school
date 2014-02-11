@@ -13,6 +13,12 @@ void Test::run(std::string which) {
     showTraceback();
   } else if(which == "linear") {
     linear();
+  } else if(which == "dptraceback") {
+    DPTraceback();
+  } else if(which == "divideandconquer") {
+    divideAndConquer();
+  } else if(which == "dpvsdc") {
+    divideAndConquerAndDPTraceback();
   }
 }
 
@@ -240,4 +246,116 @@ double Test::averageRuntime(T t, int runs) {
   }
 
   return avg(times, runs);
+}
+
+double Test::avg(double values[], int size) {
+  double sum = 0;
+  for(int i = 0; i < size; i++) {
+    sum += values[i];
+  }
+  return sum/size;
+}
+
+void Test::divideAndConquer() {
+  double leftSize = 1.0/2.0;
+  int minValue = 10, maxValue = 100;
+  int minSize = 1, maxSize = 10;
+  int minN = 8, maxN = 64;
+  int bagSize;
+
+  std::cout << "Linear" << std::endl
+            << "N" << '\t' << "Time" << std::endl;
+
+  for(int n = minN; n <= maxN; n++) {
+    bagSize = 10*n;
+    double runTime = averageRuntime([=](){
+      Cache* left = new CacheLinear(n, bagSize);
+      Cache* right = new CacheLinear(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+      knapsack.initLinear(left, right, leftSize);
+
+      knapsack.linear(1, n, bagSize);
+
+      knapsack.getLinearUsed();
+    }, 10);
+
+    std::cout << n << '\t' << runTime << std::endl;
+  }
+}
+
+void Test::DPTraceback() {
+  int minValue = 10, maxValue = 100;
+  int minSize = 1, maxSize = 5;
+  int minN = 8, maxN = 64;
+  int bagSize;
+
+  std::cout << "DP" << std::endl
+            << "N" << '\t' << "Time" << std::endl;
+
+  for(int n = minN; n <= maxN; n++) {
+    bagSize = 10*n;
+    double runTime = averageRuntime([=](){
+      Cache* cache = new CacheRegular(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+      knapsack.setCache(cache);
+
+      knapsack.fillBagDynamic(n, bagSize);
+      knapsack.getItemsUsed(n, bagSize);
+    }, 10);
+
+    std::cout << n << '\t' << runTime << std::endl;
+  }
+}
+
+void Test::divideAndConquerAndDPTraceback() {
+  double leftSize = 1.0/2.0;
+  int bagSize;
+  int minN = 64, maxN = 1000000000;
+  int minSize, maxSize;
+  int minValue = 1, maxValue = 10;
+  int runs = 1;
+
+  std::cout << "Linear" << std::endl
+            << "N" << '\t' << "linear" << '\t' << "dp" << std::endl;
+
+  for(int n = minN; n <= maxN; n+=2) {
+    bagSize = 10*n;
+    minSize = 1;
+    maxSize = bagSize/10;
+
+    double linearRunTime = averageRuntime([&](){
+      Cache* left = new CacheLinear(n, bagSize);
+      Cache* right = new CacheLinear(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+
+      knapsack.initLinear(left, right, leftSize);
+
+      knapsack.linear(1, n, bagSize);
+      knapsack.getLinearUsed();
+    }, runs);
+
+    double dynamicRunTime = averageRuntime([&](){
+      Cache* cache = new CacheRegular(n, bagSize);
+
+      Knapsack knapsack(n);
+      knapsack.initValues(minValue, maxValue);
+      knapsack.initSizes(minSize, maxSize);
+
+      knapsack.setCache(cache);
+
+      knapsack.fillBagDynamic(n, bagSize);
+      knapsack.getItemsUsed(n, bagSize);
+    }, runs);
+
+    std::cout << n << '\t' << linearRunTime << '\t' << dynamicRunTime << std::endl;
+  }
 }
