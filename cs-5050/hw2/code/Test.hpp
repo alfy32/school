@@ -15,6 +15,11 @@ public:
   static void traceback();
   static void showTraceback(int n = 0, int bagSize = 0);
   static void linear();
+
+  template<typename T>
+  static double averageRuntime(T t, int);
+
+
 };
 
 #endif
