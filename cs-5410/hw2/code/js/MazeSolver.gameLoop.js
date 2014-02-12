@@ -8,7 +8,6 @@ var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(f
 (function(that){
   var lastTime;
   var won = false;
-  var timeLabel;
 
   that.start = function () {
     that.time = 0;
@@ -20,6 +19,8 @@ var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(f
   function gameLoop(time) {
     var deltaTime = time - lastTime;
     if(deltaTime > 1000 * 1000) deltaTime = 0;
+
+    if(won) return doWin();
 
     update(deltaTime);
     render();
@@ -49,23 +50,50 @@ var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(f
   }
 
   function render() {
-    if(!won) {
-      var ms = that.time % 1000;
-      var seconds = Math.floor(that.time/1000 % 60);
-      var minutes = Math.floor(that.time/(1000*60) % 60);
-
-      timeLabel = pad2Digits(minutes) + ':' + pad2Digits(seconds);
-
-      $('.maze-timer').text(timeLabel);
-    } else {
-      $('.maze-timer').text('Finished in ' + timeLabel);
-    }
-
+    that.showTime(getTimeStamp(that.time));
+    that.showScore();
+    that.checkButtonStatus();
     that.draw('maze-canvas');
+  }
+
+  function doWin() {
+    addScore(getDateStamp(), that.time, that.score, '' + that.width + 'x' + that.height);
+
+    var winDiv = $('.win-div');
+    winDiv.removeAttr('hidden');
+  }
+
+  function getTimeStamp(time) {
+    var seconds = Math.floor(time/1000 % 60);
+    var minutes = Math.floor(time/(1000*60) % 60);
+    var ms = Math.floor(time%1000 / 10);
+
+    return pad2Digits(minutes) + ':' + pad2Digits(seconds) + '.' + pad2Digits(ms);
+  }
+
+  function getDateStamp() {
+    var date = new Date();
+    return date.getFullYear() + '-' + pad2Digits(date.getMonth()+1) + '-' + pad2Digits(date.getDate());
   }
 
   function pad2Digits(value) {
     return (+value < 10) ? '0' + value : value;
+  }
+
+  function addScore(date, time, score, size) {
+    var highScores = localStorage.highScores || {};
+
+    if(typeof highScores == 'string') highScores = JSON.parse(highScores);
+
+    highScores[size+','+time+','+score+','+date] = {
+      date: date,
+      timeStamp: getTimeStamp(time),
+      time: time,
+      score: score,
+      size: size
+    };
+
+    localStorage.highScores = JSON.stringify(highScores);
   }
 
   function win() {

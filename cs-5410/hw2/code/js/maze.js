@@ -111,4 +111,12 @@
     };
   }
 
+  $('#done').click(function() {
+    window.location = 'index.html';
+  });
+
+  $('#again').click(function() {
+    window.location.reload();
+  });
+
 }());

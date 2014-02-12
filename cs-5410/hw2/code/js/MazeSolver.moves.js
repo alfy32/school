@@ -4,7 +4,10 @@
 (function(that){
 
   that.path = {};
-  that.bread = { '0,0': true };
+  that.bread = [];
+  that.score = 0;
+  var distance = 0;
+  var beenThere = {};
 
   that.addEvent = function (newEvent) {
     that.eventQueue.push(newEvent);
@@ -39,6 +42,13 @@
   };
 
   that.makeMove = function (move) {
+    var lastPos = {
+      x: that.player.x,
+      y: that.player.y
+    };
+
+    that.bread.push(lastPos);
+
     switch(move) {
       case 'UP':
         that.player.y -= 1;
@@ -54,7 +64,34 @@
         break;
     }
 
-    that.bread[that.player.x + ',' + that.player.y] = true;
+    var top = that.path.pop();
+
+    if(top) {
+      if(top.x !== that.player.x || top.y !== that.player.y) {
+        that.path.push(top);
+        that.path.push(lastPos);
+        distance++;
+      } else {
+        distance--;
+      }
+    }
+
+    var curLocation = ''+that.player.x + ',' + that.player.y;
+
+    if(curLocation in that.originalPath) {
+      if(that.originalPath[curLocation]) {
+        that.score += 5;
+        distance = 0;
+      }
+      that.originalPath[curLocation] = false;
+    } else {
+      if(!(curLocation in beenThere)) {
+        if(distance == 1) that.score -= 1;
+        else if(distance > 1) that.score -= 2;
+      }
+    }
+
+    beenThere[curLocation] = true;
   };
 
   that.toggleControl = function(control) {

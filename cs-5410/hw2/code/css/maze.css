@@ -18,11 +18,13 @@ body {
   color: white;
 }
 
-.maze-timer {
-  text-align: center;
-  font-size: 35px;
-  height: 40px;
-  padding-bottom: 10px;
+.maze-timer, .maze-score {
+  font-size: 20px;
+  padding: 10px 0px;
+}
+
+.maze-score {
+  float: right;
 }
 
 #maze-canvas {
@@ -50,4 +52,32 @@ body {
   border-radius: 10px;
   color: white;
   font-size: 14px;
+}
+
+.footer-ul button.active {
+  background-color: #204a87;
+}
+
+.win-div {
+  position: absolute;
+  top: 120px;
+  left: 0px;
+  width: 100%;
+  background-color: green;
+  text-align: center;
+}
+
+.congrats {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+}
+
+.win-button {
+  background-color: #0F4402;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px 40px;
+  color: white;
+  font-size: large;
 }

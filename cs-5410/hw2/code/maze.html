@@ -8,7 +8,8 @@
 <body>
   <div class="maze-outer">
     <div class="maze-inner">
-      <div class="maze-timer">2:45</div>
+      <div class="maze-score">Score: 0</div>
+      <div class="maze-timer">Time: 2:45</div>
 
       <div>
         <canvas id="maze-canvas" width="500"></canvas>
@@ -23,6 +24,12 @@
       <li><button id="PATH">Path</button></li>
       <li><button id="SCORE">Score</button></li>
     </ul>
+  </div>
+
+  <div class="win-div" hidden="true">
+    <p class="congrats">Congrats You Won!!</p>
+    <div><button class="win-button" id="again">Again</button></div>
+    <div><button class="win-button" id="done">Done</button></div>
   </div>
 
   <!-- JavaScript -->
