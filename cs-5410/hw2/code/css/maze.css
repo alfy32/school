@@ -65,6 +65,7 @@ body {
   width: 100%;
   background-color: green;
   text-align: center;
+  opacity: .7;
 }
 
 .congrats {

@@ -34,6 +34,8 @@ var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(f
     that.time += deltaTime;
 
     while(that.eventQueue.length) {
+      that.controls.HINT = false;
+
       var theEvent = that.eventQueue.pop();
 
       if(
@@ -58,6 +60,12 @@ var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(f
 
   function doWin() {
     addScore(getDateStamp(), that.time, that.score, '' + that.width + 'x' + that.height);
+
+    that.controls.SCORE = true;
+    that.controls.OPTIMAL_PATH = true;
+    that.controls.BREAD = true;
+
+    render();
 
     var winDiv = $('.win-div');
     winDiv.removeAttr('hidden');

@@ -1,4 +1,4 @@
-/* globals MazeSolver */
+/* globals MazeSolver, $ */
 'use strict';
 
 (function (that) {
@@ -8,13 +8,14 @@
   var HINT_COLOR = 'yellow';
   var BREAD_COLOR = 'red';
   var PATH_COLOR = 'green';
+  var OPTIMAL_PATH_COLOR = 'orange';
 
   var WALL_COLOR = 'black';
 
   var PLAYER_STROKE_COLOR = 'black';
   var PLAYER_FILL_COLOR = 'gray';
 
-  var END_STROKE_COLOR = "green";
+  var END_STROKE_COLOR = 'green';
   var END_FILL_COLOR = 'lime';
 
   var CELL_WIDTH = 25;
@@ -23,12 +24,8 @@
   that.player.width = CELL_WIDTH - 12;
 
   that.showTime = function(timeLabel) {
-    $('.maze-timer').text("Time: " + timeLabel.substr(0,7));
-  }
-
-  function pad2Digits(value) {
-    return (+value < 10) ? '0' + value : value;
-  }
+    $('.maze-timer').text('Time: ' + timeLabel.substr(0,7));
+  };
 
   that.showScore = function() {
     $('.maze-score').text(that.controls.SCORE ? 'Score: ' + that.score : '');
@@ -65,6 +62,7 @@
     if(that.controls.BREAD) drawBread();
     if(that.controls.PATH) drawPath();
     if(that.controls.HINT) drawHint();
+    if(that.controls.OPTIMAL_PATH) drawOptimalPath();
 
     drawEnd();
 
@@ -105,7 +103,26 @@
       context.arc(x, y, CELL_WIDTH/4, 0*Math.PI, 2*Math.PI);
       context.fill();
     }
-    context.fillStyle = fillStyle
+    context.fillStyle = fillStyle;
+  }
+
+  function drawOptimalPath() {
+    var fillStyle = context.fillStyle;
+    context.fillStyle = OPTIMAL_PATH_COLOR;
+
+    for(var i in that.originalPath) {
+      var coords = i.split(',');
+      var col = coords[0];
+      var row = coords[1];
+
+      var x = col * CELL_WIDTH + CELL_WIDTH/2;
+      var y = row * CELL_HEIGHT +  CELL_HEIGHT/2;
+
+      context.beginPath();
+      context.arc(x, y, CELL_WIDTH/4, 0*Math.PI, 2*Math.PI);
+      context.fill();
+    }
+    context.fillStyle = fillStyle;
   }
 
   function drawHint() {
@@ -145,20 +162,6 @@
       }
       context.fillStyle = fillStyle;
     }
-  }
-
-  function drawVisited(x,y) {
-    x += CELL_WIDTH/2;
-    y += CELL_HEIGHT/2;
-
-    var fillStyle = context.fillStyle;
-    context.fillStyle = 'blue';
-
-    context.beginPath();
-    context.arc(x, y, CELL_WIDTH/4, 0*Math.PI, 2*Math.PI);
-    context.fill();
-
-    context.fillStyle = fillStyle;
   }
 
   function drawEnd() {

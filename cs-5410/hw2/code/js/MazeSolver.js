@@ -21,7 +21,8 @@ var MazeSolver = (function(){
     HINT: false,
     BREAD: false,
     PATH: false,
-    SCORE: false
+    SCORE: false,
+    OPTIMAL_PATH: false
   };
 
   function createCell(location) {
