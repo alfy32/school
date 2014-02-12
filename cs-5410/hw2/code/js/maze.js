@@ -91,7 +91,7 @@
     else if(keyChar === 'H') MazeSolver.addEvent('HINT');
     else if(keyChar === 'B') MazeSolver.addEvent('BREAD');
     else if(keyChar === 'P') MazeSolver.addEvent('PATH');
-    else if(keyChar === 'Y') MazeSolver.addEvent('DOWN');
+    else if(keyChar === 'Y') MazeSolver.addEvent('SCORE');
 
     return true;
 
