@@ -55,7 +55,7 @@ Game Graphics: [Link](assignment/assign3-images.zip)
   * Credits
   * Exit
 * Visual Components
-  * I have provided graphics to use. 
+  * I have provided graphics to use.
   * You may use a different background, but not a solid color. Part of the purpose of the background is to make it a little confusing for the player to see the coins.
 * High scores must persist to the browser using local storage
   * Total Score
@@ -79,4 +79,4 @@ Game Graphics: [Link](assignment/assign3-images.zip)
 
 ### Mockup
 
-!(Mockup)[assignment/mockup.png]
+![Mockup](assignment/mockup.png)
