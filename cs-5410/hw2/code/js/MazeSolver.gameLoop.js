@@ -1,4 +1,4 @@
-/* globals MazeSolver, $, Date, requestAnimationFrame */
+/* globals MazeSolver, $, requestAnimationFrame */
 'use strict';
 
 (function(that){
@@ -14,7 +14,7 @@
 
   function gameLoop(time) {
     var deltaTime = time - lastTime;
-    if(deltaTime > 1000 * 1000) deltaTime = 0;
+    if(deltaTime > 1000 * 1000 || deltaTime < 0) deltaTime = 0;
 
     if(won) return doWin();
 
@@ -68,6 +68,7 @@
   }
 
   function getTimeStamp(time) {
+    console.log(time);
     var seconds = Math.floor(time/1000 % 60);
     var minutes = Math.floor(time/(1000*60) % 60);
     var ms = Math.floor(time%1000 / 10);
