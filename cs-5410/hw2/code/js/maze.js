@@ -16,10 +16,10 @@
 
   MazeSolver.start();
 
-  var lastTouch;
+  var lastTouch = false;
 
   function swipeDetector(x, y) {
-    var minDistance = 20;
+    // var minDistance = 20;
     var maxTime = 500;
 
     var that = {
@@ -36,7 +36,7 @@
       };
 
       if(swipe.time - that.time > maxTime) return false;
-      if(swipe.x < minDistance && swipe.y < minDistance) return false;
+      // if(swipe.x < minDistance && swipe.y < minDistance) return false;
 
       if(swipe.x > swipe.y) {
         return (x > that.x) ? 'RIGHT' : 'LEFT';
@@ -56,13 +56,17 @@
 
   window.addEventListener('touchmove', function (e) {
     e.preventDefault();
+    if(lastTouch) {
+      var touch = e.changedTouches[0];
+      var result = lastTouch.getSwipe(+touch.pageX, +touch.pageY);
+      if(result) MazeSolver.addEvent(result);
+      lastTouch = false;
+      // console.log(result)
+    }
   }, false);
 
-  window.addEventListener('touchend', function (e) {
-    var touch = e.changedTouches[0];
-    var result = lastTouch.getSwipe(+touch.pageX, +touch.pageY);
-    if(result) MazeSolver.addEvent(result);
-  }, false);
+  // window.addEventListener('touchend', function (e) {
+  // }, false);
 
   // function getDirection(x,y) {
   //   var topLeft = {
