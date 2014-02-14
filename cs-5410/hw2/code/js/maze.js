@@ -2,12 +2,7 @@
 'use strict';
 
 (function() {
-  var MARGIN_WIDTH = 5;
-  // var TIMER_HEIGHT = 50;
-  // var FOOTER_HEIGHT = 50;
-
-  // var availableHeight = window.innerHeight - 2 * MARGIN_WIDTH - TIMER_HEIGHT - FOOTER_HEIGHT;
-  // var availableWidth = window.innerWidth - 2 * MARGIN_WIDTH;
+  // var MARGIN_WIDTH = 5;
 
   var dimensions = window.location.hash.split('/');
   var mazeWidth = +dimensions[1] || 5;
@@ -21,50 +16,86 @@
 
   MazeSolver.start();
 
+  var lastTouch;
+
+  function swipeDetector(x, y) {
+    var minDistance = 20;
+    var maxTime = 500;
+
+    var that = {
+      x: x,
+      y: y,
+      time: Date.now()
+    };
+
+    that.getSwipe = function(x, y) {
+      var swipe = {
+        x: Math.abs(that.x - x),
+        y: Math.abs(that.y - y),
+        time: Date.now()
+      };
+
+      if(swipe.time - that.time > maxTime) return false;
+      if(swipe.x < minDistance && swipe.y < minDistance) return false;
+
+      if(swipe.x > swipe.y) {
+        return (x > that.x) ? 'RIGHT' : 'LEFT';
+      }
+      else {
+        return (y > that.y) ? 'DOWN' : 'UP';
+      }
+    };
+
+    return that;
+  }
+
   window.addEventListener('touchstart', function (e) {
-    var touch = e.targetTouches[0];
-
-    var x = +touch.pageX - +$('#maze-canvas').position().left;
-    var y = +touch.pageY - +$('#maze-canvas').position().top;
-
-    if(y >= 0 && y < canvas.height()) MazeSolver.addEvent(getDirection(x,y));
-
-    // console.log(x,y, width, height, getDirection(x,y));
-
+    var touch = e.changedTouches[0];
+    lastTouch = swipeDetector(+touch.pageX, +touch.pageY);
   }, false);
 
-  function getDirection(x,y) {
-    var topLeft = {
-      x: +canvas.position().left,
-      y: +canvas.position().top - 2 * MARGIN_WIDTH
-    };
-    var bottomRight = {
-      x: canvas.width()-1,
-      y: canvas.height()-1
-    };
-    var bottomLeft = {
-      x: +canvas.position().left,
-      y: canvas.height()-1
-    };
-    var topRight = {
-      x: canvas.width()-1,
-      y: +canvas.position().top - 2 * MARGIN_WIDTH
-    };
+  window.addEventListener('touchmove', function (e) {
+    e.preventDefault();
+  }, false);
 
-    var currentPoint = {x:x,y:y};
+  window.addEventListener('touchend', function (e) {
+    var touch = e.changedTouches[0];
+    var result = lastTouch.getSwipe(+touch.pageX, +touch.pageY);
+    if(result) MazeSolver.addEvent(result);
+  }, false);
 
-    var leftOfBackslash = isLeft(topLeft, bottomRight, currentPoint);
-    var leftOfForwardSlash = isLeft(bottomLeft, topRight, currentPoint);
+  // function getDirection(x,y) {
+  //   var topLeft = {
+  //     x: +canvas.position().left,
+  //     y: +canvas.position().top - 2 * MARGIN_WIDTH
+  //   };
+  //   var bottomRight = {
+  //     x: canvas.width()-1,
+  //     y: canvas.height()-1
+  //   };
+  //   var bottomLeft = {
+  //     x: +canvas.position().left,
+  //     y: canvas.height()-1
+  //   };
+  //   var topRight = {
+  //     x: canvas.width()-1,
+  //     y: +canvas.position().top - 2 * MARGIN_WIDTH
+  //   };
 
-    if(leftOfBackslash && leftOfForwardSlash) return 'DOWN';
-    if(leftOfBackslash && !leftOfForwardSlash) return 'LEFT';
-    if(!leftOfBackslash && !leftOfForwardSlash) return 'UP';
-    if(!leftOfBackslash && leftOfForwardSlash) return 'RIGHT';
-  }
+  //   var currentPoint = {x:x,y:y};
 
-  function isLeft(a,b,c) {
-    return ((b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x)) > 0;
-  }
+  //   var leftOfBackslash = isLeft(topLeft, bottomRight, currentPoint);
+  //   var leftOfForwardSlash = isLeft(bottomLeft, topRight, currentPoint);
+
+  //   if(leftOfBackslash && leftOfForwardSlash) return 'DOWN';
+  //   if(leftOfBackslash && !leftOfForwardSlash) return 'LEFT';
+  //   if(!leftOfBackslash && !leftOfForwardSlash) return 'UP';
+  //   if(!leftOfBackslash && leftOfForwardSlash) return 'RIGHT';
+  // }
+
+  // function isLeft(a,b,c) {
+  //   return ((b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x)) > 0;
+  // }
 
   /////////////// desktop key events //////////////////////
 
