@@ -1,9 +1,5 @@
-/* globals MazeSolver, $, performance, requestAnimationFrame */
+/* globals MazeSolver, $, Date, requestAnimationFrame */
 'use strict';
-
-// for safari
-var performance = performance || Date;
-var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(function(){cb(Date.now());},0); };
 
 (function(that){
   var lastTime;
@@ -11,7 +7,7 @@ var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(f
 
   that.start = function () {
     that.time = 0;
-    lastTime = performance.now();
+    lastTime = Date.now();
     that.solve();
     requestAnimationFrame(gameLoop);
   };
