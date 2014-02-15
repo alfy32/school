@@ -41,8 +41,19 @@ var MazeSolver = (function(){
 
   function displayScores() {
     var div = $('.scores');
+    var sizes = [], size;
 
-    for(var size in scores) {
+    for(size in scores) {
+      sizes.push(size);
+    }
+
+    sizes.sort(function(left, right) {
+      return +left.split('x')[0] < +right.split('x')[0];
+    });
+
+    for(var index in sizes) {
+      size = sizes[index];
+
       var header = $('<h3>');
 
       header.attr('class', 'score-header');
