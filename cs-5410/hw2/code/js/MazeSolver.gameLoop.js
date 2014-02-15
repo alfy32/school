@@ -32,14 +32,13 @@ MazeSolver.gameLoop = (function(that){
     that.time += deltaTime;
 
     while(that.eventQueue.length) {
-      that.controls.HINT = false;
-
       var theEvent = that.eventQueue.pop();
 
       if(
         theEvent === 'UP' || theEvent === 'DOWN' ||
         theEvent === 'LEFT' || theEvent === 'RIGHT'
       ) {
+        that.controls.HINT = false;
         if(that.canMove(theEvent)) that.makeMove(theEvent);
       } else {
         that.toggleControl(theEvent);
