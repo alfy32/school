@@ -1,7 +1,7 @@
 /* globals MazeSolver, $, requestAnimationFrame */
 'use strict';
 
-(function(that){
+MazeSolver.gameLoop = (function(that){
   var lastTime;
   var won = false;
 
@@ -14,7 +14,9 @@
 
   function gameLoop(time) {
     var deltaTime = time - lastTime;
-    if(deltaTime > 1000 * 1000 || deltaTime < 0) deltaTime = 0;
+    // The delta time on start sometimes is greater than 10 seconds and it messes
+    // up the timing. So if it is really large or negative than I set it to 1 ms
+    if(Math.abs(deltaTime) > 10 * 1000) deltaTime = 1;
 
     if(won) return doWin();
 
@@ -68,7 +70,6 @@
   }
 
   function getTimeStamp(time) {
-    console.log(time);
     var seconds = Math.floor(time/1000 % 60);
     var minutes = Math.floor(time/(1000*60) % 60);
     var ms = Math.floor(time%1000 / 10);

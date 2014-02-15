@@ -1,7 +1,7 @@
 /* globals MazeSolver */
 'use strict';
 
-(function(that){
+MazeSolver.solver = (function(that){
 
   that.path = [];
   that.visited = {};

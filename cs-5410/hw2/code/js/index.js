@@ -1,7 +1,7 @@
-/* globals $ */
+/* globals $, MazeSolver */
 'use strict';
 
-(function() {
+MazeSolver.index = (function() {
 
   $(document).ready(function() {
     $('#new').click(goTo('size.html'));

@@ -1,5 +1,6 @@
+/* globals $, MazeSolver */
 
-(function(){
+MazeSolver.scores = (function(){
   'use strict';
 
   var SCORES_TO_SHOW = 6;
@@ -21,21 +22,21 @@
       scores[score.size].push(score);
     }
 
-    console.log(scores);
-    for(var i in scores) {
-      scores[i].splice(SCORES_TO_SHOW);
+    for(var index in scores) {
+      scores[index].splice(SCORES_TO_SHOW);
 
-      scores[i].sort(function(left, right) {
-        if(left.time == right.time) {
-          if(left.score == right.score) return 0;
-          if(left.score >= right.score) return 1;
-          if(left.score <= right.score) return -1;
-        }
-        if(left.time >= right.time) return -1;
-        if(left.time <= right.time) return 1;
-      });
+      scores[index].sort(scoreSort);
     }
+  }
 
+  function scoreSort(left, right) {
+    if(left.time == right.time) {
+      if(left.score == right.score) return 0;
+      if(left.score >= right.score) return 1;
+      if(left.score <= right.score) return -1;
+    }
+    if(left.time >= right.time) return -1;
+    if(left.time <= right.time) return 1;
   }
 
   function displayScores() {
@@ -53,7 +54,7 @@
         var p = $('<p>');
 
         p.attr('class', 'score');
-        p.text("Time: " + score.timeStamp + " - " + score.score + " points  - " + score.date);
+        p.text('Time: ' + score.timeStamp + ' - ' + score.score + ' points  - ' + score.date);
 
         div.prepend(p);
       }

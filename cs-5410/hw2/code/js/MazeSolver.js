@@ -1,6 +1,9 @@
 /* globals console, performance */
 'use strict';
 
+// for safari - the performance and the requestAnimation frame doesn't work on mobile safari.
+var performance = performance || Date;
+var requestAnimationFrame = requestAnimationFrame || function(cb) { setTimeout(function(){cb(Date.now());},0); };
 
 var MazeSolver = (function(){
 

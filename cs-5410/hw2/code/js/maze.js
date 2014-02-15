@@ -1,8 +1,7 @@
 /* globals $, MazeSolver */
 'use strict';
 
-(function() {
-  // var MARGIN_WIDTH = 5;
+MazeSolver.maze = (function() {
 
   var dimensions = window.location.hash.split('/');
   var mazeWidth = +dimensions[1] || 5;
@@ -19,7 +18,6 @@
   var lastTouch = false;
 
   function swipeDetector(x, y) {
-    // var minDistance = 20;
     var maxTime = 500;
 
     var that = {
@@ -36,7 +34,6 @@
       };
 
       if(swipe.time - that.time > maxTime) return false;
-      // if(swipe.x < minDistance && swipe.y < minDistance) return false;
 
       if(swipe.x > swipe.y) {
         return (x > that.x) ? 'RIGHT' : 'LEFT';
@@ -61,45 +58,8 @@
       var result = lastTouch.getSwipe(+touch.pageX, +touch.pageY);
       if(result) MazeSolver.addEvent(result);
       lastTouch = false;
-      // console.log(result)
     }
   }, false);
-
-  // window.addEventListener('touchend', function (e) {
-  // }, false);
-
-  // function getDirection(x,y) {
-  //   var topLeft = {
-  //     x: +canvas.position().left,
-  //     y: +canvas.position().top - 2 * MARGIN_WIDTH
-  //   };
-  //   var bottomRight = {
-  //     x: canvas.width()-1,
-  //     y: canvas.height()-1
-  //   };
-  //   var bottomLeft = {
-  //     x: +canvas.position().left,
-  //     y: canvas.height()-1
-  //   };
-  //   var topRight = {
-  //     x: canvas.width()-1,
-  //     y: +canvas.position().top - 2 * MARGIN_WIDTH
-  //   };
-
-  //   var currentPoint = {x:x,y:y};
-
-  //   var leftOfBackslash = isLeft(topLeft, bottomRight, currentPoint);
-  //   var leftOfForwardSlash = isLeft(bottomLeft, topRight, currentPoint);
-
-  //   if(leftOfBackslash && leftOfForwardSlash) return 'DOWN';
-  //   if(leftOfBackslash && !leftOfForwardSlash) return 'LEFT';
-  //   if(!leftOfBackslash && !leftOfForwardSlash) return 'UP';
-  //   if(!leftOfBackslash && leftOfForwardSlash) return 'RIGHT';
-  // }
-
-  // function isLeft(a,b,c) {
-  //   return ((b.x - a.x)*(c.y - a.y) - (b.y - a.y)*(c.x - a.x)) > 0;
-  // }
 
   /////////////// desktop key events //////////////////////
 
@@ -129,8 +89,6 @@
     else if(keyChar === 'Y') MazeSolver.addEvent('SCORE');
 
     return true;
-
-    // console.log(String.fromCharCode(e.which), e.which);
   });
 
   /////////////// buttons //////////////////////
