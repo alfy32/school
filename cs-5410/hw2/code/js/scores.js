@@ -1,6 +1,6 @@
-/* globals $, MazeSolver */
+/* globals $ */
 
-MazeSolver.scores = (function(){
+var MazeSolver = (function(){
   'use strict';
 
   var SCORES_TO_SHOW = 6;

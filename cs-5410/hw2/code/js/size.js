@@ -1,7 +1,7 @@
-/* globals $, MazeSolver */
+/* globals $ */
 'use strict';
 
-MazeSolver.size = (function() {
+var MazeSolver = (function() {
 
   function bindButtonTouchClick() {
       $('button').on('touchend click', function (e) {

@@ -1,7 +1,7 @@
 /* globals $, MazeSolver */
 'use strict';
 
-MazeSolver.maze = (function() {
+MazeSolver.mazeHTML = (function() {
 
   var dimensions = window.location.hash.split('/');
   var mazeWidth = +dimensions[1] || 5;
