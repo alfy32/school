@@ -11,6 +11,6 @@ set title 'Polynomial Multiplication'
 set term png
 set output 'polymult.png'
 
-plot 'polymult.school-book' using 1:2 title 'School-Book Algorithm' with linespoints, \
+plot 'polymult.schoolbook' using 1:2 title 'School-Book Algorithm' with linespoints, \
      'polymult.dnc4' using 1:2 title 'D&C 4 Subproblems' with linespoints, \
      'polymult.dnc3' using 1:2 title 'D&C 3 Subproblems' with linespoints;
