@@ -38,12 +38,31 @@ void PolyMult::schoolBook() {
 }
 
 void PolyMult::divideAndConquer4(int pLow, int pHigh, int qLow, int qHigh) {
-  if(pHigh <= pLow || qHigh <= qLow) return;
+  if(pHigh < pLow || qHigh < qLow) return;
+  if(pLow == pHigh && qLow == qHigh) {
+    PQ[pLow + qLow] += P[pLow] * Q[qLow];
+    return;
+  }
 
-  std::cout << "P: " << pLow << '-' << pHigh << ' '
-            << "Q: " << qLow << '-' << qHigh << std::endl;
+  int pMid = (pHigh - pLow)/2 + pLow;
+  int qMid = (qHigh - qLow)/2 + qLow;
 
-  int n = pHigh - pLow;
+  // std::cout << "P: " << pLow << '-' << pMid << '-' << pHigh << ' '
+  //           << "Q: " << qLow << '-' << qMid << '-' << qHigh << ' '
+  //           << std::endl;
+
+  divideAndConquer4(pLow, pMid, qLow, qMid);
+  divideAndConquer4(pMid+1, pHigh, qMid+1, qHigh);
+  divideAndConquer4(pLow, pMid, qMid+1, qHigh);
+  divideAndConquer4(pMid+1, pHigh, qLow, qMid);
+}
+
+void PolyMult::divideAndConquer3(int pLow, int pHigh, int qLow, int qHigh) {
+  if(pHigh < pLow || qHigh < qLow) return;
+  if(pLow == pHigh && qLow == qHigh) {
+    PQ[pLow + qLow] += P[pLow] * Q[qLow];
+    return;
+  }
 
   int pMid = (pHigh - pLow)/2 + pLow;
   int qMid = (qHigh - qLow)/2 + qLow;
@@ -52,41 +71,6 @@ void PolyMult::divideAndConquer4(int pLow, int pHigh, int qLow, int qHigh) {
   divideAndConquer4(pMid+1, pHigh, qMid+1, qHigh);
   divideAndConquer4(pLow, pMid, qMid+1, qHigh);
   divideAndConquer4(pMid+1, pHigh, qLow, qMid);
-
-  for(int i = 0; i < n; ++i) {
-    PQ[pLow + i] += P[pLow + i] * Q[qLow + i];
-    PQ[pLow + i+n/2] += P[i] * Q[i+n] + P[i+n] * Q[i];
-    PQ[pLow + i+n] += P[i+n] * Q[i+n];
-  }
-}
-
-void PolyMult::divideAndConquer3(int pLow, int pHigh, int qLow, int qHigh) {
-  if(pHigh < pLow || qHigh < qLow) return;
-
-  int n = pHigh - pLow;
-
-  // for(int i = 0; i < n/2; ++i) {
-  //   PL[i] = P[i];
-  //   PH[i] = P[i+n/2];
-  // }
-
-  // for(int i = 0; i < n/2; ++i) {
-  //   PLandPH[i] = PL[i] + PH[i];
-  //   QLandQH[i] = QL[i] + QH[i];
-  // }
-
-  int pMid = (pHigh - pLow)/2 + pLow;
-  int qMid = (qHigh - qLow)/2 + qLow;
-
-  // PLQL = divideAndConquer3(pLow, pMid, qLow, qMid);
-  // PHQH = divideAndConquer3(pMid+1, pHigh, qMid+1, qHigh);
-  // PQSum = divideAndConquer3(PLandPH, QLandQH);
-
-  // for(int i = 0; i < n; ++i) {
-  //   PQ[i] += PLQL[i];
-  //   PQ[i+n/2] += PQSum[i] - PLQL[i] - PHQH[i];
-  //   PQ[i+n] += PHQH[i];
-  // }
 }
 
 //////////// Print ////////////////

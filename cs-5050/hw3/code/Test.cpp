@@ -111,6 +111,28 @@ void Test::SchoolBook_works() {
       }
     }
   }
+
+  std::cout << std::endl;
+
+  { // TEST 3
+    int n = 4;
+    double p[] = {2,3,4,2};
+    double q[] = {2,1,6,3};
+
+    PolyMult polyMult(n, p, q);
+    polyMult.schoolBook();
+    polyMult.print();
+
+    double pqExpected[] = {4,8,23,32,35,24,6};
+    std::vector<double> pqActual = polyMult.getPQ();
+
+    for(int index = 0; index < 2*n-1; ++index) {
+      if(pqActual[index] != pqExpected[index]) {
+        std::cout << "************** Failed ***************" << std::endl;
+        return;
+      }
+    }
+  }
 }
 
 void Test::DnC4() {
@@ -156,6 +178,28 @@ void Test::DnC4_works() {
       if(pqActual[index] != pqExpected[index]) {
         std::cout << "************** Failed ***************" << std::endl;
         break;
+      }
+    }
+  }
+
+  std::cout << std::endl;
+
+  { // TEST 3
+    int n = 4;
+    double p[] = {2,3,4,2};
+    double q[] = {2,1,6,3};
+
+    PolyMult polyMult(n, p, q);
+    polyMult.divideAndConquer4(0, n-1, 0, n-1);
+    polyMult.print();
+
+    double pqExpected[] = {4,8,23,32,35,24,6};
+    std::vector<double> pqActual = polyMult.getPQ();
+
+    for(int index = 0; index < 2*n-1; ++index) {
+      if(pqActual[index] != pqExpected[index]) {
+        std::cout << "************** Failed ***************" << std::endl;
+        return;
       }
     }
   }
