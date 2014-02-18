@@ -6,16 +6,15 @@ Assignment 3
 1. Implement three algorithms for solving the polynomial multiplication algorithm:
 
   1. Given two polynomials **P** and **Q** each represented as an array of doubles where **P[i]** is the coefficient of **x** to the power **i** in polynomial **P**.
-  2. Return the polynomial that is the product of P and Q called PQ.
-  3. Note that if P and Q are of order n-1 (the highest power of x is n-1) they will have n coefficients and PQ will have 2n-1 coefficients.
+  2. Return the polynomial that is the product of **P** and **Q** called **PQ**.
+  3. Note that if **P** and **Q** are of order **n-1** (the highest power of **x** is **n-1**) they will have **n** coefficients and **PQ** will have **2n-1** coefficients.
 
 2. Here are the three algorithms you are to implement:
-
   1. Simple school-book algorithm using two nested for loops.
   2. Simple divide and conquer recursive algorithm that generates four subproblems
-  3. More complex divide and conquer algorithm that generates three subproblems
+  3. More complex divide and conquer algorithm that generates **three** subproblems
 
-3. Once you have verified that your algorithms all produce the same correct answer then perform an empirical study for a large set of random problems. For each problem, a polynomial will be a one dimensional array of n random doubles within the range of -1.0 to +1.0. Your study will loop from n = 32 to as large as possible, doubling the problem size each time (so n is always a power of 2). For each problem size generate a set of random problems of size n, and measure the time each algorithm takes to solve the same set of problems. Generate enough random problems so that the lines on the graph connecting the times is linear (on the log/log plot). Note that the lower efficiency algorithms may not be able to solve the largest of problem sizes.
+3. Once you have verified that your algorithms all produce the same correct answer then perform an empirical study for a large set of random problems. For each problem, a polynomial will be a one dimensional array of **n** random doubles within the range of -1.0 to +1.0. Your study will loop from **n = 32** to as large as possible, doubling the problem size each time (so **n** is always a power of 2). For each problem size generate a set of random problems of size n, and measure the time each algorithm takes to solve the same set of problems. Generate enough random problems so that the lines on the graph connecting the times is linear (on the log/log plot). Note that the lower efficiency algorithms may not be able to solve the largest of problem sizes.
 
 4. Generate a single log/log graph where x is the problem size and y is the time to solve the problem set.
 
