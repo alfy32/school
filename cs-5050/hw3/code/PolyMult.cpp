@@ -47,10 +47,6 @@ void PolyMult::divideAndConquer4(int pLow, int pHigh, int qLow, int qHigh) {
   int pMid = (pHigh - pLow)/2 + pLow;
   int qMid = (qHigh - qLow)/2 + qLow;
 
-  // std::cout << "P: " << pLow << '-' << pMid << '-' << pHigh << ' '
-  //           << "Q: " << qLow << '-' << qMid << '-' << qHigh << ' '
-  //           << std::endl;
-
   divideAndConquer4(pLow, pMid, qLow, qMid);
   divideAndConquer4(pMid+1, pHigh, qMid+1, qHigh);
   divideAndConquer4(pLow, pMid, qMid+1, qHigh);
@@ -67,10 +63,11 @@ void PolyMult::divideAndConquer3(int pLow, int pHigh, int qLow, int qHigh) {
   int pMid = (pHigh - pLow)/2 + pLow;
   int qMid = (qHigh - qLow)/2 + qLow;
 
-  divideAndConquer4(pLow, pMid, qLow, qMid);
-  divideAndConquer4(pMid+1, pHigh, qMid+1, qHigh);
-  divideAndConquer4(pLow, pMid, qMid+1, qHigh);
-  divideAndConquer4(pMid+1, pHigh, qLow, qMid);
+  divideAndConquer3(pLow, pMid, qLow, qMid);
+  divideAndConquer3(pMid+1, pHigh, qMid+1, qHigh);
+
+  divideAndConquer3(pLow, pMid, qMid+1, qHigh);
+  divideAndConquer3(pMid+1, pHigh, qLow, qMid);
 }
 
 //////////// Print ////////////////

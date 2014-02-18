@@ -20,6 +20,9 @@ public:
 
   static void DnC4();
   static void DnC4_works();
+
+  static void DnC3();
+  static void DnC3_works();
 };
 
 #endif
