@@ -17,6 +17,9 @@ public:
 
   static void SchoolBook();
   static void SchoolBook_works();
+
+  static void DnC4();
+  static void DnC4_works();
 };
 
 #endif
