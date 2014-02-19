@@ -1,0 +1,17 @@
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\bin\Debug\Common.dll
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\bin\Debug\Common.pdb
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\bin\Debug\log4net.dll
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\bin\Debug\log4net.xml
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\obj\Debug\Common.MonitorForm.resources
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\obj\Debug\Common.MultiGraph.resources
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\obj\Debug\Common.csproj.GenerateResource.Cache
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\obj\Debug\Common.dll
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\Common\obj\Debug\Common.pdb
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\Common\obj\Debug\Common.MonitorForm.resources
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\Common\obj\Debug\Common.MultiGraph.resources
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\Common\obj\Debug\Common.csproj.GenerateResource.Cache
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\Common\obj\Debug\Common.dll
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\Common\obj\Debug\Common.pdb
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\Common\bin\Debug\Common.dll
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\Common\bin\Debug\Common.pdb

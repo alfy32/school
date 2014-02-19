@@ -1,0 +1,13 @@
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\bin\Debug\BBTExample1.exe.config
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\bin\Debug\BBTExample1.exe
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\bin\Debug\BBTExample1.pdb
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\bin\Debug\Common.dll
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\bin\Debug\log4net.dll
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\bin\Debug\Common.pdb
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\bin\Debug\log4net.xml
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\obj\x86\Debug\BBTExample1.csprojResolveAssemblyReference.cache
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\obj\x86\Debug\BBTExample1.MainForm.resources
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\obj\x86\Debug\BBTExample1.Properties.Resources.resources
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\obj\x86\Debug\BBTExample1.csproj.GenerateResource.Cache
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\obj\x86\Debug\BBTExample1.exe
+Z:\Seafile\USU\Classes - Old\cs5200f12\Tutorials\BetterBackgroundThreads\BBTExample1\obj\x86\Debug\BBTExample1.pdb

@@ -1,0 +1,11 @@
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\bin\Debug\BTExample1.exe.config
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\bin\Debug\BTExample1.exe
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\bin\Debug\BTExample1.pdb
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\bin\Debug\Common.dll
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\bin\Debug\Common.pdb
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\obj\x86\Debug\BTExample1.csprojResolveAssemblyReference.cache
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\obj\x86\Debug\BTExample1.MainForm.resources
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\obj\x86\Debug\BTExample1.Properties.Resources.resources
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\obj\x86\Debug\BTExample1.csproj.GenerateResource.Cache
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\obj\x86\Debug\BTExample1.exe
+Z:\Seafile\USU\Classes\SoftwareEngineeringExamples\BackgroundThreadExample\BTExample1\obj\x86\Debug\BTExample1.pdb

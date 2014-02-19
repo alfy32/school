@@ -1,0 +1,5 @@
+Z:\Seafile\USU\Classes\cs5200f14\Lessons\Lesson02\SimpleUDPSocket\SimpleUDPSocket\bin\Debug\SimpleUDPSocket.exe
+Z:\Seafile\USU\Classes\cs5200f14\Lessons\Lesson02\SimpleUDPSocket\SimpleUDPSocket\bin\Debug\SimpleUDPSocket.pdb
+Z:\Seafile\USU\Classes\cs5200f14\Lessons\Lesson02\SimpleUDPSocket\SimpleUDPSocket\obj\x86\Debug\SimpleUDPSocket.exe
+Z:\Seafile\USU\Classes\cs5200f14\Lessons\Lesson02\SimpleUDPSocket\SimpleUDPSocket\obj\x86\Debug\SimpleUDPSocket.pdb
+Z:\Seafile\USU\Classes\cs5200f14\Lessons\Lesson02\SimpleUDPSocket\SimpleUDPSocket\bin\Debug\SimpleUDPSocket.exe.config
