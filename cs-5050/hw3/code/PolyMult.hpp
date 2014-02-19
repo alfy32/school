@@ -18,7 +18,7 @@ public:
 
   void schoolBook();
   void divideAndConquer4(int pLow, int pHigh, int qLow, int qHigh);
-  void divideAndConquer3(int pLow, int pHigh, int qLow, int qHigh);
+  std::vector<double> divideAndConquer3(int n, std::vector<double> P, std::vector<double> Q);
 
   void print();
 };
