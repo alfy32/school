@@ -19,7 +19,7 @@ As we can see from the graph, algorithm (1) and (2) have the same slope but (2) 
 
 ### Where is the crossing point of algoritm (1 School-Book) and (3 D&C 3 Subproblems)?
 
-The crossing point is at 16384 ms.
+The crossing point is at problem size n=32768 and about 20000 ms.
 
 ### What is the reason for this?
 
