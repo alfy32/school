@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AgentCommon
+{
+    class Doer : BackgroundThread
+    {
+        public override string ThreadName()
+        {
+            return "Doer";
+        }
+
+        public override void Process()
+        {
+
+        }
+    }
+}

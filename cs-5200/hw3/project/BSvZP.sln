@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{1AB5119F-BEFC-4350-AEEC-845105A3543C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTester", "CommonTester\CommonTester.csproj", "{3BB8F18A-23A9-49DC-AD45-923ED5E7E8F0}"
@@ -8,6 +10,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages", "Messages\Messages.csproj", "{126DE25A-FB1F-4E0B-9BA3-7072656706B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagesTester", "MessagesTester\MessagesTester.csproj", "{9A9A3D6B-96DE-4321-A0D2-6DB29B866305}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentCommon", "AgentCommon\AgentCommon.csproj", "{115FCE07-8257-4425-AB4D-16569CED7B8A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{126DE25A-FB1F-4E0B-9BA3-7072656706B6} = {126DE25A-FB1F-4E0B-9BA3-7072656706B6}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +38,10 @@ Global
 		{9A9A3D6B-96DE-4321-A0D2-6DB29B866305}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A9A3D6B-96DE-4321-A0D2-6DB29B866305}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A9A3D6B-96DE-4321-A0D2-6DB29B866305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{115FCE07-8257-4425-AB4D-16569CED7B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{115FCE07-8257-4425-AB4D-16569CED7B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{115FCE07-8257-4425-AB4D-16569CED7B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{115FCE07-8257-4425-AB4D-16569CED7B8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
