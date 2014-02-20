@@ -1,0 +1,3 @@
+f(x) = b * x ** m
+
+fit f(x) 'polymult.dnc3' using 1:2 via m,b
