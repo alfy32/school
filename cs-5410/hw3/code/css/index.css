@@ -1,5 +1,17 @@
 
+html {
+  height: 100%;
+  overflow-y: hidden;
+}
+
 body {
+  margin: 0px;
+}
+
+.background {
   background-image: url(../img/Background.png);
   background-repeat: no-repeat;
+  width: 640px;
+  height: 426px;
+  margin: auto;
 }

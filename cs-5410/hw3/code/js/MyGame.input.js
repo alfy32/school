@@ -198,7 +198,8 @@ MYGAME.input = (function() {
 
   return {
     Keyboard: Keyboard,
-    Mouse: Mouse
+    Mouse: Mouse,
+    Touch: Touch
   };
 }());
 
