@@ -83,13 +83,13 @@ std::vector<double> PolyMult::divideAndConquer3(int n, std::vector<double> P, st
 
   std::vector<double> PLQL = divideAndConquer3(n/2, PL, QL);
   std::vector<double> PHQH = divideAndConquer3(n/2, PH, QH);
-  std::vector<double> PQsum = divideAndConquer3(n/2, PLandPH, QLandQH);
+  std::vector<double> PQSum = divideAndConquer3(n/2, PLandPH, QLandQH);
 
   std::vector<double> PQ(2*n-1, 0.0);
 
-  for(int i = 0; i < n; ++i) {
+  for(int i = 0; i < n-1; ++i) {
     PQ[i] += PLQL[i];
-    PQ[i+n/2] += PQsum[i] - PLQL[i] - PHQH[i];
+    PQ[i+n/2] += PQSum[i] - PLQL[i] - PHQH[i];
     PQ[i+n] += PHQH[i];
   }
 

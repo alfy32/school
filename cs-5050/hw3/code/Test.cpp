@@ -507,6 +507,7 @@ void Test::DnC3_works() {
     double pqExpected[] = {4,8,23,32,43,38,54,50,68,49,25,23,20,11,2};
 
     for(int index = 0; index < 2*n-1; ++index) {
+      std::cout << index << "\t" << pqActual[index] << "\t" << pqExpected[index] << std::endl;
       if(pqActual[index] != pqExpected[index]) {
         std::cout << "************** Failed ***************" << std::endl;
         return;
