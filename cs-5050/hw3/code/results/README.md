@@ -27,8 +27,10 @@ This happens because (3) has the same issues as dicussed above about (2). The cr
 
 ### Calculate the exact slopes of the lines for all three algorithms.
 
-1. 2?
-2. 2?
-3. 1.585?
+Algorithm | Actual Slope | Expected Slope
+:-------: | :----------: | :------------:
+    1     |    2.0021    |      2
+    2     |    1.9911    |      2
+    3     |    1.5844    |    1.585
 
 My results are very close to what I had expected to happen.
