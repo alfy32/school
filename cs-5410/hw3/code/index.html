@@ -2,17 +2,28 @@
 <html>
 <head>
   <title>Coin Drop</title>
-  <meta name="viewport" content="width=640, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link rel="stylesheet" type="text/css" href="css/index.css">
 </head>
 <body>
-  <div class="background">
-    <canvas id="canvas-main" width="640" height="426"></canvas>
-  </div>
+  <img class="piggy-bank" src="img/Piggy-Bank.png">
+  <label class="money">1234</label>
 
+  <img class="background" src="img/Background.png">
+  <canvas id="canvas-main"></canvas>
+
+  <!-- Game JS -->
+  <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/MyGame.js"></script>
   <script type="text/javascript" src="js/MyGame.initialize.js"></script>
   <script type="text/javascript" src="js/MyGame.input.js"></script>
   <script type="text/javascript" src="js/MyGame.graphics.js"></script>
+
+  <!-- Image Preloading -->
+  <img hidden src="img/Clock.png">
+  <img hidden src="img/Coin-Canadian-Dollar.png">
+  <img hidden src="img/Coin-Roman.png">
+  <img hidden src="img/Coin-US-Dollary.png">
+  <img hidden src="img/Dollar-Sign.png">
 </body>
 </html>
