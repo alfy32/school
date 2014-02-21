@@ -13,18 +13,6 @@ namespace Messages
         #endregion
 
         #region Public Properties
-        public enum PossibleTypes
-                    {
-                        AckNak = 1
-                        // More could be defined later
-                    }
-
-        public enum PossibleStatus
-                    {
-                        Success = 1,
-                        Failure = 2
-                    }
-
         public PossibleTypes ReplyType { get; set; }
         public PossibleStatus Status { get; set; }
         public string Note {get; set;}
@@ -38,6 +26,18 @@ namespace Messages
                        + 2;             // Note
             }
         }
+
+        public enum PossibleTypes
+        {
+            AckNak = 1
+            // More could be defined later
+        }
+        public enum PossibleStatus
+        {
+            Success = 1,
+            Failure = 2
+        }
+
         #endregion
 
         #region Constructors and Factory Methods

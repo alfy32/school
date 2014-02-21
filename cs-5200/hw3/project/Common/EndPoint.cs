@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net;
 
 namespace Common
 {
@@ -10,11 +11,23 @@ namespace Common
         #region Private Data Members and Properties
         // Define this class, identifier for serialization / deserialiation purposes
         private static Int16 ClassId { get { return (Int16)DISTRIBUTABLE_CLASS_IDS.EndPoint; } }
+        private int port;
         #endregion
 
         #region Public Properties
         public Int32 Address { get; set; }
-        public Int32 Port { get; set; }
+        public Int32 Port
+        {
+            get { return port; }
+            set
+            {
+                if (value < IPEndPoint.MinPort || value > IPEndPoint.MaxPort)
+                    throw new ApplicationException("Invalid Port Number");
+                else
+                    port = value;
+            }
+        }
+
         public static int MinimumEncodingLength
         {
             get
@@ -35,10 +48,31 @@ namespace Common
             Port = port;
         }
 
+        public EndPoint(IPEndPoint ep)
+        {
+            if (ep!=null)
+            {
+                Address = BitConverter.ToInt32(ep.Address.GetAddressBytes(), 0);
+                Port = ep.Port;
+            }
+        }
+
         public EndPoint(byte[] addressBytes, Int32 port) : this(0, port)
         {
              if (addressBytes!=null && addressBytes.Length==4)
                 Address = BitConverter.ToInt32(addressBytes, 0);
+        }
+
+        public EndPoint(string hostname, Int32 port)
+            : this(0, port)
+        {
+            if (!string.IsNullOrWhiteSpace(hostname))
+            {
+                IPHostEntry host;
+                host = Dns.GetHostEntry(hostname);
+                if (host.AddressList.Length > 0)
+                    Address = BitConverter.ToInt32(host.AddressList[0].GetAddressBytes(), 0);
+            }
         }
 
         /// <summary>
@@ -101,6 +135,40 @@ namespace Common
         }
 
         #endregion
+
+        #region Other Public Methods
+
+        public IPEndPoint GetIPEndPoint()
+        {
+            return new IPEndPoint(Convert.ToInt64(Address), Port);
+        }
+
+        public static bool Match(EndPoint ep1, EndPoint ep2)
+        {
+            return (ep1.Address == ep2.Address && ep1.Port == ep2.Port);
+        }
+
+        public static bool Match(IPEndPoint ep1, IPEndPoint ep2)
+        {
+            return (ep1.Address.GetAddressBytes()[0] == ep2.Address.GetAddressBytes()[0] &&
+                    ep1.Address.GetAddressBytes()[1] == ep2.Address.GetAddressBytes()[1] &&
+                    ep1.Address.GetAddressBytes()[2] == ep2.Address.GetAddressBytes()[2] &&
+                    ep1.Address.GetAddressBytes()[3] == ep2.Address.GetAddressBytes()[3] &&
+                    ep1.Port == ep2.Port);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return (obj != null && obj.GetType() == typeof(EndPoint) && Match(this, (EndPoint)obj));
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        #endregion
+
     }
 
 }

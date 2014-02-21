@@ -75,6 +75,7 @@ namespace MessagesTester
             jg.AgentInfo = agentInfo;
             Assert.AreSame(agentInfo, jg.AgentInfo);
 
+            Assert.AreEqual(Message.MESSAGE_CLASS_IDS.JoinGame, jg.MessageTypeId());
         }
 
         [TestMethod]

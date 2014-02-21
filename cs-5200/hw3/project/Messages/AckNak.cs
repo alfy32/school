@@ -13,6 +13,8 @@ namespace Messages
         #endregion
 
         #region Public Properties
+        public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS) ClassId; }
+
         public int IntResult { get; set; }
         public DistributableObject ObjResult { get; set; }
         public string Message { get; set; }

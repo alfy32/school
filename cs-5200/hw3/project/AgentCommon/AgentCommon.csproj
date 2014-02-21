@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{115FCE07-8257-4425-AB4D-16569CED7B8A}</ProjectGuid>
+    <ProjectGuid>{33B8CB80-FA9D-4CAD-A918-05474BDFC27C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AgentCommon</RootNamespace>
@@ -49,6 +49,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{1ab5119f-befc-4350-aeec-845105a3543c}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Messages\Messages.csproj">
       <Project>{126de25a-fb1f-4e0b-9ba3-7072656706b6}</Project>
       <Name>Messages</Name>

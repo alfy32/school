@@ -13,25 +13,6 @@ namespace Messages
         #endregion
 
         #region Public Properties
-        public enum PossibleTypes
-                    {
-                        GameAnnouncement = 1,
-                        JoinGame = 2,
-                        AddComponent = 3,
-                        RemoveComponent = 4,
-                        StartGame = 5,
-                        EndGame = 6,
-                        GetResource = 7,
-                        TickDelivery = 8,
-                        ValidateTick = 9,
-                        Move = 10,
-                        ThrowBomb = 11,
-                        Eat = 12,
-                        ChangeStrength = 13,
-                        Collaborate = 14,
-                        GetStatus = 15
-                    }
-
         public PossibleTypes RequestType { get; set; }
         public static new int MinimumEncodingLength
         {
@@ -41,6 +22,26 @@ namespace Messages
                        + 1;             // RequestType
             }
         }
+
+        public enum PossibleTypes
+        {
+            GameAnnouncement = 1,
+            JoinGame = 2,
+            AddComponent = 3,
+            RemoveComponent = 4,
+            StartGame = 5,
+            EndGame = 6,
+            GetResource = 7,
+            TickDelivery = 8,
+            ValidateTick = 9,
+            Move = 10,
+            ThrowBomb = 11,
+            Eat = 12,
+            ChangeStrength = 13,
+            Collaborate = 14,
+            GetStatus = 15
+        }
+
         #endregion
 
         #region Constructors and Factory Methods
@@ -69,7 +70,7 @@ namespace Messages
             switch (msgType)
             {
                 case (Int16) MESSAGE_CLASS_IDS.GameAnnouncement:
-
+                    result = GameAnnouncement.Create(bytes);
                     break;
                 case (Int16) MESSAGE_CLASS_IDS.JoinGame:
                     result = JoinGame.Create(bytes);

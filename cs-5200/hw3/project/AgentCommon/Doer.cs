@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace AgentCommon
 {
-    class Doer : BackgroundThread
+    public class Doer : BackgroundThread
     {
         public override string ThreadName()
         {
             return "Doer";
         }
 
-        public override void Process()
+        protected override void Process()
         {
 
         }

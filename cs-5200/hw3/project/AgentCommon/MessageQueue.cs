@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgentCommon
 {
-    class MessageQueue
+    public class MessageQueue
     {
     }
 }

@@ -12,6 +12,8 @@ namespace Messages
         #endregion
 
         #region Public Properties
+        public abstract MESSAGE_CLASS_IDS MessageTypeId();
+
         public MessageNumber MessageNr { get; set; }
         public MessageNumber ConversationId { get; set; }
         public static int MinimumEncodingLength

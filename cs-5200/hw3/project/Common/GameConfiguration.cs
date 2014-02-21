@@ -53,6 +53,7 @@ namespace Common
         public float BombTwinePerSquareOfDistance { get; set; }             // Number of twine pieces per unit of distance
         public float BombDamageDiffusionFactor { get; set; }                // Percentage of remaining damage that can be spread to surround squares
 
+        public Int16 TickInterval { get; set; }                             // Delay between ticks
         public Int16 TickLifetime { get; set; }                             // Number of seconds that a tick remains active
         public float TicksToStrengthRatio { get; set; }
 
@@ -61,7 +62,7 @@ namespace Common
             get
             {
                 return 4              // Object header
-                       + 2 * 10       // Int16 properties
+                       + 2 * 11       // Int16 properties
                        + 4 * 21;      // float properties
             }
         }
@@ -139,6 +140,7 @@ namespace Common
                             BombTwinePerSquareOfDistance,
                             BombDamageDiffusionFactor,
 
+                            TickInterval,
                             TickLifetime,
                             TicksToStrengthRatio);
 
@@ -202,6 +204,7 @@ namespace Common
                 BombTwinePerSquareOfDistance = bytes.GetFloat();
                 BombDamageDiffusionFactor = bytes.GetFloat();
 
+                TickInterval = bytes.GetInt16();
                 TickLifetime = bytes.GetInt16();
                 TicksToStrengthRatio = bytes.GetFloat();
 
@@ -250,6 +253,7 @@ namespace Common
             BombTwinePerSquareOfDistance = 2.0F;
             BombDamageDiffusionFactor = 0.75F;
 
+            TickInterval = 200;
             TickLifetime = 120;
             TicksToStrengthRatio = 1.0F;
 

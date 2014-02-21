@@ -82,6 +82,8 @@ namespace MessagesTester
 
             m.Note = "Test Note";
             Assert.AreEqual("Test Note", m.Note);
+
+            Assert.AreEqual( Message.MESSAGE_CLASS_IDS.AckNak, m.MessageTypeId());
         }
 
         [TestMethod]

@@ -12,6 +12,8 @@ namespace Messages
         #endregion
 
         #region Public Properties
+        public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS)ClassId; }
+
         public Int16 ThrowingBrilliantStudentId { get; set; }
         public Bomb Bomb { get; set; }
         public FieldLocation TowardsSquare { get; set; }

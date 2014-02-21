@@ -13,6 +13,8 @@ namespace Messages
         #endregion
 
         #region Public Properties
+        public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS)ClassId; }
+
         public ComponentInfo Component { get; set; }
         public static new int MinimumEncodingLength
         {

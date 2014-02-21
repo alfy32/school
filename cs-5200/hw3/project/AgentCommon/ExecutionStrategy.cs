@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgentCommon
 {
-    class ExecutionStrategy
+    public class ExecutionStrategy
     {
         public void execution() {
 

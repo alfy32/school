@@ -47,17 +47,17 @@ namespace Common
             get { return Convert.ToInt16(_addCurrentSection * SECTION_SIZE + _addCurrentOffset); }
         }
 
-        public void WriteInt16To(Int32 writePosition, Int16 length)
+        public void WriteInt16To(Int32 writePosition, Int16 value)
         {
             if (writePosition >= 0 && writePosition < Length - 2)
             {
                 int sectionIdx = writePosition / SECTION_SIZE;
                 int sectionOffset = writePosition - sectionIdx * SECTION_SIZE;
 
-                byte[] bytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(length));
+                byte[] bytes = BitConverter.GetBytes(IPAddress.HostToNetworkOrder(value));
                 Buffer.BlockCopy(   bytes, 0,                               // Source
                                     _sections[sectionIdx], sectionOffset,   // Destination
-                                    sizeof(Int16));                         // Length
+                                    bytes.Length);                         // Length
 
             }
         }

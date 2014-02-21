@@ -13,6 +13,22 @@ namespace Messages
         #endregion
 
         #region Public Properties
+        public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS)ClassId; }
+
+        public Int16 GameId { get; set; }
+        public PossibleResourceType GetResourceType { get; set; }
+        public Tick EnablingTick { get; set; }
+        public static new int MinimumEncodingLength
+        {
+            get
+            {
+                return 4                // Object header
+                       + 2              // GameId
+                       + 1              // GetType
+                       + 1;
+            }
+        }
+
         public enum PossibleResourceType
         {
             GameConfiguration = 1,
@@ -24,19 +40,6 @@ namespace Messages
             Excuse = 7,
             WhiningTwine = 8,
             Tick = 9
-        }
-        public Int16 GameId { get; set; }
-        public PossibleResourceType GetType { get; set; }
-        public Tick EnablingTick { get; set; }
-        public static new int MinimumEncodingLength
-        {
-            get
-            {
-                return 4                // Object header
-                       + 2              // GameId
-                       + 1              // GetType
-                       + 1;
-            }
         }
 
         #endregion
@@ -57,7 +60,7 @@ namespace Messages
             : base(PossibleTypes.GetResource)
         {
             GameId = gameId;
-            GetType = type;
+            GetResourceType = type;
             EnablingTick = tick;
         }
 
@@ -99,7 +102,7 @@ namespace Messages
             base.Encode(bytes);                              // Encode the part of the object defined
                                                              // by the base class
 
-            bytes.AddObjects(GameId, Convert.ToByte(GetType), EnablingTick);
+            bytes.AddObjects(GameId, Convert.ToByte(GetResourceType), EnablingTick);
 
             Int16 length = Convert.ToInt16(bytes.CurrentWritePosition - lengthPos - 2);
             bytes.WriteInt16To(lengthPos, length);           // Write out the length of this object        
@@ -116,7 +119,7 @@ namespace Messages
             base.Decode(bytes);
 
             GameId = bytes.GetInt16();
-            GetType = (PossibleResourceType)bytes.GetByte();
+            GetResourceType = (PossibleResourceType)bytes.GetByte();
             EnablingTick = bytes.GetDistributableObject() as Tick;
 
             bytes.RestorePreviosReadLimit();

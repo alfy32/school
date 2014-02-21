@@ -8,9 +8,15 @@ using Messages;
 
 namespace AgentCommon
 {
-    class Envelope
+    public class Envelope
     {
-        Message message { get; set; }
-        string address { get; set; }
+        public Message message { get; set; }
+        public String address { get; set; }
+
+        public Envelope(Message message, String address)
+        {
+            this.message = message;
+            this.address = address;
+        }
     }
 }

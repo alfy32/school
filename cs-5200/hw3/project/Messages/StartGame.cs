@@ -14,6 +14,8 @@ namespace Messages
         #endregion
 
         #region Public Properties
+        public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS)ClassId; }
+
         public Int16 GameId { get; set; }
         public static new int MinimumEncodingLength
         {

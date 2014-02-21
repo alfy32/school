@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AgentCommon
 {
-    class Listener : BackgroundThread
+    public class Listener : BackgroundThread
     {
         public override string ThreadName()
         {
