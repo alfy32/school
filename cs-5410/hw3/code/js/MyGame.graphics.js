@@ -30,11 +30,15 @@ MYGAME.graphics = (function() {
   function Texture(spec) {
     var that = {};
 
-    that.clicked = function(x, y) {
-      return x > spec.center.x - spec.width/2 &&
-             x < spec.center.x + spec.width/2 &&
-             y > spec.center.y - spec.height/2 &&
-             y < spec.center.y + spec.height/2;
+    that.spec = spec;
+
+    that.clicked = function(mouse) {
+      var dx = mouse.x - spec.center.x;
+      var dy = mouse.y - spec.center.y;
+      var radius = spec.width/2;
+      console.log('dx', dx*dx, 'dy', dy*dy, 
+        'radius', radius*radius, 'x', mouse.x, 'y', mouse.y)
+      return dx*dx + dy*dy <= radius*radius;
     };
 
     that.offScreen = function() {
@@ -111,8 +115,8 @@ MYGAME.graphics = (function() {
   function canadian() {
     var image = new Image();
     image.src = 'img/Coin-Canadian-Dollar.png';
-    var width = 30;
-    var height = 15;
+    var width = 100;
+    var height = 100;
 
     return MYGAME.graphics.Texture(getSpec(image, height, width));
   }
@@ -121,7 +125,7 @@ MYGAME.graphics = (function() {
     var image = new Image();
     image.src = 'img/Coin-Roman.png';
     var width = 30;
-    var height = 15;
+    var height = 30;
 
     return MYGAME.graphics.Texture(getSpec(image, height, width));
   }
@@ -129,8 +133,8 @@ MYGAME.graphics = (function() {
   function US() {
     var image = new Image();
     image.src = 'img/Coin-US-Dollary.png';
-    var width = 30;
-    var height = 15;
+    var width = 50;
+    var height = 50;
 
     return MYGAME.graphics.Texture(getSpec(image, height, width));
   }
@@ -138,8 +142,8 @@ MYGAME.graphics = (function() {
   function clock() {
     var image = new Image();
     image.src = 'img/Clock.png';
-    var width = 30;
-    var height = 15;
+    var width = 50;
+    var height = 50;
 
     return MYGAME.graphics.Texture(getSpec(image, height, width));
   }

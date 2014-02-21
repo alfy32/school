@@ -1,4 +1,8 @@
 
+* {
+  pointer-events: none;
+}
+
 body {
   margin: 0px;
 }
@@ -13,6 +17,7 @@ body {
 
 .background {
   z-index: 1000;
+
 }
 
 #canvas-main {

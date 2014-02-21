@@ -3,9 +3,7 @@
 MYGAME.initialize = function initialize() {
   'use strict';
 
-  var myKeyboard = MYGAME.input.Keyboard();
   var myMouse = MYGAME.input.Mouse();
-  var myTouch = MYGAME.input.Touch();
 
   MYGAME.lastTimeStamp = performance.now();
   var money = 0;
@@ -13,7 +11,8 @@ MYGAME.initialize = function initialize() {
   window.onresize = MYGAME.graphics.resize;
 
   var objects = [];
-  var addObjectRate = 3000;
+  var addObjectRate = 2000;
+  var MAX_OBJECTS = 5;
   var timeSinceLastAddObject = 0;
 
   function addObject() {
@@ -29,7 +28,11 @@ MYGAME.initialize = function initialize() {
     randomObject = MYGAME.graphics.objects[randomObject]();
 
     myMouse.registerCommand('mousedown', function (e){
-      if(randomObject.clicked(e.clientX, e.clientY)) {
+      if(randomObject.clicked({
+        x: e.clientX, 
+        y: e.clientY
+      })) {
+        console.log(randomObject, e.clientX, e.clientY);
         explodeObject(randomObject);
       }
     });
@@ -68,11 +71,10 @@ MYGAME.initialize = function initialize() {
   }
 
   function update(elapsedTime) {
-    myKeyboard.update(elapsedTime);
     myMouse.update(elapsedTime);
-    myTouch.update(elapsedTime);
 
-    timeSinceLastAddObject += elapsedTime;
+    if(objects.length < MAX_OBJECTS)
+      timeSinceLastAddObject += elapsedTime;
 
     // console.log(timeSinceLastAddObject, addObjectRate);
 
@@ -89,7 +91,7 @@ MYGAME.initialize = function initialize() {
       }
     }
 
-    $('.money').text(Math.floor(timeSinceLastAddObject));
+    $('.money').text(money);
   }
 
   function render() {
@@ -100,5 +102,6 @@ MYGAME.initialize = function initialize() {
     }
   }
 
+  MYGAME.graphics.resize();
   requestAnimationFrame(gameLoop);
 };
