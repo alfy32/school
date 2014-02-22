@@ -178,13 +178,13 @@ MYGAME.input = (function() {
     };
 
     that.registerCommand = function(type, handler) {
-      if (type === 'mousedown') {
+      if (type === 'touchstart') {
         that.handlersStart.push(handler);
       }
-      else if (type === 'mouseup') {
+      else if (type === 'touchend') {
         that.handlersEnd.push(handler);
       }
-      else if (type === 'mousemove') {
+      else if (type === 'touchmove') {
         that.handlersMove.push(handler);
       }
     };

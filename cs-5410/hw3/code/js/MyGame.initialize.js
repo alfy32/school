@@ -1,55 +1,45 @@
-/*global MYGAME, $, performance, requestAnimationFrame */
+/*global MYGAME, $, requestAnimationFrame */
 
 MYGAME.initialize = function initialize() {
   'use strict';
 
   var myMouse = MYGAME.input.Mouse();
+  var myTouch = MYGAME.input.Touch();
 
-  MYGAME.lastTimeStamp = performance.now();
-  var money = 0;
+  MYGAME.lastTimeStamp = 0;
+  var playing = false;
+  var level = 0;
+  var countDown = 0;
+  var timer = 0;
+  var over = false;
 
   window.onresize = MYGAME.graphics.resize;
 
-  var objects = [];
-  var addObjectRate = 2000;
-  var MAX_OBJECTS = 5;
-  var timeSinceLastAddObject = 0;
-
-  function addObject() {
-    var randomObject = Math.floor(Math.random() * 4);
-
-    console.log(randomObject);
-
-    if(randomObject === 0) randomObject = 'US';
-    else if(randomObject === 1) randomObject = 'roman';
-    else if(randomObject === 2) randomObject = 'canadian';
-    else if(randomObject === 3) randomObject = 'clock';
-
-    randomObject = MYGAME.graphics.objects[randomObject]();
-
-    myMouse.registerCommand('mousedown', function (e){
-      if(randomObject.clicked({
-        x: e.clientX, 
+  MYGAME.coins.registerEvents = function (coin) {
+    myMouse.registerCommand('mousedown', function (e) {
+      e.preventDefault();
+      coin.checkClick({
+        x: e.clientX,
         y: e.clientY
-      })) {
-        console.log(randomObject, e.clientX, e.clientY);
-        explodeObject(randomObject);
-      }
+      });
     });
 
-    objects.push(randomObject);
-  }
+    myTouch.registerCommand('touchstart', function (e) {
+      e.preventDefault();
+      for(var i in e.changedTouches) {
+        var touch = e.changedTouches[i];
 
-  function explodeObject(obj) {
-    console.log('clicked');
-    removeObject(obj);
-  }
+        if(touch.clientX) {
+          coin.checkTouch({
+            x: touch.clientX,
+            y: touch.clientY
+          });
+        }
+      }
+    });
+  };
 
-  function removeObject(obj) {
-    console.log('remove')
-    var index = objects.indexOf(obj);
-    objects.splice(index, 1);
-  }
+  var countDownText = MYGAME.graphics.Text();
 
   //------------------------------------------------------------------
   //
@@ -61,6 +51,7 @@ MYGAME.initialize = function initialize() {
   function gameLoop(time) {
     MYGAME.elapsedTime = time - MYGAME.lastTimeStamp;
     MYGAME.lastTimeStamp = time;
+    timer += MYGAME.elapsedTime;
 
     update(MYGAME.elapsedTime);
     render();
@@ -72,34 +63,48 @@ MYGAME.initialize = function initialize() {
 
   function update(elapsedTime) {
     myMouse.update(elapsedTime);
+    myTouch.update(elapsedTime);
 
-    if(objects.length < MAX_OBJECTS)
-      timeSinceLastAddObject += elapsedTime;
+    var money = 0;
 
-    // console.log(timeSinceLastAddObject, addObjectRate);
+    if(over) {
+      countDown = 'Win';
+    } else {
+      if(playing) {
+        money = MYGAME.coins.update(elapsedTime);
 
-    if(timeSinceLastAddObject > addObjectRate) {
-      timeSinceLastAddObject -= addObjectRate;
-      addObject();
-    }
-
-    for(var i in objects) {
-      if(objects[i].offScreen()) removeObject(objects[i]);
-      else {
-        objects[i].moveDown(elapsedTime);
-        objects[i].draw();
+        if(money >= 100) {
+          playing = false;
+          timer = 0;
+        }
       }
-    }
+      else {
+        countDown = Math.floor(timer/1000) + 1;
 
-    $('.money').text(money);
+        if(countDown > 3) {
+          playing = true;
+          level++;
+
+          if(level === 1) MYGAME.coins.initLevel(10,3,8,1,5);
+          else if(level === 2) MYGAME.coins.initLevel(15,4,12,1,8);
+          else if(level === 3) MYGAME.coins.initLevel(20,5,15,1,10);
+          else {
+            over = true;
+            playing = false;
+          }
+        }
+      }
+
+      $('.money').text(money);
+    }
   }
 
   function render() {
     MYGAME.graphics.clear();
 
-    for(var i in objects) {
-      objects[i].draw();
-    }
+    if(playing) MYGAME.coins.render();
+
+    if(!playing) countDownText.draw(countDown);
   }
 
   MYGAME.graphics.resize();

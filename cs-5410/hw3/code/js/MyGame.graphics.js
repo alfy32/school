@@ -30,19 +30,24 @@ MYGAME.graphics = (function() {
   function Texture(spec) {
     var that = {};
 
-    that.spec = spec;
+    that.which = spec.which;
 
-    that.clicked = function(mouse) {
+    that.checkClick = function(mouse) {
       var dx = mouse.x - spec.center.x;
       var dy = mouse.y - spec.center.y;
       var radius = spec.width/2;
-      console.log('dx', dx*dx, 'dy', dy*dy, 
-        'radius', radius*radius, 'x', mouse.x, 'y', mouse.y)
-      return dx*dx + dy*dy <= radius*radius;
+      that.clicked = dx*dx + dy*dy <= radius*radius;
+    };
+
+    that.checkTouch = function(touch) {
+      var dx = touch.x - spec.center.x;
+      var dy = touch.y - spec.center.y;
+      var radius = spec.width/2;
+      that.clicked = dx*dx + dy*dy <= radius*radius;
     };
 
     that.offScreen = function() {
-      return spec.center.y + spec.height/2 > canvas.height;
+      return spec.center.y - spec.height/2 > canvas.height;
     };
 
     that.rotateRight = function(elapsedTime) {
@@ -92,73 +97,28 @@ MYGAME.graphics = (function() {
     return that;
   }
 
-  function getRandomLocation(width, height) {
-    width += 10; // add padding on the sides.
-    return {
-      x: Math.random() * (window.innerWidth) ,
-      y: 10//-height/2
+  function Text() {
+    var that = {};
+
+    that.draw = function(text) {
+      context.save();
+
+      context.translate(canvas.width/2, canvas.height/2);
+
+      context.fillStyle = 'yellow';
+      context.font = '100px Verdana';
+      context.fillText(text, -50, -50);
+
+      context.restore();
     };
+
+    return that;
   }
-
-  function getSpec(image, height, width) {
-    return {
-      image: image,
-      center: getRandomLocation(width,height),
-      width: width,
-      height: height,
-      rotation: 0,
-      moveRate: 20,
-      rotateRate: 0
-    };
-  }
-
-  function canadian() {
-    var image = new Image();
-    image.src = 'img/Coin-Canadian-Dollar.png';
-    var width = 100;
-    var height = 100;
-
-    return MYGAME.graphics.Texture(getSpec(image, height, width));
-  }
-
-  function roman() {
-    var image = new Image();
-    image.src = 'img/Coin-Roman.png';
-    var width = 30;
-    var height = 30;
-
-    return MYGAME.graphics.Texture(getSpec(image, height, width));
-  }
-
-  function US() {
-    var image = new Image();
-    image.src = 'img/Coin-US-Dollary.png';
-    var width = 50;
-    var height = 50;
-
-    return MYGAME.graphics.Texture(getSpec(image, height, width));
-  }
-
-  function clock() {
-    var image = new Image();
-    image.src = 'img/Clock.png';
-    var width = 50;
-    var height = 50;
-
-    return MYGAME.graphics.Texture(getSpec(image, height, width));
-  }
-
-  var objects = {
-    canadian: canadian,
-    roman: roman,
-    US: US,
-    clock: clock
-  };
 
   return {
     clear: clear,
     resize: resize,
     Texture: Texture,
-    objects: objects
+    Text: Text
   };
 }());

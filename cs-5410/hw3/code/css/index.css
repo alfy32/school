@@ -29,13 +29,13 @@ body {
   position: absolute;
   top: 5px;
   right: 5px;
-  height: 20%;
+  height: 80px;
 }
 
 .money {
   z-index: 1002;
   position: absolute;
-  top: 20%;
+  top: 80px;
   right: 10px;
   color: yellow;
   font-size: xx-large;
