@@ -11,22 +11,26 @@ using Messages;
 
 namespace AgentCommon
 {
-    public class Communicator
+    public static class Communicator
     {
-        static private IPEndPoint localEP = new IPEndPoint(IPAddress.Any, 12400);
-        static private UdpClient udpClient = new UdpClient(localEP);
+        static private UdpClient udpClient;
 
-        //static private IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 12300);
-        //static private UdpClient udpClientRecieve = new UdpClient(remoteEP);
+        static public void Initialize(Common.EndPoint endPoint)
+        {
+            IPEndPoint localEP = new IPEndPoint(IPAddress.Any, 12400);
+            udpClient = new UdpClient(localEP);
+        }
+
+        static public int GetAvailable()
+        {
+            return udpClient.Available;
+        }
 
         static public void Send(Envelope envelope)
         {
-            string hostName = envelope.address;
+            Common.EndPoint endPoint = envelope.endPoint;
 
-            IPEndPoint remoteEP = new IPEndPoint(GetHostAddress(hostName), 12400);
-
-            //IPEndPoint localEP = new IPEndPoint(IPAddress.Any, 12400);
-            //UdpClient udpClient = new UdpClient(localEP);
+            IPEndPoint remoteEP = new IPEndPoint(endPoint.Address, endPoint.Port);
 
             ByteList bytes = new ByteList();
 
@@ -34,19 +38,17 @@ namespace AgentCommon
             udpClient.Send(bytes.ToBytes(), bytes.Length, remoteEP);
         }
 
-        static public String Recieve(int timeout)
+        static public Envelope Recieve(int timeout)
         {
-            //IPEndPoint localEP = new IPEndPoint(IPAddress.Any, 12300);
-            //UdpClient udpClient = new UdpClient(localEP);
-
             IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
             byte[] receiveBuffer = udpClient.Receive(ref remoteEP);
+
+            Common.EndPoint endPoint = new Common.EndPoint(remoteEP);
 
             ByteList bytes = new ByteList(receiveBuffer);
 
 
-            return bytes.ToString();
-            //return new Envelope(Message.Create(bytes), remoteEP.Address.ToString());
+            return new Envelope(Message.Create(bytes), endPoint);
         }
 
         static private IPAddress GetHostAddress(string hostName)

@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BackGroundThread.cs" />
+    <Compile Include="BackgroundThread.cs" />
     <Compile Include="Communicator.cs" />
     <Compile Include="Doer.cs" />
     <Compile Include="Envelope.cs" />
