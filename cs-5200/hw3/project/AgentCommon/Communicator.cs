@@ -13,20 +13,24 @@ namespace AgentCommon
 {
     public static class Communicator
     {
-        static private UdpClient udpClient;
+        #region Private Data Members
+        private UdpClient udpClient;
+        #endregion
 
-        static public void Initialize(Common.EndPoint endPoint)
+        #region Constructors
+        public Communicator(Common.EndPoint endPoint)
         {
             IPEndPoint localEP = new IPEndPoint(IPAddress.Any, 12400);
             udpClient = new UdpClient(localEP);
         }
+        #endregion
 
-        static public int GetAvailable()
+        public int GetAvailable()
         {
             return udpClient.Available;
         }
 
-        static public void Send(Envelope envelope)
+        public void Send(Envelope envelope)
         {
             Common.EndPoint endPoint = envelope.endPoint;
 
@@ -38,7 +42,7 @@ namespace AgentCommon
             udpClient.Send(bytes.ToBytes(), bytes.Length, remoteEP);
         }
 
-        static public Envelope Recieve(int timeout)
+        public Envelope Recieve(int timeout)
         {
             IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
             byte[] receiveBuffer = udpClient.Receive(ref remoteEP);
@@ -51,7 +55,7 @@ namespace AgentCommon
             return new Envelope(Message.Create(bytes), endPoint);
         }
 
-        static private IPAddress GetHostAddress(string hostName)
+        private IPAddress GetHostAddress(string hostName)
         {
             IPAddress result = null;
             IPAddress[] addresses = Dns.GetHostAddresses(hostName);
