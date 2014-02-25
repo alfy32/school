@@ -1,9 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+
+using System.Net;
+using System.Collections.Generic;
+
 using AgentCommon;
 using Messages;
-using System.Net;
+using Common;
 
 namespace AgentCommonTester
 {
@@ -19,18 +23,27 @@ namespace AgentCommonTester
         [TestMethod]
         public void Communicator_SendRecieve()
         {
-            //EndGame message = new EndGame(2);
-            //Envelope envelope = new Envelope(message, "192.168.11.134");
+            int recievePort = 12300;
 
-            //String m = Communicator.Recieve(100);
-            ////Envelope recievedEnvelope = Communicator.Recieve(100);
-            ////EndGame recievedMessage = (EndGame)recievedEnvelope.message;
+            Communicator sender = new Communicator();
+            Communicator reciever = new Communicator(recievePort);
+                      
+            ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
+            Message message = new JoinGame(10, "A00123", "John", "Jones", agentInfo);
+            IPEndPoint localEP = new IPEndPoint(IPAddress.Loopback, recievePort);
+            Common.EndPoint endPoint = new Common.EndPoint(localEP);
+            Envelope sendEnvelope = new Envelope(message, endPoint);
 
-            //Communicator.Send(envelope);
+            sender.Send(sendEnvelope);
 
-            //Assert.AreEqual(10, m);
+            Envelope recieveEnvelope = reciever.Recieve(100);
 
-            ////Assert.AreEqual(2, recievedMessage.GameId);
+            JoinGame jg = (JoinGame)recieveEnvelope.message;
+
+            Assert.AreEqual(10, jg.GameId);
+            Assert.AreEqual("A00123", jg.ANumber);
+            Assert.AreEqual("Joe", jg.FirstName);
+            Assert.AreEqual("Jones", jg.LastName);
         }
     }
 }
