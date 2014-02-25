@@ -11,17 +11,29 @@ using Messages;
 
 namespace AgentCommon
 {
-    public static class Communicator
+    public class Communicator
     {
         #region Private Data Members
         private UdpClient udpClient;
+        private const int DEFAULT_PORT = 12400;
         #endregion
 
         #region Constructors
-        public Communicator(Common.EndPoint endPoint)
+        public Communicator()
         {
-            IPEndPoint localEP = new IPEndPoint(IPAddress.Any, 12400);
+            IPEndPoint localEP = new IPEndPoint(IPAddress.Any, DEFAULT_PORT);
             udpClient = new UdpClient(localEP);
+        }
+
+        public Communicator(int port)
+        {
+            IPEndPoint localEP = new IPEndPoint(IPAddress.Any, port);
+            udpClient = new UdpClient(localEP);
+        }
+
+        ~Communicator()
+        {
+            udpClient.Close();
         }
         #endregion
 
@@ -32,9 +44,10 @@ namespace AgentCommon
 
         public void Send(Envelope envelope)
         {
-            Common.EndPoint endPoint = envelope.endPoint;
+            int address = envelope.endPoint.Address;
+            int port = envelope.endPoint.Port;
 
-            IPEndPoint remoteEP = new IPEndPoint(endPoint.Address, endPoint.Port);
+            IPEndPoint remoteEP = new IPEndPoint(address, port);
 
             ByteList bytes = new ByteList();
 
@@ -53,15 +66,6 @@ namespace AgentCommon
 
 
             return new Envelope(Message.Create(bytes), endPoint);
-        }
-
-        private IPAddress GetHostAddress(string hostName)
-        {
-            IPAddress result = null;
-            IPAddress[] addresses = Dns.GetHostAddresses(hostName);
-            if (addresses.Length > 0 && addresses[0] != null)
-                result = addresses[0];
-            return result;
         }
     }
 }

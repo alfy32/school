@@ -12,15 +12,15 @@ namespace AgentCommon
     {
         #region Private Data Members
         private Communicator communicator;
-        private Dictionary<EndPoint, MessageQueue> messageQueues;
-        private static const int TIMEOUT = 100;
+        private MessageQueue messageQueue;
+        private const int TIMEOUT = 100;
         #endregion
 
         #region Constructors
-        public Listener(Communicator communicator, Dictionary<EndPoint, MessageQueue> messageQueues)
+        public Listener(Communicator communicator,MessageQueue messageQueue)
         {
             this.communicator = communicator;
-            this.messageQueues = messageQueues;
+            this.messageQueue = messageQueue;
         }
         #endregion
 
@@ -31,27 +31,28 @@ namespace AgentCommon
 
         protected override void Process()
         {
-            while (keepGoing)
+          while (keepGoing)
+          {
+            while (keepGoing && !suspended)
             {
-                while (!suspended)
-                {
-                    if (communicator.GetAvailable() > 0)
-                    {
-                        Envelope envelope = communicator.Recieve(TIMEOUT);
-                        if (messageQueues.ContainsKey(envelope.endPoint))
-                        {
-                            messageQueues[envelope.endPoint].push(envelope);
-                        }
-                        else
-                        {
-                            MessageQueue messageQueue = new MessageQueue();
-                            messageQueue.push(envelope);
+              if (communicator.GetAvailable() > 0)
+              {
+                Envelope envelope = communicator.Recieve(TIMEOUT);
+                int messageNr = envelope.message.MessageNr.SeqNumber;
+                int conversationId = envelope.message.ConversationId.SeqNumber;
 
-                            messageQueues.Add(envelope.endPoint, messageQueue);
-                        }
-                    }
-                }
+                if(messageNr == conversationId) {
+                  //place on request message queue
+                  messageQueue.push(envelope);
+                } else {
+                  //place on conversation message queue
+                  messageQueue.push(envelope);
+
+                  //ignore if ther is no conversation queue
+                }                
+              }
             }
+          }
         }
     }
 }

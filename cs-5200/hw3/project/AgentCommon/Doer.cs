@@ -32,7 +32,7 @@ namespace AgentCommon
         {
             while (keepGoing)
             {
-                while (!suspended)
+                while (keepGoing && !suspended)
                 {
                     if(messageQueue.hasItems())
                     {
