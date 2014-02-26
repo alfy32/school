@@ -8,7 +8,7 @@ using Messages;
 
 namespace AgentCommon
 {
-    public class ExecutionStrategy
+    public class ExecutionStrategy : BackgroundThread
     {
         public void execution() {
 
@@ -17,6 +17,16 @@ namespace AgentCommon
         public static Envelope executeMessage(Envelope envelope)
         {
             return null;
+        }
+
+        public override String ThreadName()
+        {
+            return "ExecutionStrategy";
+        }
+
+        protected override void Process()
+        {
+            
         }
     }
 }

@@ -20,9 +20,9 @@ namespace AgentCommonTester
       Communicator sender = new Communicator(senderPort);
       Communicator reciever = new Communicator(recieverPort);
 
-      MessageQueue messageQueue = new MessageQueue();
+      MessageQueue messageQueue = RequestMessageQueue.getQueue();
 
-      Listener listener = new Listener(reciever, messageQueue);
+      Listener listener = new Listener(reciever);
       listener.Start();
 
       ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
