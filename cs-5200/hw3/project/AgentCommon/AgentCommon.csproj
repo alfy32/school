@@ -45,6 +45,7 @@
     <Compile Include="Doer.cs" />
     <Compile Include="Envelope.cs" />
     <Compile Include="ExecutionStrategy.cs" />
+    <Compile Include="JoinGameExecutionStrategy.cs" />
     <Compile Include="Listener.cs" />
     <Compile Include="MessageQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

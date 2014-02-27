@@ -9,11 +9,15 @@ namespace AgentCommonTester
     public class BackgroundThreadTester
     {
         [TestMethod]
-        public void TestMethod1()
+        public void BackgroundThread_StartStop()
         {
             BackgroundThreadImpl thread = new BackgroundThreadImpl();
 
             thread.Start();
+
+            thread.Suspend();
+
+            thread.Resume();
 
             thread.Stop();
         }

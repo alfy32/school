@@ -8,15 +8,40 @@ using Messages;
 
 namespace AgentCommon
 {
-    public class ExecutionStrategy : BackgroundThread
+    public abstract class ExecutionStrategy : BackgroundThread
     {
-        public void execution() {
-
-        }
+        #region Static Members
+        private static Dictionary<int, ExecutionStrategy> StrategyPool = new Dictionary<int, ExecutionStrategy>();
 
         public static void StartConversation(Envelope envelope)
         {
-          //How do I start a conversation?
+            int conversationId = envelope.message.ConversationId.SeqNumber;
+
+            MessageQueue messageQueue = ConversationMessageQueues.getQueue(conversationId);
+
+            ExecutionStrategy executionStrategy = null;
+
+            switch (envelope.message.MessageTypeId())
+            {
+                case Message.MESSAGE_CLASS_IDS.JoinGame:
+                    executionStrategy = new JoinGameExecutionStrategy(conversationId);
+                    break;
+            }
+
+            if (executionStrategy != null)
+            {
+                StrategyPool.Add(conversationId, executionStrategy);
+
+                executionStrategy.Start();
+            }            
+        }
+        #endregion
+
+        protected MessageQueue messageQueue;
+
+        public ExecutionStrategy(int conversationId)
+        {
+            messageQueue = ConversationMessageQueues.getQueue(conversationId);
         }
 
         public override String ThreadName()
@@ -30,9 +55,11 @@ namespace AgentCommon
             {
                 while (keepGoing && !suspended)
                 {
-                    //Execute the strategy???
+                    Execute();
                 }
             }
         }
+
+        protected abstract void Execute();
     }
 }

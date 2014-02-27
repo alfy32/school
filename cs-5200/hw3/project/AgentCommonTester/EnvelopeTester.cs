@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using AgentCommon;
 using Messages;
-using System.Net;
+using Common;
 
 namespace AgentCommonTester
 {
@@ -13,9 +13,18 @@ namespace AgentCommonTester
         [TestMethod]
         public void Envelope_CheckConstructors()
         {
-            Assert.AreEqual("Test", "Test");
+            Envelope envelopeEmpty = new Envelope();
 
-            
+            Assert.AreEqual(null, envelopeEmpty.message);
+            Assert.AreEqual(null, envelopeEmpty.endPoint);
+
+            Message message = new EndGame();
+            EndPoint endPoint = new EndPoint();
+
+            Envelope envelope = new Envelope(message, endPoint);
+
+            Assert.AreEqual(message, envelope.message);
+            Assert.AreEqual(endPoint, envelope.endPoint);
         }
     }
 }

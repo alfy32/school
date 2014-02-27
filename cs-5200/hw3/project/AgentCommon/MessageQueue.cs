@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,11 @@ namespace AgentCommon
 {
     public class MessageQueue
     {
-        Queue<Envelope> queue;
+        ConcurrentQueue<Envelope> queue;
 
         public MessageQueue()
         {
-            queue = new Queue<Envelope>();
+            queue = new ConcurrentQueue<Envelope>();
         }
 
         public void push(Envelope envelope)
@@ -22,12 +23,16 @@ namespace AgentCommon
 
         public Envelope pop()
         {
-            return queue.Dequeue();
+            Envelope envelope = new Envelope();
+
+            queue.TryDequeue(out envelope);
+
+            return envelope;
         }
 
         public bool hasItems()
         {
-            return queue.Count > 0;
+            return !queue.IsEmpty;
         }
     }
 }
