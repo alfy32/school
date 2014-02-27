@@ -13,9 +13,31 @@ namespace AgentCommon
 {
     public class Communicator
     {
+        #region Static Members
+        private static Dictionary<int, bool> used = new Dictionary<int, bool>();
+        private static int currentPort = 12000;
+
+        public static int nextAvailablePort()
+        {
+          while(used.ContainsKey(currentPort))
+            currentPort++;
+
+          used.Add(currentPort, true);
+
+          return currentPort++; 
+        }
+
+        private static void markPortUsed(int port)
+        {
+          if (!used.ContainsKey(port))
+            used.Add(port, true);
+        }
+        #endregion
+
         #region Private Data Members
         private UdpClient udpClient;
         private const int DEFAULT_PORT = 12400;
+        private const int TIMEOUT = 500;
         #endregion
 
         #region Constructors
@@ -29,6 +51,9 @@ namespace AgentCommon
         {
             IPEndPoint localEP = new IPEndPoint(IPAddress.Any, port);
             udpClient = new UdpClient(localEP);
+            udpClient.Client.ReceiveTimeout = TIMEOUT;
+
+            markPortUsed(port);
         }
 
         ~Communicator()
@@ -55,7 +80,7 @@ namespace AgentCommon
             udpClient.Send(bytes.ToBytes(), bytes.Length, remoteEP);
         }
 
-        public Envelope Recieve(int timeout)
+        public Envelope Recieve()
         {
             IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
             byte[] receiveBuffer = udpClient.Receive(ref remoteEP);

@@ -17,14 +17,16 @@ namespace AgentCommonTester
         [TestMethod]
         public void Communicator_CheckInitialize()
         {
+          Communicator com = new Communicator();
 
+          Communicator com2 = new Communicator(Communicator.nextAvailablePort());
         }
 
         [TestMethod]
         public void Communicator_SendRecieve()
         {
-            int senderPort = 12300;
-            int recieverPort = 12400;
+            int senderPort = Communicator.nextAvailablePort();
+            int recieverPort = Communicator.nextAvailablePort();
 
             Communicator sender = new Communicator(senderPort);
             Communicator reciever = new Communicator(recieverPort);
@@ -37,7 +39,7 @@ namespace AgentCommonTester
 
             sender.Send(sendEnvelope);
 
-            Envelope recieveEnvelope = reciever.Recieve(100);
+            Envelope recieveEnvelope = reciever.Recieve();
 
             JoinGame jg = (JoinGame)recieveEnvelope.message;
 
@@ -47,29 +49,29 @@ namespace AgentCommonTester
             Assert.AreEqual("Jones", jg.LastName);
         }
 
-        [TestMethod]
-        public void Communicator_SendToGreg()
-        {
-            int sendPort = 12300;
-            int recieverPort = 9835;
+        //[TestMethod]
+        //public void Communicator_SendToGreg()
+        //{
+        //    int sendPort = 12300;
+        //    int recieverPort = 9835;
 
-            string hostName = "129.123.7.167";
+        //    string hostName = "129.123.7.167";
 
-            Communicator sender = new Communicator(sendPort);
+        //    Communicator sender = new Communicator(sendPort);
 
-            ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
-            Message message = new JoinGame(10, "A00123", "Joe", "Jones", agentInfo);
-            IPEndPoint recieverEP = new IPEndPoint(GetHostAddress(hostName), recieverPort);
-            Common.EndPoint endPoint = new Common.EndPoint(recieverEP);
-            Envelope sendEnvelope = new Envelope(message, endPoint);
+        //    ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
+        //    Message message = new JoinGame(10, "A00123", "Joe", "Jones", agentInfo);
+        //    IPEndPoint recieverEP = new IPEndPoint(GetHostAddress(hostName), recieverPort);
+        //    Common.EndPoint endPoint = new Common.EndPoint(recieverEP);
+        //    Envelope sendEnvelope = new Envelope(message, endPoint);
 
-            sender.Send(sendEnvelope);
-        }
+        //    sender.Send(sendEnvelope);
+        //}
 
         [TestMethod]
         public void Communicator_ListenToGreg()
         {
-            int recieverPort = 12300;
+            int recieverPort = 23456;
 
             Communicator reciever = new Communicator(recieverPort);
 

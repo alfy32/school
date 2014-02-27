@@ -14,9 +14,9 @@ namespace AgentCommon
 
         }
 
-        public static Envelope executeMessage(Envelope envelope)
+        public static void StartConversation(Envelope envelope)
         {
-            return null;
+          //How do I start a conversation?
         }
 
         public override String ThreadName()
@@ -26,7 +26,13 @@ namespace AgentCommon
 
         protected override void Process()
         {
-            
+            while (keepGoing)
+            {
+                while (keepGoing && !suspended)
+                {
+                    //Execute the strategy???
+                }
+            }
         }
     }
 }

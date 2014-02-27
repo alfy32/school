@@ -12,7 +12,6 @@ namespace AgentCommon
     {
         #region Private Data Members
         private Communicator communicator;
-        private const int TIMEOUT = 100;
         #endregion
 
         #region Constructors
@@ -35,7 +34,7 @@ namespace AgentCommon
                 {
                     if (communicator.GetAvailable() > 0)
                     {
-                        Envelope envelope = communicator.Recieve(TIMEOUT);
+                        Envelope envelope = communicator.Recieve();
                         int messageNr = envelope.message.MessageNr.SeqNumber;
                         int conversationId = envelope.message.ConversationId.SeqNumber;
 

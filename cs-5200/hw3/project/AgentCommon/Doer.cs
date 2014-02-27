@@ -10,18 +10,12 @@ namespace AgentCommon
 {
     public class Doer : BackgroundThread
     {
-        #region Private Members
         private Communicator communicator;
-        private MessageQueue messageQueue;
-        #endregion
-
-        #region Constructors
-        public Doer(Communicator communicator, MessageQueue messageQueue)
+      
+        public Doer(Communicator communicator)
         {
             this.communicator = communicator;
-            this.messageQueue = messageQueue;
         }
-        #endregion
 
         public override string ThreadName()
         {
@@ -30,16 +24,17 @@ namespace AgentCommon
 
         protected override void Process()
         {
+            MessageQueue requestMessageQueue = RequestMessageQueue.getQueue();
+
             while (keepGoing)
             {
                 while (keepGoing && !suspended)
                 {
-                    if(messageQueue.hasItems())
+                    if(requestMessageQueue.hasItems())
                     {
-                        Envelope envelope = messageQueue.pop();
-                        Envelope envelopeToSend = ExecutionStrategy.executeMessage(envelope);
+                        Envelope envelope = requestMessageQueue.pop();
 
-                        communicator.Send(envelopeToSend);
+                        ExecutionStrategy.StartConversation(envelope);
                     }
                 }
             }

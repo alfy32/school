@@ -51,9 +51,11 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BackgroundThreadTester.cs" />
+    <Compile Include="DoerTester.cs" />
     <Compile Include="EnvelopeTester.cs" />
     <Compile Include="CommunicatorTester.cs" />
     <Compile Include="ListenerTester.cs" />
+    <Compile Include="MessageQueueTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

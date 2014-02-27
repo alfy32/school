@@ -14,8 +14,8 @@ namespace AgentCommonTester
     [TestMethod]
     public void Listener_Listen()
     {
-      int senderPort = 12500;
-      int recieverPort = 12600;
+      int senderPort = Communicator.nextAvailablePort();
+      int recieverPort = Communicator.nextAvailablePort();
 
       Communicator sender = new Communicator(senderPort);
       Communicator reciever = new Communicator(recieverPort);
