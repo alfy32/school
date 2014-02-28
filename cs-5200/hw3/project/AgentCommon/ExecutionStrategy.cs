@@ -11,29 +11,26 @@ namespace AgentCommon
     public abstract class ExecutionStrategy : BackgroundThread
     {
         #region Static Members
-        private static Dictionary<int, ExecutionStrategy> StrategyPool = new Dictionary<int, ExecutionStrategy>();
+        protected static Dictionary<Message.MESSAGE_CLASS_IDS, ExecutionStrategy> StrategyPool = new Dictionary<Message.MESSAGE_CLASS_IDS, ExecutionStrategy>();
 
         public static void StartConversation(Envelope envelope)
         {
-            int conversationId = envelope.message.ConversationId.SeqNumber;
+            //TODO: Make this work better.
+            Message.MESSAGE_CLASS_IDS messageId = envelope.message.MessageTypeId();
 
-            MessageQueue messageQueue = ConversationMessageQueues.getQueue(conversationId);
-
-            ExecutionStrategy executionStrategy = null;
-
-            switch (envelope.message.MessageTypeId())
+            //If the strategyPool doesn't contain the executionStrategy then 
+            // we have not yet implemented it or don't know what to do so 
+            // we ignore it.
+            if(StrategyPool.ContainsKey(messageId)) 
             {
-                case Message.MESSAGE_CLASS_IDS.JoinGame:
-                    executionStrategy = new JoinGameExecutionStrategy(conversationId);
-                    break;
+                int conversationId = envelope.message.ConversationId.SeqNumber;
+                MessageQueue messageQueue = ConversationMessageQueues.getQueue(conversationId);
+                messageQueue.push(envelope);
+
+                ExecutionStrategy executionStrategy = StrategyPool[messageId];
+                executionStrategy.Resume();
             }
-
-            if (executionStrategy != null)
-            {
-                StrategyPool.Add(conversationId, executionStrategy);
-
-                executionStrategy.Start();
-            }            
+            
         }
         #endregion
 
