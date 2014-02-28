@@ -3,23 +3,27 @@
 <head>
   <title>Coin Drop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <link rel="stylesheet" type="text/css" href="css/index.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
-  <img class="piggy-bank" src="img/Piggy-Bank.png">
-  <label class="money">1234</label>
+
+  <h3 class="main-title">Coin Drop</h3>
+
+  <div class="index-main">
+    <div class="main-inner">
+      <button class="main-buttons" id="new">New Game</button>
+      <button class="main-buttons" id="scores">High Scores</button>
+      <button class="main-buttons" id="credits">Credits</button>
+    </div>
+  </div>
+
+  <h3 class="main-footer">Written By Alan Christensen</h3>
 
   <img class="background" src="img/Background.png">
-  <canvas id="canvas-main"></canvas>
 
-  <!-- Game JS -->
+  <!-- JavaScript -->
   <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script type="text/javascript" src="js/Random.js"></script>
-  <script type="text/javascript" src="js/MyGame.js"></script>
-  <script type="text/javascript" src="js/MyGame.coins.js"></script>
-  <script type="text/javascript" src="js/MyGame.initialize.js"></script>
-  <script type="text/javascript" src="js/MyGame.input.js"></script>
-  <script type="text/javascript" src="js/MyGame.graphics.js"></script>
+  <script type="text/javascript" src="js/index.js"></script>
 
   <!-- Image Preloading -->
   <img hidden src="img/Clock.png">
