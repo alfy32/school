@@ -124,4 +124,9 @@ public class Eat extends Request
 	public int compareTo(Object obj) {
 		 return Compare(this, (Message) obj);
 	}
+
+	@Override
+	public MESSAGE_CLASS_IDS MessageTypeId() {
+		return Message.MESSAGE_CLASS_IDS.Eat;
+	}
 }

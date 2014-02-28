@@ -119,4 +119,9 @@ public class Move  extends Request
 	public int compareTo(Object o) {
 		return 0;
 	}
+
+	@Override
+	public MESSAGE_CLASS_IDS MessageTypeId() {
+		return Message.MESSAGE_CLASS_IDS.Move;
+	}
 }

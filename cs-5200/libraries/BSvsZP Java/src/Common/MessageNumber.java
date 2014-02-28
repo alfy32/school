@@ -24,32 +24,19 @@ public class MessageNumber extends  DistributableObject implements Comparable
         return result;
     }
 
-    public static MessageNumber Create(ByteList bytes)
+    public static MessageNumber Create(ByteList bytes) throws Exception
     {
         MessageNumber result = null;
         if (bytes == null || bytes.getRemainingToRead() < MessageNumber.getMinimumEncodingLength())
-			try {
-				throw new ApplicationException("Invalid message byte array", null);
-			} catch (ApplicationException e) 
-			{
-				e.printStackTrace();
-			}
-		else
-			try {
-				if (bytes.PeekInt16() != MessageNumber.getClassId())
-					try {
-						throw new ApplicationException("Invalid message class id", null);
-					} catch (ApplicationException e) {
-						e.printStackTrace();
-					}
-				else
+			throw new ApplicationException("Invalid message byte array", null);
+		
+		else if (bytes.PeekInt16() != MessageNumber.getClassId())
+				throw new ApplicationException("Invalid message class id", null);
+			else
 				{
 				    result = new MessageNumber();
 				    result.Decode(bytes);
 				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
         return result;
     }
 
@@ -197,7 +184,7 @@ public class MessageNumber extends  DistributableObject implements Comparable
 	@Override
 	public void Encode(ByteList bytes)
     {
-    	   bytes.getRemainingToRead();
+    	   bytes.update();
 		   bytes.Add(MessageNumber.getClassId());                              // Write out the class type
 
            short lengthPos = bytes.getCurrentWritePosition();    // Get the current write position, so we

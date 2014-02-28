@@ -8,6 +8,7 @@ import org.omg.CORBA.portable.ApplicationException;
 import Common.ByteList;
 import Common.ComponentInfo;
 import Messages.JoinGame;
+import Messages.Message;
 
 public class JoinGameTester {
 
@@ -71,6 +72,7 @@ public class JoinGameTester {
         jg.setAgentInfo(agentInfo);
         assertSame(agentInfo, jg.getAgentInfo());
 
+        assertEquals(Message.MESSAGE_CLASS_IDS.JoinGame, jg.MessageTypeId());
     }
    
 	@Test
@@ -89,11 +91,7 @@ public class JoinGameTester {
        
         jg1.Encode(bytes);
     
-      /*  System.out.println(bytes.getLength());
-        for (int i = 0; i< bytes.get_sections().size(); i++)
-        	System.out.print(bytes.get_sections().get(i).toString().charAt(i) + " ");
-        System.out.println();*/
-        	
+    	
 		JoinGame jg2 = JoinGame.Create(bytes);
 		
 		System.out.println("jg1.getGameId() @@@" + jg1.getGameId());

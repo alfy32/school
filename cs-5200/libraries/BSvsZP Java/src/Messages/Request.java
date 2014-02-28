@@ -74,25 +74,38 @@ public abstract class Request extends Message
 
         short msgType = bytes.PeekInt16();
         
-        if (msgType == (short) MESSAGE_CLASS_IDS.GameAnnouncement.getValue()) ;
+        if (msgType == (short) MESSAGE_CLASS_IDS.GameAnnouncement.getValue())
+        	result = GameAnnouncement.Create(bytes);
         if (msgType == (short) MESSAGE_CLASS_IDS.JoinGame.getValue())
         	result = JoinGame.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.AddComponent.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.RemoveComponent.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.StartGame.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.EndGame.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.GetResource.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.TickDelivery.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.ValidateTick.getValue()) ;
+        if (msgType == (short) MESSAGE_CLASS_IDS.AddComponent.getValue())
+        	result = AddComponent.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.RemoveComponent.getValue()) 
+        	result = RemoveComponent.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.StartGame.getValue()) 
+        	result =  StartGame.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.EndGame.getValue()) 
+        	result =  EndGame.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.GetResource.getValue()) 
+        	result = GetResource.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.TickDelivery.getValue()) 
+        	result = TickDelivery.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.ValidateTick.getValue()) 
+        	result = ValidateTick.Create(bytes);
         if (msgType == (short) MESSAGE_CLASS_IDS.Move.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.ThrowBomb.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.Eat.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.ChangeStrength.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.Collaborate.getValue()) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.GetStatus.getValue()) ;
+        	result = Move.Create(bytes) ;
+        if (msgType == (short) MESSAGE_CLASS_IDS.ThrowBomb.getValue()) 
+        	result = ThrowBomb.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.Eat.getValue()) 
+        	result = Eat.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.ChangeStrength.getValue()) 
+        	result = ChangeStrength.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.Collaborate.getValue()) 
+        	result = Collaborate.Create(bytes);
+        if (msgType == (short) MESSAGE_CLASS_IDS.GetStatus.getValue()) 
+        	result = GetStatus.Create(bytes);
         else
-        	
-           throw new ApplicationException("Invalid Message Class Id", null);
+            throw new ApplicationException("Invalid Message Class Id", null);
         return result;
     }
 	
@@ -146,7 +159,7 @@ public abstract class Request extends Message
 	public static int getMinimumEncodingLength()
 	{
 		MinimumEncodingLength = 4                // Object header
-                 + 1;             // RequestType
+								+ 1;             // RequestType
 		System.out.println("Request.MinimumEncodingLength" + MinimumEncodingLength);
 		return MinimumEncodingLength;
 	}

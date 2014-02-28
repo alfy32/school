@@ -14,7 +14,7 @@ public abstract class Message implements Comparable
 	private MessageNumber ConversationId;
 	private static short ClassId;
 	private static int MinimumEncodingLength;
-	
+	public abstract MESSAGE_CLASS_IDS MessageTypeId();
 	public enum MESSAGE_CLASS_IDS
 	{
 		Message(1),
@@ -87,12 +87,15 @@ public abstract class Message implements Comparable
 	public void Encode(ByteList bytes) throws UnknownHostException,	NotActiveException, Exception 
 	{
 		bytes.Add(Message.getClassId()); // Write out the class type
-
+		bytes.update();
+		
 		short lengthPos = bytes.getCurrentWritePosition(); // Get the current write position, so we
 														// can write the length here later
 		bytes.Add((short) 0); 			// Write out a place holder for the length
-		bytes.getRemainingToRead();
+		bytes.update();
+		
 		bytes.AddObjects(getMessageNr(), getConversationId());
+		bytes.update();
 		short length = (short)(bytes.getCurrentWritePosition() - lengthPos - 2);
 		bytes.WriteInt16To(lengthPos, length); // Write out the length of this object
 	}
@@ -103,10 +106,10 @@ public abstract class Message implements Comparable
 		short objLength = bytes.GetInt16();
 
 		bytes.SetNewReadLimit(objLength);
-		bytes.getRemainingToRead();
+		bytes.update();
 		MessageNr = ((MessageNumber) bytes.GetDistributableObject());
 		ConversationId = ((MessageNumber) bytes.GetDistributableObject());
-		bytes.getRemainingToRead();
+		bytes.update();
 		bytes.RestorePreviosReadLimit();
 	}
 

@@ -2,11 +2,16 @@ package MessagesTester;
 
 import static org.junit.Assert.*;
 
-import org.junit.Assert;
-import org.junit.Test;
+import java.io.NotActiveException;
+import java.net.UnknownHostException;
 
+import org.junit.Test;
+import org.omg.CORBA.portable.ApplicationException;
+
+import Common.ByteList;
 import Common.Tick;
 import Messages.AckNak;
+import Messages.Message;
 import Messages.Reply;
 
 public class AckNakTester {
@@ -80,5 +85,9 @@ public class AckNakTester {
 
         m.Note = "Test Note";
         assertEquals("Test Note", m.Note);
+        
+        assertEquals(Message.MESSAGE_CLASS_IDS.AckNak, m.MessageTypeId());
      }
+	
+	
 }

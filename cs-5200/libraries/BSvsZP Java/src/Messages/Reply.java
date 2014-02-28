@@ -5,7 +5,9 @@ import java.net.UnknownHostException;
 
 import org.omg.CORBA.portable.ApplicationException;
 
+import Common.BitConverter;
 import Common.ByteList;
+import Common.DistributableObject.DISTRIBUTABLE_CLASS_IDS;
 import Messages.Message.MESSAGE_CLASS_IDS;
 
 public abstract class Reply extends Message
@@ -30,12 +32,21 @@ public abstract class Reply extends Message
                      return (short) status.value;
                  }
              }
-             // throw an IllegalArgumentException or return null
+          
              throw new IllegalArgumentException("the given number doesn't match any Status.");
          }
-         public static PossibleTypes convert(byte value) {
-             return PossibleTypes.values()[value];
+         public static PossibleTypes convert(int value) {
+        	PossibleTypes temp = null;
+          	for(PossibleTypes dt : PossibleTypes.values()) 
+          	{	
+                  if(dt.value == value) 
+                      temp = dt;
+          	}
+          	return temp;
+       
          }  
+         
+        
     }
 	public enum PossibleStatus
     {
@@ -67,11 +78,17 @@ public abstract class Reply extends Message
         		if (status.getValue() == i)
         			return (short)status.value;
         	}
-        	 // throw an IllegalArgumentException or return null
+        
         	throw new IllegalArgumentException("the given number doesn't match any Status.");
         }
-        public static PossibleStatus convert(byte value) {
-            return PossibleStatus.values()[value];
+        public static PossibleStatus convert(int value) {
+        	PossibleStatus temp = null;
+          	for(PossibleStatus dt : PossibleStatus.values()) 
+          	{	
+                  if(dt.value == value) 
+                      temp = dt;
+          	}
+          	return temp;
         } 
     }
 	public PossibleTypes ReplyType;
@@ -110,19 +127,25 @@ public abstract class Reply extends Message
     public  void Encode(ByteList messageBytes) throws UnknownHostException, NotActiveException, Exception
     {
         messageBytes.Add(Reply.getClassId());                            // Write out this class id first
-
+        messageBytes.update();
+       
         short lengthPos = messageBytes.getCurrentWritePosition();    // Get the current write position, so we
                                                                 // can write the length here later
         messageBytes.Add((short)0);                             // Write out a place holder for the length
-
+        messageBytes.update();
+        
         super.Encode(messageBytes);                              // Encode stuff from base class
 
-        messageBytes.Add(ReplyType.getValue());            // Write out a place holder for the length
-
-        messageBytes.Add(Status.getValue());               // Write out a place holder for the length
-
-        Integer tempa = (messageBytes.getCurrentWritePosition() - lengthPos - 2);
-        short length = tempa.shortValue();
+        messageBytes.Add((byte)ReplyType.getValue());            // Write out a place holder for the length
+        //messageBytes.update();
+        
+        messageBytes.Add((byte)Status.getValue());               // Write out a place holder for the length
+        messageBytes.update();
+        
+        if (Note == null) Note = "";
+        messageBytes.Add(Note);
+        messageBytes.update();
+        short length = (short) (messageBytes.getCurrentWritePosition() - lengthPos - 2);
         messageBytes.WriteInt16To(lengthPos, length);           // Write out the length of this object        
     }
     
@@ -133,12 +156,16 @@ public abstract class Reply extends Message
         short objLength = bytes.GetInt16();
 
         bytes.SetNewReadLimit(objLength);
-
+     
+        
         super.Decode(bytes);
-
-        Byte tempa = bytes.GetByte();
+        bytes.update();
+        int  tempa = (int) bytes.GetByte();
+        
         ReplyType = PossibleTypes.convert(tempa);
+        bytes.update();
         Status = PossibleStatus.convert(tempa);
+        bytes.update();
         Note = bytes.GetString();
 
         bytes.RestorePreviosReadLimit();

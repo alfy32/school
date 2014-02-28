@@ -7,6 +7,7 @@ import org.omg.CORBA.portable.ApplicationException;
 
 import Common.ByteList;
 import Common.DistributableObject;
+import Messages.Message;
 
 public class AckNak extends Reply
 {
@@ -17,6 +18,13 @@ public class AckNak extends Reply
      public String Message;
      private static int MinimumEncodingLength;
 
+     
+     public Message.MESSAGE_CLASS_IDS MessageTypeId()
+     { 
+    	 return Messages.Message.MESSAGE_CLASS_IDS.AckNak;
+     }
+     
+     
      protected AckNak() { }
 
      public AckNak(PossibleStatus status, int intResult, DistributableObject objResult, String message, String note) 
@@ -59,6 +67,7 @@ public class AckNak extends Reply
          else
          {
              result = new AckNak();
+             messageBytes.update();
              result.Decode(messageBytes);
          }
 
@@ -68,19 +77,21 @@ public class AckNak extends Reply
      public void Encode(ByteList bytes) throws NotActiveException, UnknownHostException, Exception
      {
          bytes.Add(AckNak.getClassId());                           // Write out this class id first
-
+         bytes.update();
+         
          short lengthPos = bytes.getCurrentWritePosition();   // Get the current write position, so we
                                                              // can write the length here later
          bytes.Add((short) 0);                           // Write out a place holder for the length
-
+         bytes.update();
+         
          super.Encode(bytes);                             // Encode stuff from base class
 
          if (Message == null)
         	 Message = "";
-         bytes.AddObjects(IntResult, ObjResult, Message);
-
-         Integer lenghtinBytes = (bytes.getCurrentWritePosition() - lengthPos - 2);
-         short length = lenghtinBytes.shortValue();
+         bytes.AddObjects(getIntResult(), getObjResult(), getMessage());
+         bytes.update();
+         
+         short length = (short) (bytes.getCurrentWritePosition() - lengthPos - 2);
          bytes.WriteInt16To(lengthPos, length);          // Write out the length of this object        
 
      }
@@ -91,7 +102,7 @@ public class AckNak extends Reply
          short objLength = bytes.GetInt16();
 
          bytes.SetNewReadLimit(objLength);
-
+         bytes.update();
          super.Decode(bytes);
 
          IntResult = bytes.GetInt32();
@@ -134,6 +145,7 @@ public class AckNak extends Reply
     	 return MinimumEncodingLength;
 	}
 
+     
 	public static short getClassId() {
 		ClassId = (short)MESSAGE_CLASS_IDS.AckNak.getValue();
 		return ClassId;

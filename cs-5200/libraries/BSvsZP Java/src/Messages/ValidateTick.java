@@ -111,4 +111,9 @@ public class ValidateTick extends Request
 	{
 		return 0;
 	}
+
+	@Override
+	public MESSAGE_CLASS_IDS MessageTypeId() {
+		return Message.MESSAGE_CLASS_IDS.ValidateTick;
+	}
 }

@@ -8,7 +8,7 @@ public class GetResource extends Request
 {
 	 private static short ClassId;
 	 public short GameId;
-     public PossibleResourceType GetType; 
+     public PossibleResourceType GetResourceType; 
      public Tick EnablingTick;
      private static int MinimumEncodingLength;
 		
@@ -46,7 +46,7 @@ public class GetResource extends Request
      {
     	 super(PossibleTypes.GetResource);
          GameId = gameId;
-         GetType = type;
+         GetResourceType = type;
          EnablingTick = tick;
      }
 
@@ -80,7 +80,7 @@ public class GetResource extends Request
 
          super.Encode(bytes);                              // Encode the part of the object defined
          													// by the base class
-         bytes.AddObjects(GameId, (byte) GetType.getValue(), EnablingTick);
+         bytes.AddObjects(GameId, (byte) GetResourceType.getValue(), EnablingTick);
          int lengthinBytes = (bytes.getCurrentWritePosition() - lengthPos - 2);
          short length = (short) lengthinBytes;
          bytes.WriteInt16To(lengthPos, length);           // Write out the length of this object        
@@ -97,7 +97,7 @@ public class GetResource extends Request
          super.Decode(bytes);
 
          GameId = bytes.GetInt16();
-         GetType = PossibleResourceType.convert(bytes.GetByte());
+         GetResourceType = PossibleResourceType.convert(bytes.GetByte());
          EnablingTick = (Tick) bytes.GetDistributableObject();
 
          bytes.RestorePreviosReadLimit();
@@ -126,11 +126,11 @@ public class GetResource extends Request
 	}
 
 	 public PossibleResourceType getGetType() {
-		return GetType;
+		return GetResourceType;
 	}
 
 	 public void setGetType(PossibleResourceType getType) {
-		GetType = getType;
+		GetResourceType = getType;
 	}
 
 	 public Tick getEnablingTick() {
@@ -149,6 +149,11 @@ public class GetResource extends Request
 	@Override
 	 public int compareTo(Object o) {
 			return 0;
+	}
+
+	@Override
+	public MESSAGE_CLASS_IDS MessageTypeId() {
+		return Message.MESSAGE_CLASS_IDS.GetResource;
 	}
 
 }
