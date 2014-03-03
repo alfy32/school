@@ -4,6 +4,7 @@
   <title>Coin Drop</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <link rel="stylesheet" type="text/css" href="css/coinDrop.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
   <img class="piggy-bank" src="img/Piggy-Bank.png">
@@ -11,6 +12,18 @@
 
   <img class="background" src="img/Background.png">
   <canvas id="canvas-main"></canvas>
+
+  <div class="game-over-div" hidden>
+    <p class="message">Game over man!</p>
+    <div>
+      <label>Level:</label><span class="level">2</span>
+      <label>Score:</label><span class="score">100</span>
+    </div>
+    <div>
+      <button id="again">Play Again</button>
+      <button id="done">Done</button>
+    </div>
+  </div>
 
   <!-- Game JS -->
   <script type="text/javascript" src="js/jquery.min.js"></script>

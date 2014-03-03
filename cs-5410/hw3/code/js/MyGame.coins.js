@@ -1,4 +1,4 @@
-/*global MYGAME, Random */
+/*global MYGAME, Random, particleSystem */
 
 MYGAME.coins = (function() {
   'use strict';
@@ -38,36 +38,37 @@ MYGAME.coins = (function() {
   images.dollarSign.src = 'img/Dollar-Sign.png';
 
   function update(time) {
+    var index;
+
     if(timeToAdd(time)) addCoin();
 
-    for(var i in coins) {
-      if(coins[i].onScreen) {
-        checkStatus(coins[i], +i);
-        coins[i].moveDown(time);
-        coins[i].rotateRight(time);
-      }
+    for(index in coins) {
+      checkStatus(coins[index], +index);
     }
 
-    for(var i in particleSystems) {
-      var system = particleSystems[i];
-
-      if(system.created > 5) {
-        delete particleSystems[i];
-      } else {
-        system.update(time);
-        system.render();
-        system.create();
-      }
+    for(index in coins) {
+      coins[index].moveDown(time);
+      coins[index].rotateRight(time);
     }
+
+    // for(index in particleSystems) {
+    //   var system = particleSystems[index];
+
+    //   if(system.created > 5) {
+    //     delete particleSystems[index];
+    //   } else {
+    //     system.update(time);
+    //     system.render();
+    //     system.create();
+    //   }
+    // }
 
     return settings.score;
   }
 
   function render() {
     for(var i in coins) {
-      if(coins[i].onScreen) {
-        coins[i].draw();
-      }
+      coins[i].draw();
     }
   }
 
@@ -86,7 +87,6 @@ MYGAME.coins = (function() {
   function addCoin() {
     var coin = coinStock.pop();
 
-    coin.onScreen = true;
     coin.clicked = false;
     coin.moveTo({
       x: Random.nextRange(PADDING, canvas.width - PADDING - PIG_SPACE),
@@ -96,22 +96,22 @@ MYGAME.coins = (function() {
     coins.push(coin);
   }
 
-  function checkStatus(coin, id) {
-    if(coin.clicked || coin.offScreen) {
-      coin.onScreen = false;
-      
-      if(coin.clicked) {
+  function checkStatus(coin, index) {
+    if(coin.offScreen()) {
+      coins.splice(index, 1);
+    }
+    if(coin.clicked) {
+      coins.splice(index, 1);
+      addParticles(coin.center);
 
-        if(coin.which === 'US') settings.score += 10;
-        else if(coin.which === 'ROMAN') settings.score += 50;
-        else if(coin.which === 'CANADIAN') settings.score = 0;
-        else {
-          for(var i = 0; i < settings.clockValue; ++i) {
-            createCoin(usCoin);
-          }
+      if(coin.which === 'US') settings.score += 10;
+      else if(coin.which === 'ROMAN') settings.score += 50;
+      else if(coin.which === 'CANADIAN') settings.score = 0;
+      else if(coin.which === 'CLOCK') {
+        for(var i = 0; i < settings.clockValue; ++i) {
+          createCoin(usCoin);
         }
-
-        addParticles(coin.center);
+        shuffle(coinStock);
       }
     }
   }
@@ -120,7 +120,7 @@ MYGAME.coins = (function() {
     var particles = particleSystem( {
         image : images.dollarSign,
         center: center,
-        speed: {mean: .1, stdev: .02},
+        speed: {mean: 0.1, stdev: 0.02},
         lifetime: {mean: 2000, stdev: 100}
       },
       MYGAME.graphics
@@ -140,6 +140,10 @@ MYGAME.coins = (function() {
   function clearCoins() {
     coins.length = 0;
     coinStock.length = 0;
+  }
+
+  function gone() {
+    return coinStock.length === 0 && coins.length === 0;
   }
 
   function initLevel(us, roman, canadian, clocks, clockValue) {
@@ -247,6 +251,7 @@ MYGAME.coins = (function() {
     initLevel: initLevel,
     clearCoins: clearCoins,
     update: update,
-    render: render
+    render: render,
+    gone: gone
   };
 }());

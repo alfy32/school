@@ -70,3 +70,39 @@ body {
   text-align: center;
   font-family: Arial;
 }
+
+.game-over-div {
+  z-index: 2000;
+  position: absolute;
+  top: 120px;
+  left: 0px;
+  width: 100%;
+  background-color: rgba(0,255,0,.8);
+  text-align: center;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.game-over-div .message{
+  font-size: 30px;
+  margin: 10px 0px;
+}
+
+.game-over-div label {
+  margin-right: 5px;
+}
+
+.game-over-div button {
+  pointer-events: all;
+  background-color: #0F4402;
+  border: none;
+  border-radius: 10px;
+  margin: 20px 5px;
+  padding: 10px 30px;
+  color: white;
+  font-size: small;
+}
+
+.game-over-div button:hover {
+  background-color: rgb(0,255,0);
+}
