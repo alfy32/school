@@ -41,6 +41,7 @@ MYGAME.initialize = function initialize() {
 
   var countDownText = MYGAME.graphics.Text();
 
+
   //------------------------------------------------------------------
   //
   // This is the Game Loop function!

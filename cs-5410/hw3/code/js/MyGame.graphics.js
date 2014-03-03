@@ -31,6 +31,7 @@ MYGAME.graphics = (function() {
     var that = {};
 
     that.which = spec.which;
+    that.center = spec.center;
 
     that.checkClick = function(mouse) {
       var dx = mouse.x - spec.center.x;
@@ -115,10 +116,32 @@ MYGAME.graphics = (function() {
     return that;
   }
 
+  //------------------------------------------------------------------
+  //
+  // Expose an ability to draw an image/texture on the canvas.
+  //
+  //------------------------------------------------------------------
+  function drawImage(spec) {
+    context.save();
+
+    context.translate(spec.center.x, spec.center.y);
+    context.rotate(spec.rotation);
+    context.translate(-spec.center.x, -spec.center.y);
+
+    context.drawImage(
+      spec.image, 
+      spec.center.x - spec.size/2, 
+      spec.center.y - spec.size/2,
+      spec.size, spec.size);
+
+    context.restore();
+  }
+
   return {
     clear: clear,
     resize: resize,
     Texture: Texture,
-    Text: Text
+    Text: Text,
+    drawImage: drawImage
   };
 }());

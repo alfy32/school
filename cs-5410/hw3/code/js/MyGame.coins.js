@@ -7,14 +7,17 @@ MYGAME.coins = (function() {
   var PADDING = 60;
   var PIG_SPACE = 100;
 
+  var particleSystems = [];
+
+  var coinStock = [];
   var coins = [];
-  var availableCoins = [];
   var settings = {
     clockValue: 0,
     score: 0,
     countDown: -1,
     dropRate: 200,
-    moveRate: 400,
+    moveRate: 300,
+    moveDist: 50,
     rotateRate: 3,
     rotateRateDist: 1,
     rotation: 50
@@ -24,13 +27,15 @@ MYGAME.coins = (function() {
     canadianCoin: new Image(),
     romanCoin: new Image(),
     usCoin: new Image(),
-    clock: new Image()
+    clock: new Image(),
+    dollarSign: new Image()
   };
 
   images.canadianCoin.src = 'img/Coin-Canadian-Dollar.png';
   images.romanCoin.src = 'img/Coin-Roman.png';
   images.usCoin.src = 'img/Coin-US-Dollary.png';
   images.clock.src = 'img/Clock.png';
+  images.dollarSign.src = 'img/Dollar-Sign.png';
 
   function update(time) {
     if(timeToAdd(time)) addCoin();
@@ -40,6 +45,18 @@ MYGAME.coins = (function() {
         checkStatus(coins[i], +i);
         coins[i].moveDown(time);
         coins[i].rotateRight(time);
+      }
+    }
+
+    for(var i in particleSystems) {
+      var system = particleSystems[i];
+
+      if(system.created > 5) {
+        delete particleSystems[i];
+      } else {
+        system.update(time);
+        system.render();
+        system.create();
       }
     }
 
@@ -55,7 +72,7 @@ MYGAME.coins = (function() {
   }
 
   function timeToAdd(time) {
-    if(!availableCoins.length) return false;
+    if(!coinStock.length) return false;
 
     settings.countDown -= time;
     if(settings.countDown < 0) {
@@ -67,47 +84,62 @@ MYGAME.coins = (function() {
   }
 
   function addCoin() {
-    var rand = Random.nextRange(0, availableCoins.length);
-    var index = availableCoins.splice(rand, 1)[0];
-    coins[index].onScreen = true;
-    coins[index].clicked = false;
-    coins[index].moveTo({
+    var coin = coinStock.pop();
+
+    coin.onScreen = true;
+    coin.clicked = false;
+    coin.moveTo({
       x: Random.nextRange(PADDING, canvas.width - PADDING - PIG_SPACE),
       y: -50
     });
+
+    coins.push(coin);
   }
 
   function checkStatus(coin, id) {
-    if(coin.clicked) {
-      availableCoins.push(id);
+    if(coin.clicked || coin.offScreen) {
       coin.onScreen = false;
-      coin.clicked = false;
+      
+      if(coin.clicked) {
 
-      if(coin.which === 'US') settings.score += 10;
-      else if(coin.which === 'ROMAN') settings.score += 50;
-      else if(coin.which === 'CANADIAN') settings.score = 0;
-      else {
-        for(var i = 0; i < settings.clockValue; ++i) {
-          createCoin(usCoin);
+        if(coin.which === 'US') settings.score += 10;
+        else if(coin.which === 'ROMAN') settings.score += 50;
+        else if(coin.which === 'CANADIAN') settings.score = 0;
+        else {
+          for(var i = 0; i < settings.clockValue; ++i) {
+            createCoin(usCoin);
+          }
         }
+
+        addParticles(coin.center);
       }
     }
-    else if(coin.offScreen()) {
-      availableCoins.push(id);
-      coin.onScreen = false;
-    }
+  }
+
+  function addParticles(center) {
+    var particles = particleSystem( {
+        image : images.dollarSign,
+        center: center,
+        speed: {mean: .1, stdev: .02},
+        lifetime: {mean: 2000, stdev: 100}
+      },
+      MYGAME.graphics
+    );
+
+    particles.created = 0;
+
+    particleSystems.push(particles);
   }
 
   function createCoin(coinFunc) {
     var coin = coinFunc();
     MYGAME.coins.registerEvents(coin);
-    availableCoins.push(coins.length);
-    coins.push(coin);
+    coinStock.push(coin);
   }
 
   function clearCoins() {
     coins.length = 0;
-    availableCoins.length = 0;
+    coinStock.length = 0;
   }
 
   function initLevel(us, roman, canadian, clocks, clockValue) {
@@ -130,7 +162,8 @@ MYGAME.coins = (function() {
     for(i = 0; i < clocks; ++i) {
       createCoin(clock);
     }
-    shuffle(coins);
+
+    shuffle(coinStock);
   }
 
   function shuffle(arr) {
@@ -156,7 +189,7 @@ MYGAME.coins = (function() {
       width: 100,
       height: 100,
       rotation: Random.nextGaussian(settings.rotation,3),
-      moveRate: Random.nextGaussian(settings.moveRate,10),
+      moveRate: Random.nextGaussian(settings.moveRate,settings.moveDist),
       rotateRate: Random.nextGaussian(settings.rotateRate,settings.rotateRateDist),
       which: 'CANADIAN'
     });
