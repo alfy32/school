@@ -57,10 +57,12 @@ MYGAME.initialize = function initialize() {
   var countDownMS = 0;
 
   function win() {
+    var div = $('.game-over-div');
 
+    div.find('.messages').text("You Won!");
+    
 
-
-    $('.game-over-div').removeAttr('hidden');
+    div.removeAttr('hidden');
 
     return true;
   }
@@ -79,6 +81,7 @@ MYGAME.initialize = function initialize() {
     var count = Math.floor(countDownMS/1000) + 1;
 
     if(count > 3) {
+      countDownMS = 0;
       state = 'play';
       level++;
 
@@ -86,6 +89,7 @@ MYGAME.initialize = function initialize() {
       else if(level === 2) MYGAME.coins.initLevel(15,4,12,1,8);
       else if(level === 3) MYGAME.coins.initLevel(20,5,15,1,10);
     }
+
     if(level > 3) {
       state = 'win';
     }
@@ -95,7 +99,7 @@ MYGAME.initialize = function initialize() {
     var money = MYGAME.coins.update(time);
     $('.money').text(money);
 
-    if(money > 100) {
+    if(money >= 100) {
       state = 'countDown';
     } else if(MYGAME.coins.gone()) {
       state = 'lose';
