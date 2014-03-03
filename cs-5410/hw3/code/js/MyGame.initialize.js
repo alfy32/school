@@ -59,18 +59,31 @@ MYGAME.initialize = function initialize() {
   function win() {
     var div = $('.game-over-div');
 
-    div.find('.messages').text("You Won!");
-    
+    var score = +$('.money').text();
+
+    div.find('.message').text("You Won!");
+    div.find('.level').text(level);
+    div.find('.score').text(score);
 
     div.removeAttr('hidden');
+
+    MYGAME.persistence.addScore(level, score);
 
     return true;
   }
 
   function lose() {
+    var div = $('.game-over-div');
 
+    var score = +$('.money').text();
 
-    $('.game-over-div').removeAttr('hidden');
+    div.find('.message').text("Game Over Man!");
+    div.find('.level').text(level);
+    div.find('.score').text(score);
+
+    div.removeAttr('hidden');
+
+    MYGAME.persistence.addScore(level, score);
 
     return true;
   }
@@ -89,10 +102,6 @@ MYGAME.initialize = function initialize() {
       else if(level === 2) MYGAME.coins.initLevel(15,4,12,1,8);
       else if(level === 3) MYGAME.coins.initLevel(20,5,15,1,10);
     }
-
-    if(level > 3) {
-      state = 'win';
-    }
   }
 
   function play(time) {
@@ -100,7 +109,10 @@ MYGAME.initialize = function initialize() {
     $('.money').text(money);
 
     if(money >= 100) {
-      state = 'countDown';
+      
+      if(level == 3) state = 'win';
+      else state = 'countDown';
+
     } else if(MYGAME.coins.gone()) {
       state = 'lose';
     }

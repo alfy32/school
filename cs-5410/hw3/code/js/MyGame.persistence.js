@@ -21,9 +21,20 @@ MYGAME.persistence = (function () {
     return value;
   }
 
+  function addScore(level, score) {
+    var highscores = get('highscores');
+
+    if(!highscores) highscores = {};
+
+    highscores[level].push(score);
+
+    add('highscores', highscores);
+  }
+
   return {
     add : add,
     remove : remove,
-    get : get
+    get : get,
+    addScore: addScore
   };
 }());
