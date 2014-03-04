@@ -42,7 +42,7 @@ public class Eat extends Request
 
         if (bytes == null || bytes.getRemainingToRead() < Eat.getMinimumEncodingLength())
             throw new ApplicationException("Invalid message byte array", null);
-        else if (bytes.PeekInt16() != Eat.getClassId())
+        else if (bytes.PeekInt16() != ClassId)
             throw new ApplicationException("Invalid message class id", null);
         else
         {
@@ -55,7 +55,7 @@ public class Eat extends Request
     @Override
     public void Encode(ByteList bytes) throws Exception
     {
-        bytes.Add(Eat.getClassId());                              // Write out this class id first
+        bytes.Add(getClassId());                              // Write out this class id first
 
         short lengthPos = bytes.getCurrentWritePosition();    // Get the current write position, so we
                                                          // can write the length here later
@@ -83,7 +83,7 @@ public class Eat extends Request
         bytes.RestorePreviosReadLimit();
     }
     
-    public static short getClassId() {
+    public short getClassId() {
 		ClassId  = (short) MESSAGE_CLASS_IDS.Eat.getValue();
 		return ClassId;
 	}

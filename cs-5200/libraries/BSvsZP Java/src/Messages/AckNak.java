@@ -62,12 +62,12 @@ public class AckNak extends Reply
 
          if (messageBytes==null || messageBytes.getRemainingToRead() < AckNak.getMinimumEncodingLength())
              throw new ApplicationException("Invalid message byte array", null);
-         if (messageBytes.PeekInt16() != AckNak.getClassId())
+         if (messageBytes.PeekInt16() != AckNak.ClassId)
              throw new ApplicationException("Invalid message class id", null);
          else
          {
              result = new AckNak();
-             messageBytes.update();
+           
              result.Decode(messageBytes);
          }
 
@@ -76,7 +76,7 @@ public class AckNak extends Reply
      
      public void Encode(ByteList bytes) throws NotActiveException, UnknownHostException, Exception
      {
-         bytes.Add(AckNak.getClassId());                           // Write out this class id first
+         bytes.Add(getClassId());                           // Write out this class id first
          bytes.update();
          
          short lengthPos = bytes.getCurrentWritePosition();   // Get the current write position, so we
@@ -102,7 +102,7 @@ public class AckNak extends Reply
          short objLength = bytes.GetInt16();
 
          bytes.SetNewReadLimit(objLength);
-         bytes.update();
+       
          super.Decode(bytes);
 
          IntResult = bytes.GetInt32();
@@ -146,7 +146,7 @@ public class AckNak extends Reply
 	}
 
      
-	public static short getClassId() {
+	public  short getClassId() {
 		ClassId = (short)MESSAGE_CLASS_IDS.AckNak.getValue();
 		return ClassId;
 	}

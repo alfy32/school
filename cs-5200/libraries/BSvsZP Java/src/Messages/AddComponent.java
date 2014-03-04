@@ -32,7 +32,7 @@ public class AddComponent extends Request
 
         if (messageBytes == null || messageBytes.getRemainingToRead() < AddComponent.getMinimumEncodingLength())
             throw new ApplicationException("Invalid message byte array", null);
-        else if (messageBytes.PeekInt16() != AddComponent.getClassId())
+        else if (messageBytes.PeekInt16() != ClassId)
             throw new ApplicationException("Invalid message class id", null);
         else
         {
@@ -45,7 +45,7 @@ public class AddComponent extends Request
     
     public void Encode(ByteList bytes) throws UnknownHostException, NotActiveException, Exception
     {
-        bytes.Add(AddComponent.getClassId());                              // Write out this class id first
+        bytes.Add(getClassId());                              // Write out this class id first
 
         short lengthPos = bytes.getCurrentWritePosition();    // Get the current write position, so we
                                                                 // can write the length here later
@@ -92,7 +92,7 @@ public class AddComponent extends Request
 	}
 
 	
-	public static short getClassId()
+	public  short getClassId()
 	{ 
 		ClassId =  (short) MESSAGE_CLASS_IDS.AddComponent.getValue();
 		return ClassId;

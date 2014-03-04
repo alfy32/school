@@ -12,7 +12,7 @@ import Messages.Message.MESSAGE_CLASS_IDS;
 
 public abstract class Request extends Message
 {
-	private static short ClassId;
+	private short ClassId;
 	public enum PossibleTypes
     {
 		GameAnnouncement(1),
@@ -76,33 +76,33 @@ public abstract class Request extends Message
         
         if (msgType == (short) MESSAGE_CLASS_IDS.GameAnnouncement.getValue())
         	result = GameAnnouncement.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.JoinGame.getValue())
+        else if (msgType == (short) MESSAGE_CLASS_IDS.JoinGame.getValue())
         	result = JoinGame.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.AddComponent.getValue())
+        else if (msgType == (short) MESSAGE_CLASS_IDS.AddComponent.getValue())
         	result = AddComponent.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.RemoveComponent.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.RemoveComponent.getValue()) 
         	result = RemoveComponent.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.StartGame.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.StartGame.getValue()) 
         	result =  StartGame.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.EndGame.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.EndGame.getValue()) 
         	result =  EndGame.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.GetResource.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.GetResource.getValue()) 
         	result = GetResource.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.TickDelivery.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.TickDelivery.getValue()) 
         	result = TickDelivery.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.ValidateTick.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.ValidateTick.getValue()) 
         	result = ValidateTick.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.Move.getValue()) ;
+        else if (msgType == (short) MESSAGE_CLASS_IDS.Move.getValue()) 
         	result = Move.Create(bytes) ;
-        if (msgType == (short) MESSAGE_CLASS_IDS.ThrowBomb.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.ThrowBomb.getValue()) 
         	result = ThrowBomb.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.Eat.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.Eat.getValue()) 
         	result = Eat.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.ChangeStrength.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.ChangeStrength.getValue()) 
         	result = ChangeStrength.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.Collaborate.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.Collaborate.getValue()) 
         	result = Collaborate.Create(bytes);
-        if (msgType == (short) MESSAGE_CLASS_IDS.GetStatus.getValue()) 
+        else if (msgType == (short) MESSAGE_CLASS_IDS.GetStatus.getValue()) 
         	result = GetStatus.Create(bytes);
         else
             throw new ApplicationException("Invalid Message Class Id", null);
@@ -112,7 +112,7 @@ public abstract class Request extends Message
 	@Override 
     public void Encode(ByteList messageBytes) throws NotActiveException, UnknownHostException, Exception
     {
-        messageBytes.Add(Request.getClassId());                           // Write out this class id first
+        messageBytes.Add(getClassId());                           // Write out this class id first
 
         short lengthPos = messageBytes.getCurrentWritePosition();   // Get the current write position, so we
                                                                // can write the length here later
@@ -141,7 +141,7 @@ public abstract class Request extends Message
         messageBytes.RestorePreviosReadLimit();
     }
 	
- 	public static short getClassId()
+ 	public short getClassId()
 	{
 		ClassId =  (short) MESSAGE_CLASS_IDS.Request.getValue();
 		System.out.println("Request.ClassId: " + ClassId);

@@ -106,7 +106,7 @@ public abstract class Reply extends Message
         Note = note;
     }
 
-    public static Reply Create(ByteList messageBytes) throws Exception
+    public  static Reply Create(ByteList messageBytes) throws Exception
     {
         Reply result = null;
 
@@ -126,7 +126,7 @@ public abstract class Reply extends Message
     @Override
     public  void Encode(ByteList messageBytes) throws UnknownHostException, NotActiveException, Exception
     {
-        messageBytes.Add(Reply.getClassId());                            // Write out this class id first
+        messageBytes.Add(getClassId());                            // Write out this class id first
         messageBytes.update();
        
         short lengthPos = messageBytes.getCurrentWritePosition();    // Get the current write position, so we
@@ -137,7 +137,7 @@ public abstract class Reply extends Message
         super.Encode(messageBytes);                              // Encode stuff from base class
 
         messageBytes.Add((byte)ReplyType.getValue());            // Write out a place holder for the length
-        //messageBytes.update();
+      
         
         messageBytes.Add((byte)Status.getValue());               // Write out a place holder for the length
         messageBytes.update();
@@ -157,15 +157,16 @@ public abstract class Reply extends Message
 
         bytes.SetNewReadLimit(objLength);
      
+        bytes.update();
         
         super.Decode(bytes);
-        bytes.update();
+    
         int  tempa = (int) bytes.GetByte();
-        
         ReplyType = PossibleTypes.convert(tempa);
-        bytes.update();
+     
+        tempa = (int) bytes.GetByte();
         Status = PossibleStatus.convert(tempa);
-        bytes.update();
+    
         Note = bytes.GetString();
 
         bytes.RestorePreviosReadLimit();
@@ -195,7 +196,7 @@ public abstract class Reply extends Message
 		Note = note;
 	}
 
-	public static short getClassId() {
+	public  short getClassId() {
 		ClassId =  (short)MESSAGE_CLASS_IDS.Reply.getValue();
 		System.out.println("Reply.ClassId" +  ClassId);
 		return ClassId;

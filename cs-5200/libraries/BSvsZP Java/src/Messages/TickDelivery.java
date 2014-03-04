@@ -25,14 +25,14 @@ public class TickDelivery extends Request
         CurrentTick = tick;
     }
 
-     //new
+   
     public static TickDelivery Create(ByteList bytes) throws ApplicationException, Exception
     {
         TickDelivery result = null;
 
         if (bytes == null || bytes.getRemainingToRead() < TickDelivery.getMinimumEncodingLength())
             throw new ApplicationException("Invalid message byte array", null);
-        else if (bytes.PeekInt16() != TickDelivery.getClassId())
+        else if (bytes.PeekInt16() != ClassId)
             throw new ApplicationException("Invalid message class id", null);
         else
         {
@@ -46,7 +46,7 @@ public class TickDelivery extends Request
 	@Override
     public void Encode(ByteList bytes) throws Exception
     {
-        bytes.Add(TickDelivery.getClassId());                              // Write out this class id first
+        bytes.Add(getClassId());                              // Write out this class id first
         short lengthPos = bytes.getCurrentWritePosition();    // Get the current write position, so we
                                                                 // can write the length here later
         bytes.Add((short)0);                             // Write out a place holder for the length
@@ -79,7 +79,7 @@ public class TickDelivery extends Request
 		CurrentTick = currentTick;
 	}
 
-	public static short getClassId() {
+	public short getClassId() {
 		ClassId =  (short) MESSAGE_CLASS_IDS.TickDelivery.getValue();
 		return ClassId;
 	}

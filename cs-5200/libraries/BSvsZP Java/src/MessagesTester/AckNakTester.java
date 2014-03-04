@@ -90,4 +90,48 @@ public class AckNakTester {
      }
 	
 	
+	@Test
+	public void AckNak_CheckEncodeDecode() throws NotActiveException, UnknownHostException, Exception
+	{
+	            Tick t1 = new Tick();
+	            AckNak m1 = new AckNak(Reply.PossibleStatus.Success, 10, t1, "Test Message", "Test Note");
+	            assertEquals(Reply.PossibleTypes.AckNak, m1.ReplyType);
+	            assertEquals(Reply.PossibleStatus.Success, m1.Status);
+	            assertEquals(10, m1.IntResult);
+	            assertSame(t1, m1.ObjResult);
+	            assertEquals("Test Message", m1.Message);
+	            assertEquals("Test Note", m1.Note);
+
+	            ByteList bytes = new ByteList();
+	            m1.Encode(bytes);
+	            AckNak m2 = AckNak.Create(bytes);
+	            assertEquals(m1.Status, m2.Status);
+	            assertEquals(m1.IntResult, m2.IntResult);
+	            assertEquals(((Tick)m1.ObjResult).getLogicalClock(), ((Tick)m2.ObjResult).getLogicalClock());
+	            assertEquals(m1.Message, m2.Message);
+	            assertEquals(m1.Note, m2.Note);
+
+	            bytes.Clear();
+	            m1.Encode(bytes);
+	            bytes.GetByte();            // Read one byte, which will throw the length off
+	            try
+	            {
+	                m2 = AckNak.Create(bytes);
+	                fail("Expected an exception to be thrown");
+	            }
+	            catch (ApplicationException e ) {      }
+
+	            bytes.Clear();
+	            m1.Encode(bytes);
+	            bytes.Add((byte)100);       // Add a byte
+	            bytes.GetByte();            // Read one byte, which will make the ID wrong
+	            try
+	            {
+	                m2 = AckNak.Create(bytes);
+	                fail("Expected an exception to be thrown");
+	            }
+	            catch (ApplicationException e) {     }
+
+	        }
+	
 }

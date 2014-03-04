@@ -34,7 +34,7 @@ public class ValidateTick extends Request
 
         if (bytes == null || bytes.getRemainingToRead() < ValidateTick.getMinimumEncodingLength())
             throw new ApplicationException("Invalid message byte array", null);
-        else if (bytes.PeekInt16() != ValidateTick.getClassId())
+        else if (bytes.PeekInt16() != ClassId)
             throw new ApplicationException("Invalid message class id", null);
         else
         {
@@ -48,7 +48,7 @@ public class ValidateTick extends Request
     @Override 
     public void Encode(ByteList bytes) throws Exception
     {
-        bytes.Add(ValidateTick.getClassId());                              // Write out this class id first
+        bytes.Add(getClassId());                              // Write out this class id first
 
         short lengthPos = bytes.getCurrentWritePosition();    // Get the current write position, so we
                                                                 // can write the length here later
@@ -100,7 +100,7 @@ public class ValidateTick extends Request
 		return MinimumEncodingLength;
 	}
 	
-	public static short getClassId()
+	public short getClassId()
 	{
 		ClassId =  (short) MESSAGE_CLASS_IDS.ValidateTick.getValue();
 		return ClassId;

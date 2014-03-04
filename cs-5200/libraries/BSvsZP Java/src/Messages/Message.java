@@ -12,7 +12,7 @@ public abstract class Message implements Comparable
 {
 	private MessageNumber MessageNr;
 	private MessageNumber ConversationId;
-	private static short ClassId;
+	private  short ClassId;
 	private static int MinimumEncodingLength;
 	public abstract MESSAGE_CLASS_IDS MessageTypeId();
 	public enum MESSAGE_CLASS_IDS
@@ -86,7 +86,7 @@ public abstract class Message implements Comparable
 	
 	public void Encode(ByteList bytes) throws UnknownHostException,	NotActiveException, Exception 
 	{
-		bytes.Add(Message.getClassId()); // Write out the class type
+		bytes.Add(getClassId()); // Write out the class type
 		bytes.update();
 		
 		short lengthPos = bytes.getCurrentWritePosition(); // Get the current write position, so we
@@ -178,7 +178,7 @@ public abstract class Message implements Comparable
 		return super.hashCode();
 	}
 
-	public static short getClassId() {
+	public short getClassId() {
 		ClassId =  (short) MESSAGE_CLASS_IDS.Message.getValue();
 		System.out.println("Message.ClassId: " + ClassId);
 		return ClassId;

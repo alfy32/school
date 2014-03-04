@@ -57,7 +57,7 @@ public class GetResource extends Request
 
          if (messageBytes == null || messageBytes.getRemainingToRead() < GetResource.getMinimumEncodingLength())
              throw new ApplicationException("Invalid message byte array", null);
-         else if (messageBytes.PeekInt16() != GetResource.getClassId())
+         else if (messageBytes.PeekInt16() != ClassId)
              throw new ApplicationException("Invalid message class id", null);
          else
          {
@@ -71,7 +71,7 @@ public class GetResource extends Request
     @Override
      public void Encode(ByteList bytes) throws Exception
      {
-         bytes.Add(GetResource.getClassId());                              // Write out this class id first
+         bytes.Add(getClassId());                              // Write out this class id first
 
          short lengthPos = bytes.getCurrentWritePosition();    // Get the current write position, so we
                                                                  // can write the length here later
@@ -111,7 +111,7 @@ public class GetResource extends Request
      	return MinimumEncodingLength;
      }
   	
-     public static short getClassId()
+     public short getClassId()
  	{ 
  		ClassId = (short) MESSAGE_CLASS_IDS.GetResource.getValue(); 
     	return ClassId;

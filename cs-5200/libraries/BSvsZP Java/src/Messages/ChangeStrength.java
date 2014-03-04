@@ -30,7 +30,7 @@ public class ChangeStrength extends Request
 
         if (messageBytes == null || messageBytes.getRemainingToRead() < ChangeStrength.getMinimumEncodingLength())
             throw new ApplicationException("Invalid message byte array", null);
-        else if (messageBytes.PeekInt16() != ChangeStrength.getClassId())
+        else if (messageBytes.PeekInt16() != ClassId)
             throw new ApplicationException("Invalid message class id", null);
         else
         {
@@ -43,7 +43,7 @@ public class ChangeStrength extends Request
 
     public void Encode(ByteList bytes) throws UnknownHostException, NotActiveException, Exception
     {
-        bytes.Add(ChangeStrength.getClassId());                              // Write out this class id first
+        bytes.Add(getClassId());                              // Write out this class id first
 
         short lengthPos = bytes.getCurrentWritePosition();    // Get the current write position, so we
                                                                 // can write the length here later
@@ -73,7 +73,7 @@ public class ChangeStrength extends Request
         bytes.RestorePreviosReadLimit();
     }
     
-    public static short getClassId()
+    public short getClassId()
  	{
     	ClassId =  (short)MESSAGE_CLASS_IDS.ChangeStrength.getValue();
     	return ClassId;
