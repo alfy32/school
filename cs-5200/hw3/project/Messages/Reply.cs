@@ -95,7 +95,7 @@ namespace Messages
         /// This method encodes
         /// </summary>
         /// <param name="bytes"></param>
-        virtual public new void Encode(ByteList bytes)
+        public override void Encode(ByteList bytes)
         {
             bytes.Add(ClassId);                              // Write out this class id first
 
@@ -120,7 +120,7 @@ namespace Messages
         /// This method decodes a message from a byte list
         /// </summary>
         /// <param name="bytes"></param>
-        virtual public new void Decode(ByteList bytes)
+        public override void Decode(ByteList bytes)
         {
             Int16 objType = bytes.GetInt16();
             Int16 objLength = bytes.GetInt16();
@@ -134,7 +134,6 @@ namespace Messages
             Note = bytes.GetString();
 
             bytes.RestorePreviosReadLimit();
-
         }
 
         #endregion

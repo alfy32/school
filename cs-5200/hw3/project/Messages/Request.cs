@@ -76,43 +76,43 @@ namespace Messages
                     result = JoinGame.Create(bytes);
                     break;
                 case (Int16) MESSAGE_CLASS_IDS.AddComponent:
-
+                    result = AddComponent.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.RemoveComponent:
-
+                    result = RemoveComponent.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.StartGame:
-
+                    result = StartGame.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.EndGame:
-
+                    result = EndGame.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.GetResource:
-
+                    result = GetResource.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.TickDelivery:
-
+                    result = TickDelivery.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.ValidateTick:
-
+                    result = ValidateTick.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.Move:
-
+                    result = Move.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.ThrowBomb:
-
+                    result = ThrowBomb.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.Eat:
-
+                    result = Eat.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.ChangeStrength:
-
+                    result = ChangeStrength.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.Collaborate:
-
+                    result = Collaborate.Create(bytes);
                     break;
                 case (Int16)MESSAGE_CLASS_IDS.GetStatus:
-
+                    result = GetStatus.Create(bytes);
                     break;
 
                 default:
