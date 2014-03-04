@@ -31,7 +31,10 @@ MYGAME.graphics = (function() {
     var that = {};
 
     that.which = spec.which;
-    that.center = spec.center;
+
+    that.getCenter = function () {
+      return spec.center;
+    };
 
     that.checkClick = function(mouse) {
       var dx = mouse.x - spec.center.x;
@@ -129,8 +132,8 @@ MYGAME.graphics = (function() {
     context.translate(-spec.center.x, -spec.center.y);
 
     context.drawImage(
-      spec.image, 
-      spec.center.x - spec.size/2, 
+      spec.image,
+      spec.center.x - spec.size/2,
       spec.center.y - spec.size/2,
       spec.size, spec.size);
 

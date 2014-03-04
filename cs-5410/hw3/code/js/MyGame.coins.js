@@ -28,7 +28,8 @@ MYGAME.coins = (function() {
     romanCoin: new Image(),
     usCoin: new Image(),
     clock: new Image(),
-    dollarSign: new Image()
+    dollarSign: new Image(),
+    x: new Image()
   };
 
   images.canadianCoin.src = 'img/Coin-Canadian-Dollar.png';
@@ -36,6 +37,7 @@ MYGAME.coins = (function() {
   images.usCoin.src = 'img/Coin-US-Dollary.png';
   images.clock.src = 'img/Clock.png';
   images.dollarSign.src = 'img/Dollar-Sign.png';
+  images.x.src = 'img/x.png';
 
   function checkClicks(clicks) {
     var i;
@@ -69,24 +71,29 @@ MYGAME.coins = (function() {
       coins[index].rotateRight(time);
     }
 
-    // for(index in particleSystems) {
-    //   var system = particleSystems[index];
+    for(index in particleSystems) {
+      var system = particleSystems[index];
 
-    //   if(system.created > 5) {
-    //     delete particleSystems[index];
-    //   } else {
-    //     system.update(time);
-    //     system.render();
-    //     system.create();
-    //   }
-    // }
+      system.update(time/1000);
+
+      if(system.created < 5) {
+        system.create();
+        system.created++;
+      }
+    }
 
     return settings.score;
   }
 
   function render() {
-    for(var i in coins) {
+    var i;
+
+    for(i in coins) {
       coins[i].draw();
+    }
+
+    for(i in particleSystems) {
+      particleSystems[i].render();
     }
   }
 
@@ -120,7 +127,7 @@ MYGAME.coins = (function() {
     }
     if(coin.clicked) {
       coins.splice(index, 1);
-      addParticles(coin.center);
+      addParticles(coin);
 
       if(coin.which === 'US') settings.score += 10;
       else if(coin.which === 'ROMAN') settings.score += 50;
@@ -134,12 +141,13 @@ MYGAME.coins = (function() {
     }
   }
 
-  function addParticles(center) {
+  function addParticles(coin) {
+
     var particles = particleSystem( {
-        image : images.dollarSign,
-        center: center,
-        speed: {mean: 0.1, stdev: 0.02},
-        lifetime: {mean: 2000, stdev: 100}
+        image : coin.which === 'CANADIAN' ? images.x : images.dollarSign,
+        center: coin.getCenter(),
+        speed: {mean: 50, stdev: 25},
+        lifetime: {mean: 1, stdev: 0.5}
       },
       MYGAME.graphics
     );
