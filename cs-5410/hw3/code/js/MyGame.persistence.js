@@ -25,8 +25,7 @@ MYGAME.persistence = (function () {
     var highscores = get('highscores');
 
     if(!highscores) highscores = {};
-
-    highscores[level] = [];
+    if(!highscores[level]) highscores[level] = [];
 
     highscores[level].push(score);
 

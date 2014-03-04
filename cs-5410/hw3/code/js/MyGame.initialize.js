@@ -66,8 +66,8 @@ MYGAME.initialize = function initialize() {
     var div = $('.game-over-div');
 
     div.find('.message').text('You Won!');
-    div.find('.level').text(level);
-    div.find('.score').text(totalScore);
+    div.find('#level').text(level);
+    div.find('#score').text(totalScore);
 
     div.removeAttr('hidden');
 
@@ -80,8 +80,8 @@ MYGAME.initialize = function initialize() {
     var div = $('.game-over-div');
 
    div.find('.message').text('Game Over Man!');
-    div.find('.level').text(level);
-    div.find('.score').text(totalScore);
+    div.find('#level').text(level);
+    div.find('#score').text(totalScore);
 
     div.removeAttr('hidden');
 
@@ -126,6 +126,8 @@ MYGAME.initialize = function initialize() {
       }
 
       totalScore += money;
+
+      MYGAME.persistence.addScore(level, totalScore);
     }
   }
 
@@ -135,17 +137,6 @@ MYGAME.initialize = function initialize() {
   //
   //------------------------------------------------------------------
   var MAX_FRAME_RATE = 1000/30;
-
-  // var particles = particleSystem( {
-  //     image : images.dollarSign,
-  //     center: {x: 100, y: 100},
-  //     speed: {mean: 50, stdev: 25},
-  //     lifetime: {mean: 4, stdev: 1}
-  //   },
-  //   MYGAME.graphics
-  // );
-
-  // console.log(particles)
 
   function gameLoop(time) {
     var elapsedTime = time - MYGAME.lastTimeStamp;
@@ -158,11 +149,7 @@ MYGAME.initialize = function initialize() {
     var quit = states[state](elapsedTime);
     if(quit) return;
 
-    // particles.update(elapsedTime/1000);
-
     render();
-
-    // particles.create();
 
     setTimeout(function() {
       requestAnimationFrame(gameLoop);
@@ -171,8 +158,6 @@ MYGAME.initialize = function initialize() {
 
   function render() {
     MYGAME.graphics.clear();
-
-    // particles.render();
 
     var countDownElement = $('.countdown');
 
@@ -189,17 +174,3 @@ MYGAME.initialize = function initialize() {
   MYGAME.graphics.resize();
   requestAnimationFrame(gameLoop);
 };
-
- var images = {
-    canadianCoin: new Image(),
-    romanCoin: new Image(),
-    usCoin: new Image(),
-    clock: new Image(),
-    dollarSign: new Image()
-  };
-
-  images.canadianCoin.src = 'img/Coin-Canadian-Dollar.png';
-  images.romanCoin.src = 'img/Coin-Roman.png';
-  images.usCoin.src = 'img/Coin-US-Dollary.png';
-  images.clock.src = 'img/Clock.png';
-  images.dollarSign.src = 'img/Dollar-Sign.png';

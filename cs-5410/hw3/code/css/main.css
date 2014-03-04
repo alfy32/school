@@ -7,7 +7,7 @@ body {
 }
 
 .background {
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
   z-index: -1;
@@ -108,14 +108,29 @@ body {
 }
 
 .countdown {
-background-color: rgba(0,255,0,.8);
-z-index: 2000;
-position: absolute;
-top: 200px;
-left: 0px;
-text-align: center;
-width: 100%;
-padding: 10px 0px;
-font-family: Arial, Helvetica, sans-serif;
-font-size: 50px;
+  background-color: rgba(0,255,0,.8);
+  z-index: 2000;
+  position: absolute;
+  top: 200px;
+  left: 0px;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 50px;
+}
+
+.level {
+  background-color: green;
+  border-radius: 10px;
+  padding: 2px 0px;
+  text-align: center;
+  margin: 10px 0px;
+}
+
+.score {
+  background-color: rgba(0,255,0,.8);
+  margin: 4px 0px;
+  border-radius: 20px;
+  text-align: center;
 }
