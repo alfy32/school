@@ -39,17 +39,22 @@ MYGAME.coins = (function() {
   images.dollarSign.src = 'img/Dollar-Sign.png';
   images.x.src = 'img/x.png';
 
-  function checkClicks(clicks) {
+  var clicks = [];
+
+  function addClick(click) {
+    clicks.push(click);
+  }
+
+  function checkClicks() {
     var i;
 
-    for(i in clicks) {
-      var click = clicks[i];
+    while(clicks.length) {
+      var click = clicks.pop();
 
       for(i = coins.length-1; i >= 0; i--) {
         var coin = coins[i];
 
         if(coin.checkClick(click)) {
-
 
           break;
         }
@@ -61,6 +66,8 @@ MYGAME.coins = (function() {
     var index;
 
     if(timeToAdd(time)) addCoin();
+
+    checkClicks();
 
     for(index in coins) {
       checkStatus(coins[index], +index);
@@ -159,7 +166,6 @@ MYGAME.coins = (function() {
 
   function createCoin(coinFunc) {
     var coin = coinFunc();
-    MYGAME.coins.registerEvents(coin);
     coinStock.push(coin);
   }
 
@@ -275,6 +281,7 @@ MYGAME.coins = (function() {
 
   return {
     initLevel: initLevel,
+    addClick: addClick,
     checkClicks: checkClicks,
     clearCoins: clearCoins,
     update: update,

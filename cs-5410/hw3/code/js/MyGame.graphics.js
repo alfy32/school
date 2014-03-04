@@ -41,6 +41,7 @@ MYGAME.graphics = (function() {
       var dy = mouse.y - spec.center.y;
       var radius = spec.width/2;
       that.clicked = dx*dx + dy*dy <= radius*radius;
+      return that.clicked;
     };
 
     that.checkTouch = function(touch) {
