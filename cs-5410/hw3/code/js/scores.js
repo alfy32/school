@@ -12,9 +12,11 @@ MYGAME.scores = (function () {
     scoresDiv.empty();
   });
 
-  for(var level in highscores) {
-    for(var score in highscores[level]) {
-      addScore(level, highscores[level][score]);
+  for(var level = 1; level <= 3; level++) {
+    if(highscores[level]) {
+      for(var score in highscores[level]) {
+        addScore(level, highscores[level][score]);
+      }
     }
   }
 
