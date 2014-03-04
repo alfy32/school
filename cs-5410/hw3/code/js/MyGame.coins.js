@@ -37,6 +37,24 @@ MYGAME.coins = (function() {
   images.clock.src = 'img/Clock.png';
   images.dollarSign.src = 'img/Dollar-Sign.png';
 
+  function checkClicks(clicks) {
+    var i;
+
+    for(i in clicks) {
+      var click = clicks[i];
+
+      for(i = coins.length-1; i >= 0; i--) {
+        var coin = coins[i];
+
+        if(coin.checkClick(click)) {
+
+
+          break;
+        }
+      }
+    }
+  }
+
   function update(time) {
     var index;
 
@@ -249,6 +267,7 @@ MYGAME.coins = (function() {
 
   return {
     initLevel: initLevel,
+    checkClicks: checkClicks,
     clearCoins: clearCoins,
     update: update,
     render: render,

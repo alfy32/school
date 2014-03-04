@@ -1,10 +1,11 @@
-/*global MYGAME, $, requestAnimationFrame */
+/*global MYGAME, $, KeyEvent, requestAnimationFrame */
 
 MYGAME.initialize = function initialize() {
   'use strict';
 
   var myMouse = MYGAME.input.Mouse();
   var myTouch = MYGAME.input.Touch();
+  var myKeyboard = MYGAME.input.Keyboard();
 
   MYGAME.lastTimeStamp = 0;
 
@@ -16,6 +17,10 @@ MYGAME.initialize = function initialize() {
 
   $('#again').click(function () {
     window.location.reload();
+  });
+
+  myKeyboard.registerCommand(KeyEvent.KEY_ESCAPE, function () {
+    window.history.back();
   });
 
   MYGAME.coins.registerEvents = function (coin) {
@@ -42,8 +47,6 @@ MYGAME.initialize = function initialize() {
     });
   };
 
-  var countDownText = MYGAME.graphics.Text();
-
   var state = 'countDown';
   var states = {
     win: win,
@@ -52,6 +55,9 @@ MYGAME.initialize = function initialize() {
     play: play
   };
 
+  var totalScore = 0;
+  var countDownText = '';
+
   $('.money').text(0);
   var level = 0;
   var countDownMS = 0;
@@ -59,15 +65,13 @@ MYGAME.initialize = function initialize() {
   function win() {
     var div = $('.game-over-div');
 
-    var score = +$('.money').text();
-
-    div.find('.message').text("You Won!");
+    div.find('.message').text('You Won!');
     div.find('.level').text(level);
-    div.find('.score').text(score);
+    div.find('.score').text(totalScore);
 
     div.removeAttr('hidden');
 
-    MYGAME.persistence.addScore(level, score);
+    MYGAME.persistence.addScore(level, totalScore);
 
     return true;
   }
@@ -75,15 +79,13 @@ MYGAME.initialize = function initialize() {
   function lose() {
     var div = $('.game-over-div');
 
-    var score = +$('.money').text();
-
-    div.find('.message').text("Game Over Man!");
+   div.find('.message').text('Game Over Man!');
     div.find('.level').text(level);
-    div.find('.score').text(score);
+    div.find('.score').text(totalScore);
 
     div.removeAttr('hidden');
 
-    MYGAME.persistence.addScore(level, score);
+    MYGAME.persistence.addScore(level, totalScore);
 
     return true;
   }
@@ -91,9 +93,11 @@ MYGAME.initialize = function initialize() {
   function countDown(time) {
     countDownMS += time;
 
-    var count = Math.floor(countDownMS/1000) + 1;
+    countDownText = Math.floor(countDownMS/1000);
 
-    if(count > 3) {
+    if(countDownText === 0) {
+      countDownText = 'Level ' + (level + 1);
+    } else if(countDownText > 3) {
       countDownMS = 0;
       state = 'play';
       level++;
@@ -108,13 +112,20 @@ MYGAME.initialize = function initialize() {
     var money = MYGAME.coins.update(time);
     $('.money').text(money);
 
-    if(money >= 100) {
-      
-      if(level == 3) state = 'win';
-      else state = 'countDown';
+    if(MYGAME.coins.gone()) {
+      if(money < 100) {
+        state = 'lose';
+      }
+      else {
 
-    } else if(MYGAME.coins.gone()) {
-      state = 'lose';
+        if(level === 3)
+          state = 'win';
+        else
+          state = 'countDown';
+
+      }
+
+      totalScore += money;
     }
   }
 
@@ -129,6 +140,7 @@ MYGAME.initialize = function initialize() {
     var elapsedTime = time - MYGAME.lastTimeStamp;
     MYGAME.lastTimeStamp = time;
 
+    myKeyboard.update(elapsedTime);
     myMouse.update(elapsedTime);
     myTouch.update(elapsedTime);
 
@@ -145,8 +157,16 @@ MYGAME.initialize = function initialize() {
   function render() {
     MYGAME.graphics.clear();
 
-    if(state === 'play') MYGAME.coins.render();
-    else if(state === 'countDown') countDownText.draw(Math.floor(countDownMS/1000) + 1);
+    var countDownElement = $('.countdown');
+
+    if(state === 'play') {
+      countDownElement.attr('hidden', 'true');
+      MYGAME.coins.render();
+    }
+    else if(state === 'countDown') {
+      countDownElement.text(countDownText);
+      countDownElement.removeAttr('hidden');
+    }
   }
 
   MYGAME.graphics.resize();
