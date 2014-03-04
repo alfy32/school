@@ -23,29 +23,27 @@ MYGAME.initialize = function initialize() {
     window.history.back();
   });
 
-  MYGAME.coins.registerEvents = function (coin) {
-    myMouse.registerCommand('mousedown', function (e) {
-      e.preventDefault();
-      coin.checkClick({
-        x: e.clientX,
-        y: e.clientY
-      });
+  myMouse.registerCommand('mousedown', function (e) {
+    e.preventDefault();
+    MYGAME.coins.addClick({
+      x: e.clientX,
+      y: e.clientY
     });
+  }, false);
 
-    myTouch.registerCommand('touchstart', function (e) {
-      e.preventDefault();
-      for(var i in e.changedTouches) {
-        var touch = e.changedTouches[i];
+  myTouch.registerCommand('touchstart', function (e) {
+    e.preventDefault();
+    for(var i in e.changedTouches) {
+      var touch = e.changedTouches[i];
 
-        if(touch.clientX) {
-          coin.checkTouch({
-            x: touch.clientX,
-            y: touch.clientY
-          });
-        }
+      if(touch.clientX) {
+        MYGAME.coins.addClick({
+          x: touch.clientX,
+          y: touch.clientY
+        });
       }
-    });
-  };
+    }
+  }, false);
 
   var state = 'countDown';
   var states = {
@@ -77,7 +75,7 @@ MYGAME.initialize = function initialize() {
   function lose() {
     var div = $('.game-over-div');
 
-   div.find('.message').text('Game Over Man!');
+    div.find('.message').text('Game Over Man!');
     div.find('#level').text(level);
     div.find('#score').text(totalScore);
 
