@@ -3,7 +3,10 @@
 MYGAME.scores = (function () {
   'use strict';
 
+  var score, level;
+
   var highscores = MYGAME.persistence.get('highscores');
+  var topScores = [];
 
   var scoresDiv = $('.scores');
 
@@ -12,13 +15,13 @@ MYGAME.scores = (function () {
     scoresDiv.empty();
   });
 
-  for(var level = 1; level <= 3; level++) {
+  for(level = 1; level <= 3; level++) {
     if(highscores[level]) {
       addLevel(level);
 
       highscores[level].sort(numericSort);
 
-      for(var score = 0; score < 3; score++) {
+      for(score = 0; score < 3; score++) {
         var index = highscores[level].length - 1 - score;
 
         if(index >= 0) {
@@ -26,6 +29,30 @@ MYGAME.scores = (function () {
         }
       }
     }
+
+  }
+
+  topScores.sort(numericSort);
+
+  var last = topScores.length;
+  for(score = last - 3; score < last; score++) {
+    addTopScore(topScores[score]);
+  }
+
+  var div = $('<div>');
+
+  div.text('Top Scores');
+  div.attr('class', 'level');
+
+  scoresDiv.prepend(div);
+
+  function addTopScore(score) {
+    var div = $('<div>');
+
+    div.text(score);
+    div.attr('class', 'score');
+
+    scoresDiv.prepend(div);
   }
 
   function numericSort(left, right) {
@@ -42,6 +69,8 @@ MYGAME.scores = (function () {
   }
 
   function addScore(level, score) {
+    topScores.push(score);
+
     var div = $('<div>');
 
     div.text(score);

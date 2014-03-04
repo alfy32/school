@@ -71,8 +71,6 @@ MYGAME.initialize = function initialize() {
 
     div.removeAttr('hidden');
 
-    MYGAME.persistence.addScore(level, totalScore);
-
     return true;
   }
 
@@ -84,8 +82,6 @@ MYGAME.initialize = function initialize() {
     div.find('#score').text(totalScore);
 
     div.removeAttr('hidden');
-
-    MYGAME.persistence.addScore(level, totalScore);
 
     return true;
   }
