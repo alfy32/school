@@ -139,26 +139,22 @@ void Test::test_PolyMult_works() {
 
   int randMin = -100, randMax = 100;
 
-  Vector<Complex> PR(n), PD(n),
-                  QR(n), QD(n);
+  Vector<Complex> P(n), Q(n);
 
   for(int i = 0; i < n; ++i) {
 
     double real = rand()%(randMax-randMin)+randMin;
     double imaginary = rand()%(randMax-randMin)+randMin;
 
-    PR[i] = Complex(real, imaginary);
-    QR[i] = Complex(real, imaginary);
+    P[i] = Complex(real, imaginary);
+    Q[i] = Complex(real, imaginary);
   }
-
-  PD = Vector<Complex> (PR.begin(), PR.end());
-  QD = Vector<Complex> (QR.begin(), QR.end());
 
   FFT fft;
 
   fft.preComputeOmega(n);
-  Vector<Complex> resultsR = fft.polyMultR(PR, QR, n);
-  Vector<Complex> resultsD = fft.polyMultD(PD, QD, n);
+  Vector<Complex> resultsR = fft.polyMultR(P, Q, n);
+  Vector<Complex> resultsD = fft.polyMultD(P, Q, n);
 
   for(int i = 0; i < n; ++i) {
     if(resultsD[i] != resultsR[i])

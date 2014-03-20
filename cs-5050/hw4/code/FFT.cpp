@@ -30,7 +30,7 @@ void FFT::preComputeOmega(int n) {
   }
 }
 
-Vector<Complex> FFT::algebraic(Vector<Complex> P, int n, Vector<Complex> x) {
+Vector<Complex> FFT::algebraic(Vector<Complex> P, int n, Vector<Complex>& x) {
   Vector<Complex> answer;
 
   for(int xIndex = 0; xIndex < n; xIndex++) {
@@ -49,7 +49,7 @@ Vector<Complex> FFT::algebraic(Vector<Complex> P, int n, Vector<Complex> x) {
   return answer;
 }
 
-Vector<Complex> FFT::recursive(Vector<Complex> P, int n, Vector<Complex> x, int power) {
+Vector<Complex> FFT::recursive(Vector<Complex> P, int n, Vector<Complex>& x, int power) {
   // Allocate Memory
   Vector<Complex> PolyE(n/2);
   Vector<Complex> PolyO(n/2);
@@ -80,7 +80,7 @@ Vector<Complex> FFT::recursive(Vector<Complex> P, int n, Vector<Complex> x, int 
   return Poly;
 }
 
-Vector<Complex> FFT::dynamic(Vector<Complex> Poly, int n, Vector<Complex> x) {
+Vector<Complex> FFT::dynamic(Vector<Complex> Poly, int n, Vector<Complex>& x) {
   int logN = log2(n);
   Vector<Vector<Complex>> sol(2/*logN+1*/, Vector<Complex>(n));
 

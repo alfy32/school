@@ -19,9 +19,9 @@ public:
   FFT();
 
   void preComputeOmega(int n);
-  Vector<Complex> algebraic(Vector<Complex> P, int n, Vector<Complex> x);
-  Vector<Complex> recursive(Vector<Complex> P, int n, Vector<Complex> x, int power);
-  Vector<Complex> dynamic(Vector<Complex> Poly, int n, Vector<Complex> x);
+  Vector<Complex> algebraic(Vector<Complex> P, int n, Vector<Complex>& x);
+  Vector<Complex> recursive(Vector<Complex> P, int n, Vector<Complex>& x, int power);
+  Vector<Complex> dynamic(Vector<Complex> Poly, int n, Vector<Complex>& x);
 
   Vector<Complex> polyMultR(Vector<Complex> P, Vector<Complex> Q, int n);
   Vector<Complex> polyMultD(Vector<Complex> P, Vector<Complex> Q, int n);
