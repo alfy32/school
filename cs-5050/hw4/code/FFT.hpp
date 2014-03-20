@@ -6,13 +6,12 @@
 #include <complex>
 
 #define PI 3.1415926
-#define ComplexVector std::vector<std::complex<double>>
 #define Complex std::complex<double>
 #define Vector std::vector
 
 class FFT {
 private:
-  ComplexVector omega;
+  Vector<Complex> omega, omega2n, omega2nInverse;
 
   int RBS(int i, int k);
 
@@ -20,10 +19,12 @@ public:
   FFT();
 
   void preComputeOmega(int n);
-  ComplexVector recursive(ComplexVector P, int n, int power);
-  ComplexVector dynamic(ComplexVector Poly, int n);
+  Vector<Complex> algebraic(Vector<Complex> P, int n, Vector<Complex> x);
+  Vector<Complex> recursive(Vector<Complex> P, int n, Vector<Complex> x, int power);
+  Vector<Complex> dynamic(Vector<Complex> Poly, int n, Vector<Complex> x);
 
-  ComplexVector polyMult(ComplexVector P, ComplexVector Q, int n);
+  Vector<Complex> polyMultR(Vector<Complex> P, Vector<Complex> Q, int n);
+  Vector<Complex> polyMultD(Vector<Complex> P, Vector<Complex> Q, int n);
 };
 
 #endif
