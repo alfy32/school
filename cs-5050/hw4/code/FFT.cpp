@@ -82,7 +82,7 @@ Vector<Complex> FFT::recursive(Vector<Complex> P, int n, Vector<Complex> x, int 
 
 Vector<Complex> FFT::dynamic(Vector<Complex> Poly, int n, Vector<Complex> x) {
   int logN = log2(n);
-  Vector<Vector<Complex>> sol(logN+1, Vector<Complex>(n));
+  Vector<Vector<Complex>> sol(2/*logN+1*/, Vector<Complex>(n));
 
   for(int i = 0; i < n; i++){
     sol[0][RBS(i, logN)] = Poly[i];
@@ -100,11 +100,11 @@ Vector<Complex> FFT::dynamic(Vector<Complex> Poly, int n, Vector<Complex> x) {
     for(int i = 0; i < n; i+= size) {
       // fills the solution
       for(int j = 0; j < size/2; j++) {
-        Complex odd = x[j*power]*sol[k-1][i+j+size/2];
+        Complex odd = x[j*power]*sol[(k-1) %2][i+j+size/2];
         // + 1/2 solution
-        sol[k][i+j] = sol[k-1][i+j] + odd;
+        sol[k %2][i+j] = sol[(k-1) %2][i+j] + odd;
         // - 1/2 solution
-        sol[k][i+j+size/2] = sol[k-1][i+j] - odd;
+        sol[k %2][i+j+size/2] = sol[(k-1) %2][i+j] - odd;
       }
     }
     // decrease power (more up)
@@ -113,7 +113,7 @@ Vector<Complex> FFT::dynamic(Vector<Complex> Poly, int n, Vector<Complex> x) {
     size = size*2;
   }
 
-  return sol.back();
+  return sol[(logN) %2];
 }
 
 Vector<Complex> FFT::polyMultR(Vector<Complex> P, Vector<Complex> Q, int n) {
