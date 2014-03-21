@@ -25,3 +25,13 @@ Looking at the plot the recursive seems to take about 2 times as long to compute
 
 ![FFT Vs Other Methods](FFTvsOthers.png)
 
+      | FFT R | FFT D | DnC 3 | DnC 4 |  SB
+:---: | :---: | :---: | :---: | :---: | :---:
+FFT R |   NA  |  ?1   | ~2^4  | ~2^2  |  ~2^7
+FFT D |       |  NA   | ~2^2  | Nope  |  ~2^6
+DnC 3 |       |       |  NA   | Nope  |  ~2^12
+DnC 4 |       |       |       |  NA   |  ~2^20 ?2
+ SB   |       |       |       |       |  NA
+
+*?1 The recursive seems to be at a slope that is slightly less then the dynamic. So It might pass a very large numbers.*
+*?2 2^20 is a projection. I don't have enough results to be sure.*

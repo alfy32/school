@@ -15,6 +15,6 @@ set output 'FFTvsOthers.png'
 
 plot 'FFT.recursive' using log(1):2 title 'FFT Recursive' with linespoints, \
      'FFT.dynamic' using log(1):2 title 'FFT DP' with linespoints, \
-     'pastResults/polymult.dnc3' using log(1):2 title 'Dnc 3' with linespoints, \
-     'pastResults/polymult.dnc4' using log(1):2 title 'Dnc 4' with linespoints, \
+     'pastResults/polymult.dnc3' using log(1):2 title 'DnC 3' with linespoints, \
+     'pastResults/polymult.dnc4' using log(1):2 title 'DnC 4' with linespoints, \
      'pastResults/polymult.schoolbook' using log(1):2 title 'SchoolBook' with linespoints;
