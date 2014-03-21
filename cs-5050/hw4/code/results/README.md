@@ -30,8 +30,8 @@ Looking at the plot the recursive seems to take about 2 times as long to compute
 FFT R |  NA   |  ?1   | ~2^4  | ~2^2  |  ~2^7
 FFT D |  ''   |  NA   | ~2^2  | Nope  |  ~2^6
 DnC 3 |  ''   |  ''   |  NA   | Nope  |  ~2^12
-DnC 4 |  ''   |  ''   |  ''   |  NA   |  ?2
- SB   |  ''   |  ''   |  ''   |  ''   |  Nope
+DnC 4 |  ''   |  ''   |  ''   |  NA   |  Nope
+ SB   |  ''   |  ''   |  ''   |  ''   |  NA
 
 *?1 The recursive seems to be at a slope that is slightly less then the dynamic. So It might cross at very large numbers.*
 
