@@ -1,4 +1,4 @@
-Assignment 4 FFT
+panAssignment 4 FFT
 ----------------
 
 
@@ -10,7 +10,7 @@ Summary: Implement recursive and dynamic programming version of the FFT and appl
 
 1. Implement the recursive FFT with the following optimizations: (a) pre-compute the omega table (do not count this as part of the run time) and use the indexing technique to compute the x^2 values as needed.
 
-2. Apply your FFT method to polynomial multiplication of two polynomials P Q size n by (a) padding the polynomials with high-order 0’s to make them size 2n, (b) evaluate P and Q at 2n values (powers of omega), (c) multiple P(xi)*Q(xi) to obtain samples of PQ(xi), (d) use the inverse FFT to interpolate the coefficients of PQ.
+2. Apply your FFT method to polynomial multiplication of two polynomials P Q size n by (a) padding the polynomials with high-order 0’s to make them size 2n, (b) evaluate P and Q at 2n values (powers of omega), (c) multiply P(xi)*Q(xi) to obtain samples of PQ(xi), (d) use the inverse FFT to interpolate the coefficients of PQ.
 
 3. Check that the values computed by the FFT sampling technique are the same as those obtained by the previous approaches. There will be some slight rounding errors due limited resolution of the doubles (or longs).  (*Steps 1,2,3 are worth 20 points*)
 
