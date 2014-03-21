@@ -1,17 +1,17 @@
 Assigment 4 - Fast Fourier transform
 =======================================
 
-The following number correspond to the numbers in the assignment.
+The following numbers correspond to the numbers in the assignment.
 
-1. I implemented the recursive FFT correctly. Make and run "./FFT test fftworks" to test.
+1. I implemented the recursive FFT correctly. Make and run `./FFT test fftworks` to test.
 
-2. To apply the recursive PolyMult FFT method to two polynomials run "./FFT test pmr" and "./FFT test polymultworks".
+2. To apply the recursive PolyMult FFT method to two polynomials run `./FFT test pmr` and `./FFT test polymultworks`.
 
-3. To check that the computed values are correct and check against older versions of PolyMult run "./FFT test fftvsold".
+3. To check that the computed values are correct and check against older versions of PolyMult run `./FFT test fftvsold`.
 
-4. To apply the recursive DP FFT method to two polynomials run "./FFT test pmd" and "./FFT test polymultworks".
+4. To apply the recursive DP FFT method to two polynomials run `./FFT test pmd` and `./FFT test polymultworks`.
 
-5. To run timing studies make and run "./FFT run pmr" for recursive and "./FFT run pmd" for DP.
+5. To run timing studies make and run `./FFT run pmr` for recursive and `./FFT run pmd` for DP.
 
 ### Graph of the Results
 
@@ -35,3 +35,5 @@ DnC 4 |       |       |       |  NA   |  ~2^20 ?2
 
 *?1 The recursive seems to be at a slope that is slightly less then the dynamic. So It might pass a very large numbers.*
 *?2 2^20 is a projection. I don't have enough results to be sure.*
+
+This data shows the the FFT is in fact faster. I think there are possible optimizations that would make some run faster than others at times. But in the end the slope is the main concern in this analysis.
