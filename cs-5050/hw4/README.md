@@ -16,7 +16,7 @@ Summary: Implement recursive and dynamic programming version of the FFT and appl
 
 4. Implement FFT using the optimized DP method: (a) No dynamic allocation, (b) pre-computed bit shuffle for coefficient lookup (don’t count in the timing), (c) 2 row space optimization. (*worth 10 points*)
 
-5. Execute timing studies comparing the performance of recursive with DP FFT for the largest problems that can be feasibly solved. I’m hoping for at least 220. Plot the results on a log-log graph, measure the vertical offset between the two methods and compute the corresponding factor. How much faster is DP compared to recursive? (*worth 10 points*)
+5. Execute timing studies comparing the performance of recursive with DP FFT for the largest problems that can be feasibly solved. I’m hoping for at least 2^20. Plot the results on a log-log graph, measure the vertical offset between the two methods and compute the corresponding factor. How much faster is DP compared to recursive? (*worth 10 points*)
 
 6. Compare the run-time performance of FFT with the previous methods. Plot the time performance for the four algorithms on one graph. The maximum problem size solvable will increase with algorithm performance. At what problem sizes do the lines cross? Give a table of crossing points. (*worth 10 points*)
 

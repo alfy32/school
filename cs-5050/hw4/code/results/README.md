@@ -15,4 +15,13 @@ The following number correspond to the numbers in the assignment.
 
 ### Graph of the Results
 
+This graph shows the average runtime versus the problem size. The runtime is in milliseconds and the Problem size is shown as log2(n). The numbers were too big to look good on the graph.
+
 ![FFT results](FFT.png)
+
+Looking at the plot the recursive seems to take about 2 times as long to compute. It starts out nearer to 3 and comes closer to 2 as the problem size gets bigger.
+
+6. Comparison of FFT vs Other methods we have done.
+
+![FFT Vs Other Methods](FFTvsOthers.png)
+

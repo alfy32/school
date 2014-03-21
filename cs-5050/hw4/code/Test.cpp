@@ -297,7 +297,7 @@ void Test::test_FFT_vs_previous_approaches() {
 }
 
 void Test::run_FFT_dynamic() {
-  int minN = 32, maxN = 2000000;
+  int minN = 32, maxN = 20000000;
 
   std::cout << "FFT dynamic" << std::endl
             << "N" << '\t' << "Time" << std::endl;
@@ -322,7 +322,7 @@ void Test::run_FFT_dynamic() {
 }
 
 void Test::run_FFT_recursive() {
-  int minN = 32, maxN = 2000000;
+  int minN = 32, maxN = 20000000;
 
   std::cout << "FFT recursive" << std::endl
             << "N" << '\t' << "Time" << std::endl;
