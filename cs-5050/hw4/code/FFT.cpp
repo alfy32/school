@@ -18,6 +18,19 @@ FFT::FFT() {
 
 }
 
+Vector<Complex> FFT::makeRandomVector(int n, int min, int max) {
+  Vector<Complex> randomVector(n);
+
+  for(int i = 0; i < n; ++i) {
+    double real = rand()%(max-min)+min;
+    double imaginary = rand()%(max-min)+min;
+
+    randomVector[i] = Complex(real, imaginary);
+  }
+
+  return randomVector;
+}
+
 void FFT::preComputeRBS(int n) {
   n = 2*n;
 

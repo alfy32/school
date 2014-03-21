@@ -58,6 +58,10 @@ void Test::test(std::string which) {
 void Test::run(std::string which) {
   if(which == "") {
     std::cout << "Type which test to run." << std::endl;
+  } else if(which == "pmr") {
+    run_FFT_recursive();
+  } else if(which == "pmd") {
+    run_FFT_dynamic();
   }
 }
 
@@ -289,5 +293,54 @@ void Test::test_FFT_vs_previous_approaches() {
                 << std::setprecision(0) << std::setw(w1) << pqActualFFTD[index].real()
                 << std::endl;
     }
+  }
+}
+
+void Test::run_FFT_dynamic() {
+  int minN = 32, maxN = 2000000;
+
+  std::cout << "FFT dynamic" << std::endl
+            << "N" << '\t' << "Time" << std::endl;
+
+  for(int n = minN; n <= maxN; n*=2) {
+
+    FFT fft;
+    fft.preComputeRBS(n);
+    fft.preComputeOmega(n);
+
+    int runTime = averageRuntime([&](){
+
+      Vector<Complex> P = fft.makeRandomVector(n, -1, 1);
+      Vector<Complex> Q = fft.makeRandomVector(n, -1, 1);
+
+      Vector<Complex> result = fft.polyMultD(P, Q, n);
+
+    }, RUNS);
+
+    std::cout << n << '\t' << runTime << std::endl;
+  }
+}
+
+void Test::run_FFT_recursive() {
+  int minN = 32, maxN = 2000000;
+
+  std::cout << "FFT recursive" << std::endl
+            << "N" << '\t' << "Time" << std::endl;
+
+  for(int n = minN; n <= maxN; n*=2) {
+
+    FFT fft;
+    fft.preComputeOmega(n);
+
+    int runTime = averageRuntime([&](){
+
+      Vector<Complex> P = fft.makeRandomVector(n, -1, 1);
+      Vector<Complex> Q = fft.makeRandomVector(n, -1, 1);
+
+      Vector<Complex> result = fft.polyMultR(P, Q, n);
+
+    }, RUNS);
+
+    std::cout << n << '\t' << runTime << std::endl;
   }
 }

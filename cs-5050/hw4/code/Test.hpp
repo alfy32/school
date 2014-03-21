@@ -24,6 +24,9 @@ public:
   static void test_PolyMult_works();
 
   static void test_FFT_vs_previous_approaches();
+
+  static void run_FFT_dynamic();
+  static void run_FFT_recursive();
 };
 
 #endif

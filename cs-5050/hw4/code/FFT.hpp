@@ -20,6 +20,8 @@ private:
 public:
   FFT();
 
+  Vector<Complex> makeRandomVector(int n, int min, int max);
+
   void preComputeRBS(int n);
   void preComputeOmega(int n);
   Vector<Complex> algebraic(Vector<Complex> P, int n, Vector<Complex>& x);
