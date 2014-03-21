@@ -13,11 +13,14 @@ class FFT {
 private:
   Vector<Complex> omega, omega2n, omega2nInverse;
 
+  Vector<Vector<int>> RBScache;
+
   int RBS(int i, int k);
 
 public:
   FFT();
 
+  void preComputeRBS(int n);
   void preComputeOmega(int n);
   Vector<Complex> algebraic(Vector<Complex> P, int n, Vector<Complex>& x);
   Vector<Complex> recursive(Vector<Complex> P, int n, Vector<Complex>& x, int power);

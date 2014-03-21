@@ -2,8 +2,10 @@
 #define TEST_HPP
 
 #include <string>
+#include <iomanip>
 
 #include "FFT.hpp"
+#include "PolyMult.hpp"
 
 class Test {
 private:
@@ -20,6 +22,8 @@ public:
 
   static void test_FFT_works();
   static void test_PolyMult_works();
+
+  static void test_FFT_vs_previous_approaches();
 };
 
 #endif

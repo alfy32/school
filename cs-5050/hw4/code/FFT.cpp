@@ -10,8 +10,26 @@ int FFT::RBS(int i, int k) {
     return RBS(i/2, k-1);
 }
 
+// int FFT::RBSdynamic(int i, int k) {
+//   for(int i = )
+// }
+
 FFT::FFT() {
 
+}
+
+void FFT::preComputeRBS(int n) {
+  n = 2*n;
+
+  int log2N = log2(n);
+
+  RBScache = Vector<Vector<int>> (n, Vector<int> (log2N+1));
+
+  for(int i = 0; i < n; ++i) {
+    for(int k = 0; k <= log2N; ++k) {
+      RBScache[i][k] = RBS(i,k);
+    }
+  }
 }
 
 void FFT::preComputeOmega(int n) {
@@ -35,14 +53,12 @@ Vector<Complex> FFT::algebraic(Vector<Complex> P, int n, Vector<Complex>& x) {
 
   for(int xIndex = 0; xIndex < n; xIndex++) {
 
-    std::cout << "X: " << x[xIndex] << std::endl;
-
     Complex curr = P.back();
 
     for(int i = P.size()-2; i >= 0; --i) {
       curr = P[i] + x[xIndex] * curr;
     }
-    std::cout << curr << std::endl;
+
     answer.push_back(curr);
   }
 
@@ -85,9 +101,8 @@ Vector<Complex> FFT::dynamic(Vector<Complex> Poly, int n, Vector<Complex>& x) {
   Vector<Vector<Complex>> sol(2/*logN+1*/, Vector<Complex>(n));
 
   for(int i = 0; i < n; i++){
-    sol[0][RBS(i, logN)] = Poly[i];
+    sol[0][RBScache[i][logN]] = Poly[i];
   }
-
 
   // solution array initialized with base case
 
