@@ -21,17 +21,19 @@ This graph shows the average runtime versus the problem size. The runtime is in 
 
 Looking at the plot the recursive seems to take about 2 times as long to compute. It starts out nearer to 3 and comes closer to 2 as the problem size gets bigger.
 
-6. Comparison of FFT vs Other methods we have done.
+6) Comparison of FFT vs Other methods we have done.
 
 ![FFT Vs Other Methods](FFTvsOthers.png)
 
+**Table of the crossing points of the lines**
+
       | FFT R | FFT D | DnC 3 | DnC 4 |  SB
 :---: | :---: | :---: | :---: | :---: | :---:
-FFT R |  NA   |  ?1   | ~2^4  | ~2^2  |  ~2^7
-FFT D |  ''   |  NA   | ~2^2  | Nope  |  ~2^6
-DnC 3 |  ''   |  ''   |  NA   | Nope  |  ~2^12
-DnC 4 |  ''   |  ''   |  ''   |  NA   |  Nope
- SB   |  ''   |  ''   |  ''   |  ''   |  NA
+FFT R |  NA   |  ''   | ''    | ''    |  ''
+FFT D |  ?1   |  NA   | ''    | ''    |  ''
+DnC 3 |  ~2^4 |  ~2^2 |  NA   | ''    |  ''
+DnC 4 |  ~2^2 |  Nope |  Nope |  NA   |  ''
+ SB   |  ~2^7 |  ~2^6 |  ~2^12| Nope  |  NA
 
 *?1 The recursive seems to be at a slope that is slightly less then the dynamic. So It might cross at very large numbers.*
 
