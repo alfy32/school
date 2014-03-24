@@ -1,6 +1,8 @@
 Assigment 4 - Fast Fourier transform
 =======================================
 
+**Alan Christensen**
+
 The following numbers correspond to the numbers in the assignment.
 
 1. I implemented the recursive FFT correctly. Make and run `./FFT test fftworks` to test.
