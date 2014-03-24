@@ -1,7 +1,7 @@
 Assigment 4 - Fast Fourier transform
 =======================================
 
-**Alan Christensen**
+**Alan Christensen - 3/24/2014**
 
 The following numbers correspond to the numbers in the assignment.
 
