@@ -29,9 +29,15 @@ namespace Messages
 
         public enum PossibleTypes
         {
-            AckNak = 1
-            // More could be defined later
+            AckNak = 1,
+            ReadyReply = 2,
+            ResourceReply = 3,
+            ConfigurationReply = 4,
+            PlayingFieldReply = 5,
+            AgentListReply = 6,
+            StatusReply = 7
         }
+
         public enum PossibleStatus
         {
             Success = 1,
@@ -78,9 +84,18 @@ namespace Messages
                 case (Int16) MESSAGE_CLASS_IDS.AckNak:
                     result = AckNak.Create(messageBytes);
                     break;
-
-                // Additional reply types would go here
-
+                case (Int16) MESSAGE_CLASS_IDS.ReadyReply:
+                    break;
+                case (Int16) MESSAGE_CLASS_IDS.ResourceReply:
+                    break;
+                case (Int16) MESSAGE_CLASS_IDS.ConfigurationReply:
+                    break;
+                case (Int16) MESSAGE_CLASS_IDS.PlayingFieldReply:
+                    break;
+                case (Int16) MESSAGE_CLASS_IDS.AgentListReply:
+                    break;
+                case (Int16) MESSAGE_CLASS_IDS.StatusReply:
+                    break;
                 default:
                     throw new ApplicationException("Invalid Message Class Id");
             }

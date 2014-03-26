@@ -15,7 +15,7 @@ namespace Messages
         #region Public Properties
         public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS)ClassId; }
 
-        public ComponentInfo Component { get; set; }
+        public AgentInfo Component { get; set; }
         public static new int MinimumEncodingLength
         {
             get
@@ -38,7 +38,7 @@ namespace Messages
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        public AddComponent(ComponentInfo component)
+        public AddComponent(AgentInfo component)
             : base(PossibleTypes.AddComponent)
         {
             Component = component;
@@ -98,7 +98,7 @@ namespace Messages
 
             base.Decode(bytes);
 
-            Component = bytes.GetDistributableObject() as ComponentInfo;
+            Component = bytes.GetDistributableObject() as AgentInfo;
 
             bytes.RestorePreviosReadLimit();
         }

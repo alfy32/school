@@ -54,6 +54,12 @@ namespace Messages
             GetStatus = 115,
             Reply = 200,
             AckNak = 201,
+            ReadyReply = 205,
+            ResourceReply =  210,
+            ConfigurationReply = 215,
+            PlayingFieldReply = 220,
+            AgentListReply = 225,
+            StatusReply = 230,
             MaxMessageClassId = 299
         };
         #endregion

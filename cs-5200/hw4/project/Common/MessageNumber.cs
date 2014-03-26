@@ -48,7 +48,7 @@ namespace Common
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        public static MessageNumber Create(ByteList bytes)
+        new public static MessageNumber Create(ByteList bytes)
         {
             MessageNumber result = null;
             if (bytes == null || bytes.RemainingToRead < MinimumEncodingLength)

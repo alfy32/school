@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Runtime.Serialization;
 
 namespace Common
 {
-    public abstract class DistributableObject
+    [DataContract]
+    public class DistributableObject
     {
         public enum DISTRIBUTABLE_CLASS_IDS
         {
@@ -14,13 +16,15 @@ namespace Common
             EndPoint = 1002, 
             PlayingFieldLayout = 1004,
             FieldLocation = 1006,
+            AgentInfo = 1008,
             ComponentInfo = 1010,
-            ComponentList = 1012,
+            GameInfo = 1011,
+            AgentList = 1012,
             StatusInfo = 1014,
             Tick = 1020,
             Excuse = 1022,
             WhiningTwine = 1024,
-            Bomb = 1026
+            Bomb = 1026,
         };
 
         public static DistributableObject Create(ByteList bytes)
@@ -39,11 +43,11 @@ namespace Common
                 case DISTRIBUTABLE_CLASS_IDS.Bomb:
                     result = Bomb.Create(bytes);
                     break;
-                case DISTRIBUTABLE_CLASS_IDS.ComponentInfo:
-                    result = ComponentInfo.Create(bytes);
+                case DISTRIBUTABLE_CLASS_IDS.AgentInfo:
+                    result = AgentInfo.Create(bytes);
                     break;
-                case DISTRIBUTABLE_CLASS_IDS.ComponentList:
-                    result = ComponentList.Create(bytes);
+                case DISTRIBUTABLE_CLASS_IDS.AgentList:
+                    result = AgentList.Create(bytes);
                     break;
                 case DISTRIBUTABLE_CLASS_IDS.EndPoint:
                     result = EndPoint.Create(bytes);
@@ -60,9 +64,6 @@ namespace Common
                 case DISTRIBUTABLE_CLASS_IDS.PlayingFieldLayout:
                     result = PlayingFieldLayout.Create(bytes);
                     break;
-                case DISTRIBUTABLE_CLASS_IDS.StatusInfo:
-                    result = StatusInfo.Create(bytes);
-                    break;
                 case DISTRIBUTABLE_CLASS_IDS.Tick:
                     result = Tick.Create(bytes);
                     break;
@@ -70,12 +71,12 @@ namespace Common
                     result = WhiningTwine.Create(bytes);
                     break;
                 default:
-                    throw new ApplicationException("Invalid Class IDs");
+                    throw new ApplicationException(string.Format("Invalid Class Id={0}", objType));
             }
             return result;
         }
 
-        abstract public void Encode(ByteList bytes);
-        abstract protected void Decode(ByteList bytes);
+        public virtual void Encode(ByteList bytes) {}
+        protected virtual void Decode(ByteList bytes) {}
     }
 }

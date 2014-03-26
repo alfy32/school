@@ -16,10 +16,7 @@ namespace Messages
         public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS)ClassId; }
 
         public Int16 GameId { get; set; }
-        public string ANumber { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public ComponentInfo AgentInfo { get; set; }
+        public AgentInfo AgentInfo { get; set; }
         public static new int MinimumEncodingLength
         {
             get
@@ -45,13 +42,10 @@ namespace Messages
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        public JoinGame(Int16 gameId, string aNumber, string firstName, string lastName, ComponentInfo agentInfo)
+        public JoinGame(Int16 gameId, AgentInfo agentInfo)
             : base(PossibleTypes.JoinGame)
         {
             GameId = gameId;
-            ANumber = aNumber;
-            FirstName = firstName;
-            LastName = lastName;
             AgentInfo = agentInfo;
         }
 
@@ -92,15 +86,7 @@ namespace Messages
 
             base.Encode(bytes);                              // Encode the part of the object defined
                                                                     // by the base class
-
-            if (ANumber == null)
-                ANumber = string.Empty;
-            if (FirstName == null)
-                FirstName = string.Empty;
-            if (LastName == null)
-                LastName = string.Empty;
-
-            bytes.AddObjects(GameId, ANumber, FirstName, LastName, AgentInfo);  
+            bytes.AddObjects(GameId, AgentInfo);  
 
             Int16 length = Convert.ToInt16(bytes.CurrentWritePosition - lengthPos - 2);
             bytes.WriteInt16To(lengthPos, length);           // Write out the length of this object        
@@ -117,10 +103,7 @@ namespace Messages
             base.Decode(bytes);
 
             GameId = bytes.GetInt16();
-            ANumber = bytes.GetString();
-            FirstName = bytes.GetString();
-            LastName = bytes.GetString();
-            AgentInfo = bytes.GetDistributableObject() as ComponentInfo;
+            AgentInfo = bytes.GetDistributableObject() as AgentInfo;
 
             bytes.RestorePreviosReadLimit();
         }

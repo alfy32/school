@@ -7,37 +7,33 @@ using Common;
 
 namespace Messages
 {
-    public class AckNak : Reply
+    public class PlayingFieldReply : Reply
     {
         #region Private Properties
-        private static Int16 ClassId { get { return (Int16)MESSAGE_CLASS_IDS.AckNak; } }
+        private static Int16 ClassId { get { return (Int16)MESSAGE_CLASS_IDS.PlayingFieldReply; } }
         #endregion
 
         #region Public Properties
-        public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS) ClassId; }
+        public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS)ClassId; }
 
-        public int IntResult { get; set; }
-        public DistributableObject ObjResult { get; set; }
-        public string Message { get; set; }
+        public PlayingFieldLayout Layout { get; set; }
         public static new int MinimumEncodingLength
         {
             get
             {
                 return 4                // Object header
-                       + 2              // IntResult
-                       + 1              // ObjResult
-                       + 2              // Message
-                       + 1;
+                       + PlayingFieldLayout.MinimumEncodingLength;
             }
         }
         #endregion
 
+        
         #region Constructors and Factory Methods
         /// <summary>
         /// Default message constructor, used by Factory methods (i.e., the Create methods)
         /// </summary>
 
-        protected AckNak() { }
+        protected PlayingFieldReply() { }
 
         /// <summary>
         /// Constructor used by all specializations, which in turn are used by
@@ -46,27 +42,20 @@ namespace Messages
         /// <param name="conversationId">conversation id</param>
         /// <param name="status">Status of the ack/nak</status>
         /// <param name="note">error message or note</note>
-        public AckNak(PossibleStatus status, int intResult, DistributableObject objResult, string message, string note) :
-            base(Reply.PossibleTypes.AckNak, status, note)
+        public PlayingFieldReply(PossibleStatus status, PlayingFieldLayout layout, string note = null) :
+            base(Reply.PossibleTypes.PlayingFieldReply, status, note)
         {
-            IntResult = intResult;
-            ObjResult = objResult;
-            Message = message;
+            Layout = layout;
         }
-
-        public AckNak(PossibleStatus status, int intResult) : this(status, intResult, null, string.Empty, string.Empty) { }
-        public AckNak(PossibleStatus status, int intResult, string message) : this(status, intResult, null, message, string.Empty) { }
-        public AckNak(PossibleStatus status, DistributableObject objResult) : this(status, 0, objResult, string.Empty, string.Empty) { }
-        public AckNak(PossibleStatus status, DistributableObject objResult, string message) : this(status, 0, objResult, message, string.Empty) { }
 
         /// <summary>
         /// Factor method to create a message from a byte list
         /// </summary>
         /// <param name="messageBytes">A byte list from which the message will be decoded</param>
         /// <returns>A new message of the right specialization</returns>
-        new public static AckNak Create(ByteList messageBytes)
+        new public static PlayingFieldReply Create(ByteList messageBytes)
         {
-            AckNak result = null;
+            PlayingFieldReply result = null;
 
             if (messageBytes==null || messageBytes.RemainingToRead<MinimumEncodingLength)
                 throw new ApplicationException("Invalid message byte array");
@@ -74,7 +63,7 @@ namespace Messages
                 throw new ApplicationException("Invalid message class id");
             else
             {
-                result = new AckNak();
+                result = new PlayingFieldReply();
                 result.Decode(messageBytes);
             }
 
@@ -94,8 +83,7 @@ namespace Messages
 
             base.Encode(bytes);                             // Encode stuff from base class
 
-            if (Message == null) Message = string.Empty;
-            bytes.AddObjects(IntResult, ObjResult, Message);
+            bytes.Add(Layout);
 
             Int16 length = Convert.ToInt16(bytes.CurrentWritePosition - lengthPos - 2);
             bytes.WriteInt16To(lengthPos, length);          // Write out the length of this object        
@@ -111,13 +99,12 @@ namespace Messages
 
             base.Decode(bytes);
 
-            IntResult = bytes.GetInt32();
-            ObjResult = bytes.GetDistributableObject();
-            Message = bytes.GetString();
-
+            Layout = bytes.GetDistributableObject() as PlayingFieldLayout;
+            
             bytes.RestorePreviosReadLimit();
         }
 
         #endregion
+
     }
 }

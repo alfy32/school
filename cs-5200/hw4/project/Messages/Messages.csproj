@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Messages</RootNamespace>
     <AssemblyName>Messages</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
@@ -46,8 +49,10 @@
   <ItemGroup>
     <Compile Include="AckNak.cs" />
     <Compile Include="AddComponent.cs" />
+    <Compile Include="AgentListReply.cs" />
     <Compile Include="ChangeStrength.cs" />
     <Compile Include="Collaborate.cs" />
+    <Compile Include="ConfigurationReply.cs" />
     <Compile Include="EndGame.cs" />
     <Compile Include="Eat.cs" />
     <Compile Include="GameAnnouncement.cs" />
@@ -56,11 +61,15 @@
     <Compile Include="JoinGame.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Move.cs" />
+    <Compile Include="PlayingFieldReply.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadyReply.cs" />
     <Compile Include="RemoveComponent.cs" />
     <Compile Include="Reply.cs" />
     <Compile Include="Request.cs" />
+    <Compile Include="ResourceReply.cs" />
     <Compile Include="StartGame.cs" />
+    <Compile Include="StatusReply.cs" />
     <Compile Include="ThrowBomb.cs" />
     <Compile Include="TickDelivery.cs" />
     <Compile Include="ValidateTick.cs" />

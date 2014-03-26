@@ -7,37 +7,32 @@ using Common;
 
 namespace Messages
 {
-    public class AckNak : Reply
+    public class AgentListReply : Reply
     {
         #region Private Properties
-        private static Int16 ClassId { get { return (Int16)MESSAGE_CLASS_IDS.AckNak; } }
+        private static Int16 ClassId { get { return (Int16)MESSAGE_CLASS_IDS.AgentListReply; } }
         #endregion
 
         #region Public Properties
-        public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS) ClassId; }
+        public override Message.MESSAGE_CLASS_IDS MessageTypeId() { return (Message.MESSAGE_CLASS_IDS)ClassId; }
 
-        public int IntResult { get; set; }
-        public DistributableObject ObjResult { get; set; }
-        public string Message { get; set; }
+        public AgentList Agents { get; set; }
         public static new int MinimumEncodingLength
         {
             get
             {
                 return 4                // Object header
-                       + 2              // IntResult
-                       + 1              // ObjResult
-                       + 2              // Message
-                       + 1;
+                       + AgentList.MinimumEncodingLength;
             }
         }
         #endregion
-
+        
         #region Constructors and Factory Methods
         /// <summary>
         /// Default message constructor, used by Factory methods (i.e., the Create methods)
         /// </summary>
 
-        protected AckNak() { }
+        protected AgentListReply() { }
 
         /// <summary>
         /// Constructor used by all specializations, which in turn are used by
@@ -46,27 +41,20 @@ namespace Messages
         /// <param name="conversationId">conversation id</param>
         /// <param name="status">Status of the ack/nak</status>
         /// <param name="note">error message or note</note>
-        public AckNak(PossibleStatus status, int intResult, DistributableObject objResult, string message, string note) :
-            base(Reply.PossibleTypes.AckNak, status, note)
+        public AgentListReply(PossibleStatus status, AgentList agents, string note = null) :
+            base(Reply.PossibleTypes.AgentListReply, status, note)
         {
-            IntResult = intResult;
-            ObjResult = objResult;
-            Message = message;
+            Agents = agents;
         }
-
-        public AckNak(PossibleStatus status, int intResult) : this(status, intResult, null, string.Empty, string.Empty) { }
-        public AckNak(PossibleStatus status, int intResult, string message) : this(status, intResult, null, message, string.Empty) { }
-        public AckNak(PossibleStatus status, DistributableObject objResult) : this(status, 0, objResult, string.Empty, string.Empty) { }
-        public AckNak(PossibleStatus status, DistributableObject objResult, string message) : this(status, 0, objResult, message, string.Empty) { }
 
         /// <summary>
         /// Factor method to create a message from a byte list
         /// </summary>
         /// <param name="messageBytes">A byte list from which the message will be decoded</param>
         /// <returns>A new message of the right specialization</returns>
-        new public static AckNak Create(ByteList messageBytes)
+        new public static AgentListReply Create(ByteList messageBytes)
         {
-            AckNak result = null;
+            AgentListReply result = null;
 
             if (messageBytes==null || messageBytes.RemainingToRead<MinimumEncodingLength)
                 throw new ApplicationException("Invalid message byte array");
@@ -74,7 +62,7 @@ namespace Messages
                 throw new ApplicationException("Invalid message class id");
             else
             {
-                result = new AckNak();
+                result = new AgentListReply();
                 result.Decode(messageBytes);
             }
 
@@ -94,8 +82,7 @@ namespace Messages
 
             base.Encode(bytes);                             // Encode stuff from base class
 
-            if (Message == null) Message = string.Empty;
-            bytes.AddObjects(IntResult, ObjResult, Message);
+            bytes.Add(Agents);
 
             Int16 length = Convert.ToInt16(bytes.CurrentWritePosition - lengthPos - 2);
             bytes.WriteInt16To(lengthPos, length);          // Write out the length of this object        
@@ -111,10 +98,8 @@ namespace Messages
 
             base.Decode(bytes);
 
-            IntResult = bytes.GetInt32();
-            ObjResult = bytes.GetDistributableObject();
-            Message = bytes.GetString();
-
+            Agents = bytes.GetDistributableObject() as AgentList;
+            
             bytes.RestorePreviosReadLimit();
         }
 

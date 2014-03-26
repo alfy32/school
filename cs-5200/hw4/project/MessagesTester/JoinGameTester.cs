@@ -20,56 +20,36 @@ namespace MessagesTester
         {
             JoinGame jg = new JoinGame();
             Assert.AreEqual(0, jg.GameId);
-            Assert.IsNull(jg.ANumber);
-            Assert.IsNull(jg.FirstName);
-            Assert.IsNull(jg.LastName);
             Assert.IsNull(jg.AgentInfo);
 
-            ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
-            jg = new JoinGame(10, "A00123", "Joe", "Jones", agentInfo);
+            AgentInfo agentInfo = new AgentInfo(1001, AgentInfo.PossibleAgentType.BrilliantStudent) { ANumber = "A0001", FirstName = "Joe", LastName = "Jone" };
+            jg = new JoinGame(10, agentInfo);
             Assert.AreEqual(10, jg.GameId);
-            Assert.AreEqual("A00123", jg.ANumber);
-            Assert.AreEqual("Joe", jg.FirstName);
-            Assert.AreEqual("Jones", jg.LastName);
+
             Assert.AreSame(agentInfo, jg.AgentInfo);
 
+            ByteList bytes = new ByteList();
+            jg.Encode(bytes);
+            Message msg = Message.Create(bytes);
+            Assert.IsNotNull(msg);
+            Assert.IsTrue(msg is JoinGame);
+            JoinGame jg2 = msg as JoinGame;
+            Assert.AreEqual(jg.GameId, jg2.GameId);
         }
 
         [TestMethod]
         public void JoinGame_Properties()
         {
-            ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
-            JoinGame jg = new JoinGame(10, "A00123", "Joe", "Jones", agentInfo);
+            AgentInfo agentInfo = new AgentInfo(1001, AgentInfo.PossibleAgentType.BrilliantStudent) { ANumber = "A00001", FirstName = "Joe", LastName = "Jones" };
+            JoinGame jg = new JoinGame(10, agentInfo);
             Assert.AreEqual(10, jg.GameId);
-            Assert.AreEqual("A00123", jg.ANumber);
-            Assert.AreEqual("Joe", jg.FirstName);
-            Assert.AreEqual("Jones", jg.LastName);
+            Assert.AreEqual("A00001", jg.AgentInfo.ANumber);
+            Assert.AreEqual("Joe", jg.AgentInfo.FirstName);
+            Assert.AreEqual("Jones", jg.AgentInfo.LastName);
             Assert.AreSame(agentInfo, jg.AgentInfo);
 
             jg.GameId = 20;
             Assert.AreEqual(20, jg.GameId);
-
-            jg.ANumber = "A12345";
-            Assert.AreEqual("A12345", jg.ANumber);
-            jg.ANumber = null;
-            Assert.IsNull(jg.ANumber);
-            jg.ANumber = "A00001";
-            Assert.AreEqual("A00001", jg.ANumber);
-
-            jg.FirstName = "Sue";
-            Assert.AreEqual("Sue", jg.FirstName);
-            jg.FirstName = null;
-            Assert.IsNull(jg.FirstName);
-            jg.FirstName = "James";
-            Assert.AreEqual("James", jg.FirstName);
-
-            jg.LastName = "Hanks";
-            Assert.AreEqual("Hanks", jg.LastName);
-            jg.LastName = null;
-            Assert.IsNull(jg.LastName);
-            jg.LastName = "Blitzer";
-            Assert.AreEqual("Blitzer", jg.LastName);
-
             jg.AgentInfo = null;
             Assert.IsNull(jg.AgentInfo);
             jg.AgentInfo = agentInfo;
@@ -81,21 +61,15 @@ namespace MessagesTester
         [TestMethod]
         public void JoinGame_EncodingAndDecoding()
         {
-            ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
-            JoinGame jg1 = new JoinGame(10, "A00123", "Joe", "Jones", agentInfo);
+            AgentInfo agentInfo = new AgentInfo(1001, AgentInfo.PossibleAgentType.BrilliantStudent) { ANumber = "A0001", FirstName = "Joe", LastName = "Jone" };
+            JoinGame jg1 = new JoinGame(10, agentInfo);
             Assert.AreEqual(10, jg1.GameId);
-            Assert.AreEqual("A00123", jg1.ANumber);
-            Assert.AreEqual("Joe", jg1.FirstName);
-            Assert.AreEqual("Jones", jg1.LastName);
             Assert.AreSame(agentInfo, jg1.AgentInfo);
 
             ByteList bytes = new ByteList();
             jg1.Encode(bytes);
             JoinGame jg2 = JoinGame.Create(bytes);
             Assert.AreEqual(jg1.GameId, jg2.GameId);
-            Assert.AreEqual(jg1.ANumber, jg2.ANumber);
-            Assert.AreEqual(jg1.FirstName, jg2.FirstName);
-            Assert.AreEqual(jg1.LastName, jg2.LastName);
 
 
             bytes.Clear();

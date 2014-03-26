@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net;
+using System.Runtime.Serialization;
 
 namespace Common
 {
@@ -15,7 +16,9 @@ namespace Common
         #endregion
 
         #region Public Properties
+        [DataMember]
         public Int32 Address { get; set; }
+        [DataMember]
         public Int32 Port
         {
             get { return port; }
@@ -67,11 +70,28 @@ namespace Common
             : this(0, port)
         {
             if (!string.IsNullOrWhiteSpace(hostname))
+                Address = ParseAddress(hostname);
+        }
+
+        private int ParseAddress(string hostname)
+        {
+            int result = 0;
+            IPAddress[] addressList = Dns.GetHostAddresses(hostname);
+            if (addressList.Length > 0)
+                result = BitConverter.ToInt32(addressList[0].GetAddressBytes(), 0);
+            return result;
+        }
+
+        public EndPoint(string hostnameAndPort)
+        {
+            if (!string.IsNullOrWhiteSpace(hostnameAndPort))
             {
-                IPHostEntry host;
-                host = Dns.GetHostEntry(hostname);
-                if (host.AddressList.Length > 0)
-                    Address = BitConverter.ToInt32(host.AddressList[0].GetAddressBytes(), 0);
+                string[] tmp = hostnameAndPort.Split(':');
+                if (tmp.Length == 2 && !string.IsNullOrWhiteSpace(tmp[0]))
+                {
+                    Address = ParseAddress(tmp[0]);
+                    Int32.TryParse(tmp[1], out port);
+                }
             }
         }
 
@@ -165,6 +185,12 @@ namespace Common
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            byte[] addressBytes = BitConverter.GetBytes(Address);
+            return string.Format("{0}.{1}.{2}.{3}:{4}", addressBytes[0], addressBytes[1], addressBytes[2], addressBytes[3], Port);
         }
 
         #endregion

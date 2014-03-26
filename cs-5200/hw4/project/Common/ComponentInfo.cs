@@ -2,56 +2,71 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Net;
+using System.Runtime.Serialization;
 
 namespace Common
 {
+    [DataContract]
     public class ComponentInfo : DistributableObject
     {
+        
         #region Private Data Members
         // Define this, the Message class, identifier
         private static Int16 ClassId { get { return (Int16)DISTRIBUTABLE_CLASS_IDS.ComponentInfo; } }
+
+        private Int16 id;
+        private EndPoint communicationEndPoint;
         #endregion
 
         #region Public Properties and Other Stuff
-        public enum PossibleAgentType { BrilliantStudent = 1, ExcuseGenerator = 2, WhiningSpinner = 3, ZombieProfessor = 4 };
 
-        public Int16 Id { get; set; }
-        public PossibleAgentType AgentType { get; set; }  
-        public EndPoint CommmunicationEndPoint { get; set; }
-        public StatusInfo Status { get; set; }
+        [DataMember]
+        public Int16 Id
+        {
+            get { return id; }
+            set
+            {
+                id = value;
+                RaiseChangedEvent();
+            }
+        }
+        [DataMember]
+        public EndPoint CommunicationEndPoint
+        {
+            get { return communicationEndPoint; }
+            set
+            {
+                communicationEndPoint = value;
+                RaiseChangedEvent();
+            }
+        }
+        
         public static int MinimumEncodingLength
         {
             get
             {
                 return 4                // Object header
                        + 2              // Id
-                       + 1              // Agent Types
-                       + 1              // CommunicationEndPoint
-                       + 1;             // Status
+                       + 1;             // CommunicationEndPoint
             }
         }
+
+        public event StateChangeHandler Changed;
+
         #endregion
       
         #region Constructors
         public ComponentInfo() {}
 
-        public ComponentInfo(Int16 id, PossibleAgentType type)
+        public ComponentInfo(Int16 id)
         {
             Id = id;
-            AgentType = type;
         }
 
-        /// <summary>
-        /// Factor method to create an object of this class from a byte list
-        /// </summary>
-        /// <param name="bytes">A byte list from which the distributable object will be decoded</param>
-        /// <returns>A new object of this class</returns>
-        new public static ComponentInfo Create(ByteList bytes)
+        public ComponentInfo(Int16 id, EndPoint endPoint)
+            : this(id)
         {
-            ComponentInfo result = new ComponentInfo();
-            result.Decode(bytes);
-            return result;
+            CommunicationEndPoint = endPoint;
         }
         #endregion
 
@@ -70,9 +85,7 @@ namespace Common
 
             bytes.Add((Int16) 0);                           // Write out a place holder for the length
 
-            bytes.AddObjects( (byte) AgentType, Id);
-            bytes.Add(CommmunicationEndPoint);
-            bytes.Add(Status);
+            bytes.AddObjects(Id, CommunicationEndPoint);
 
             Int16 length = Convert.ToInt16(bytes.CurrentWritePosition - lengthPos - 2);
             bytes.WriteInt16To(lengthPos, length);          // Write out the length of this object        
@@ -95,15 +108,22 @@ namespace Common
 
                 bytes.SetNewReadLimit(objLength);
 
-                AgentType = (PossibleAgentType) bytes.GetByte();
-                Id = bytes.GetInt16();
-                CommmunicationEndPoint = bytes.GetDistributableObject() as EndPoint;
-                Status = bytes.GetDistributableObject() as StatusInfo;
+                id = bytes.GetInt16();
+                communicationEndPoint = bytes.GetDistributableObject() as EndPoint;
+                RaiseChangedEvent();
 
                 bytes.RestorePreviosReadLimit();
             }
         }
 
+        #endregion
+
+        #region Event raising methods
+        protected void RaiseChangedEvent()
+        {
+            if (Changed != null)
+                Changed(new StateChange() { Type = StateChange.ChangeType.UPDATE, Subject = this });
+        }
         #endregion
     }
 }

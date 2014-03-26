@@ -12,7 +12,7 @@ namespace MessagesTester
     public class AckNakTester
     {
         [TestMethod]
-        public void AckNak_CheckConstructors()
+        public void AckNak_CheckConstructorsAndFactories()
         {
             Tick t1 = new Tick();
             AckNak m = new AckNak(Reply.PossibleStatus.Success, 10, t1, "Test Message", "Test Note");
@@ -54,6 +54,15 @@ namespace MessagesTester
             Assert.AreSame(t1, m.ObjResult);
             Assert.AreEqual("Test Message", m.Message);
             Assert.AreEqual("", m.Note);
+
+            ByteList bytes = new ByteList();
+            m.Encode(bytes);
+            Message msg = Message.Create(bytes);
+            Assert.IsNotNull(msg);
+            Assert.IsTrue(msg is AckNak);
+            AckNak m2 = msg as AckNak;
+            Assert.AreEqual(m.Status, m2.Status);
+            Assert.AreEqual(m.Note, m2.Note);
 
         }
 
