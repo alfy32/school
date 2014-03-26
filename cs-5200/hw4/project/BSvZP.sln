@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
+# Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{1AB5119F-BEFC-4350-AEEC-845105A3543C}"
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WhiningSpinner", "WhiningSpinner\WhiningSpinner.csproj", "{288F8268-2F5B-474E-8D91-69F89F9554F1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcuseGenerator", "ExcuseGenerator\ExcuseGenerator.csproj", "{78ECA84B-CFCC-4624-A1FB-BFFAF28FF60C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameRegistry", "GameRegistry\GameRegistry.csproj", "{98317861-E4D5-4CAF-8325-87CD99EB6504}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{78ECA84B-CFCC-4624-A1FB-BFFAF28FF60C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78ECA84B-CFCC-4624-A1FB-BFFAF28FF60C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78ECA84B-CFCC-4624-A1FB-BFFAF28FF60C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98317861-E4D5-4CAF-8325-87CD99EB6504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98317861-E4D5-4CAF-8325-87CD99EB6504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98317861-E4D5-4CAF-8325-87CD99EB6504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98317861-E4D5-4CAF-8325-87CD99EB6504}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

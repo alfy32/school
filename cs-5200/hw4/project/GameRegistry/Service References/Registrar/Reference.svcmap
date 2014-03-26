@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e79e2b70-346b-4b0d-94b7-48b510dc3ae1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d09e7417-7bca-4589-ade5-19c692ba5888" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,11 +22,11 @@
     <MetadataSource Address="http://cs5200web.serv.usu.edu/Registrar.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="Registrar.disco" MetadataType="Disco" ID="e8eb1738-8c64-4d4e-9336-04c9d16ab21b" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?disco" />
-    <MetadataFile FileName="Registrar.xsd" MetadataType="Schema" ID="262a87e9-909e-4769-8b94-93c63c7ec57a" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?xsd=xsd2" />
-    <MetadataFile FileName="Registrar.wsdl" MetadataType="Wsdl" ID="1645ba8c-e53a-4f0b-9804-7b1bd9400001" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?wsdl" />
-    <MetadataFile FileName="Registrar1.xsd" MetadataType="Schema" ID="b76135bc-aa20-49ba-847d-201de8d5362d" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?xsd=xsd0" />
-    <MetadataFile FileName="Registrar2.xsd" MetadataType="Schema" ID="69073ad2-a211-4f8a-8019-adf0e3d9380d" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?xsd=xsd1" />
+    <MetadataFile FileName="Registrar.disco" MetadataType="Disco" ID="fdf53322-8754-455d-b7a2-c7bb2f37ddaf" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?disco" />
+    <MetadataFile FileName="Registrar.xsd" MetadataType="Schema" ID="80b5b3ee-0a3f-4d24-9d4d-c87fc79fff48" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?xsd=xsd2" />
+    <MetadataFile FileName="Registrar.wsdl" MetadataType="Wsdl" ID="73db7c15-7073-472a-80fb-47ea1ae66405" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?wsdl" />
+    <MetadataFile FileName="Registrar1.xsd" MetadataType="Schema" ID="8d569595-9103-4224-84e1-02da9bff409d" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?xsd=xsd0" />
+    <MetadataFile FileName="Registrar2.xsd" MetadataType="Schema" ID="a46fe817-36a4-4608-95a4-c372de26e199" SourceId="1" SourceUrl="http://cs5200web.serv.usu.edu/Registrar.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

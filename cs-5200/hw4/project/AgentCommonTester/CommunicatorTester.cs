@@ -72,6 +72,8 @@ namespace AgentCommonTester
           Envelope sendEnvelope = new Envelope(message, endPoint);
 
           sender.Send(sendEnvelope);
+
+          Envelope response = sender.Recieve();
         }
 
         [TestMethod]

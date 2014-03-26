@@ -99,6 +99,7 @@ namespace AgentCommon
       ByteList bytes = new ByteList();
 
       envelope.message.Encode(bytes);
+      byte[] b = bytes.ToBytes();
       udpClient.Send(bytes.ToBytes(), bytes.Length, remoteEP);
     }
 

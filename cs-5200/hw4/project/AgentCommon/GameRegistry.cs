@@ -13,7 +13,6 @@ namespace AgentCommon
 {
   public class GameRegistry
   {
-    RegistrarClient client = new RegistrarClient();
 
     public GameRegistry()
     {
@@ -22,6 +21,7 @@ namespace AgentCommon
 
     public GameInfo[] GetGames()
     {
+      RegistrarClient client = new RegistrarClient();
       return client.GetGames(GameInfo.GameStatus.AVAILABLE);
     }
   }
