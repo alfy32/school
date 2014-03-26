@@ -23,12 +23,13 @@ namespace AgentCommonTester
       MessageQueue requestMessageQueue = RequestMessageQueue.getQueue();
 
       //create message
-      ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
-      Message message = new JoinGame(10, "A00123", "Joe", "Jones", agentInfo);
+      AgentInfo agentInfo = new AgentInfo();
+      agentInfo.AgentType = AgentInfo.PossibleAgentType.BrilliantStudent;
+      Message message = new JoinGame(10, agentInfo);
       IPEndPoint localEP = new IPEndPoint(IPAddress.Loopback, Communicator.nextAvailablePort());
       Common.EndPoint endPoint = new Common.EndPoint(localEP);
       Envelope envelope = new Envelope(message, endPoint);
-      
+
       requestMessageQueue.push(envelope);
 
       doer.Suspend();

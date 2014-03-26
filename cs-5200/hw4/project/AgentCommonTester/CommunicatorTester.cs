@@ -25,48 +25,54 @@ namespace AgentCommonTester
         [TestMethod]
         public void Communicator_SendRecieve()
         {
-            int senderPort = Communicator.nextAvailablePort();
-            int recieverPort = Communicator.nextAvailablePort();
+          int senderPort = Communicator.nextAvailablePort();
+          int recieverPort = Communicator.nextAvailablePort();
 
-            Communicator sender = new Communicator(senderPort);
-            Communicator reciever = new Communicator(recieverPort);
+          Communicator sender = new Communicator(senderPort);
+          Communicator reciever = new Communicator(recieverPort);
 
-            ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
-            Message message = new JoinGame(10, "A00123", "Joe", "Jones", agentInfo);
-            IPEndPoint localEP = new IPEndPoint(IPAddress.Loopback, recieverPort);
-            Common.EndPoint endPoint = new Common.EndPoint(localEP);
-            Envelope sendEnvelope = new Envelope(message, endPoint);
+          AgentInfo agentInfo = new AgentInfo();
+          agentInfo.ANumber = "A00123";
+          agentInfo.FirstName = "Joe";
+          agentInfo.LastName = "Jones";
 
-            sender.Send(sendEnvelope);
+          Message message = new JoinGame(10, agentInfo);
+          IPEndPoint localEP = new IPEndPoint(IPAddress.Loopback, recieverPort);
+          Common.EndPoint endPoint = new Common.EndPoint(localEP);
+          Envelope sendEnvelope = new Envelope(message, endPoint);
 
-            Envelope recieveEnvelope = reciever.Recieve();
+          sender.Send(sendEnvelope);
 
-            JoinGame jg = (JoinGame)recieveEnvelope.message;
+          Envelope recieveEnvelope = reciever.Recieve();
 
-            Assert.AreEqual(10, jg.GameId);
-            Assert.AreEqual("A00123", jg.ANumber);
-            Assert.AreEqual("Joe", jg.FirstName);
-            Assert.AreEqual("Jones", jg.LastName);
+          JoinGame jg = (JoinGame)recieveEnvelope.message;
+
+          Assert.AreEqual(10, jg.GameId);
+          Assert.AreEqual("A00123", jg.AgentInfo.ANumber);
+          Assert.AreEqual("Joe", jg.AgentInfo.FirstName);
+          Assert.AreEqual("Jones", jg.AgentInfo.LastName);
         }
 
-        //[TestMethod]
-        //public void Communicator_SendToGreg()
-        //{
-        //    int sendPort = 12300;
-        //    int recieverPort = 9835;
+        [TestMethod]
+        public void Communicator_SendToGreg()
+        {
+          int sendPort = 2345;
+          int recieverPort = 9876;
 
-        //    string hostName = "129.123.7.167";
+          short gameId = 10;
 
-        //    Communicator sender = new Communicator(sendPort);
+          string hostName = "thingsforreasons.com";
 
-        //    ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
-        //    Message message = new JoinGame(10, "A00123", "Joe", "Jones", agentInfo);
-        //    IPEndPoint recieverEP = new IPEndPoint(GetHostAddress(hostName), recieverPort);
-        //    Common.EndPoint endPoint = new Common.EndPoint(recieverEP);
-        //    Envelope sendEnvelope = new Envelope(message, endPoint);
+          Communicator sender = new Communicator(sendPort);
 
-        //    sender.Send(sendEnvelope);
-        //}
+          AgentInfo agentInfo = new AgentInfo();
+          Message message = new JoinGame(gameId, agentInfo);
+          IPEndPoint recieverEP = new IPEndPoint(GetHostAddress(hostName), recieverPort);
+          Common.EndPoint endPoint = new Common.EndPoint(recieverEP);
+          Envelope sendEnvelope = new Envelope(message, endPoint);
+
+          sender.Send(sendEnvelope);
+        }
 
         [TestMethod]
         public void Communicator_ListenToGreg()
