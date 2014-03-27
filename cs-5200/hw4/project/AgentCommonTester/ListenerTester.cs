@@ -25,24 +25,28 @@ namespace AgentCommonTester
       Listener listener = new Listener(reciever);
       listener.Start();
 
-      //ComponentInfo agentInfo = new ComponentInfo(1001, ComponentInfo.PossibleAgentType.BrilliantStudent);
-      //Message message = new JoinGame(10, "A00123", "John", "Jones", agentInfo);
-      //IPEndPoint localEP = new IPEndPoint(IPAddress.Loopback, recieverPort);
-      //Common.EndPoint endPoint = new Common.EndPoint(localEP);
-      //Envelope envelope = new Envelope(message, endPoint);
+      AgentInfo agentInfo = new AgentInfo();
+      agentInfo.ANumber = "A00123";
+      agentInfo.FirstName = "John";
+      agentInfo.LastName = "Jones";
 
-      //sender.Send(envelope);
+      Message message = new JoinGame(10, agentInfo);
+      IPEndPoint localEP = new IPEndPoint(IPAddress.Loopback, recieverPort);
+      Common.EndPoint endPoint = new Common.EndPoint(localEP);
+      Envelope envelope = new Envelope(message, endPoint);
 
-      //listener.Stop();
+      sender.Send(envelope);
 
-      //Assert.AreEqual(true, messageQueue.hasItems());
+      listener.Stop();
 
-      //JoinGame jg = (JoinGame)messageQueue.pop().message;
+      Assert.AreEqual(true, messageQueue.hasItems());
 
-      //Assert.AreEqual(10, jg.GameId);
-      //Assert.AreEqual("A00123", jg.ANumber);
-      //Assert.AreEqual("John", jg.FirstName);
-      //Assert.AreEqual("Jones", jg.LastName);
+      JoinGame jg = (JoinGame)messageQueue.pop().message;
+
+      Assert.AreEqual(10, jg.GameId);
+      Assert.AreEqual("A00123", jg.AgentInfo.ANumber);
+      Assert.AreEqual("John", jg.AgentInfo.FirstName);
+      Assert.AreEqual("Jones", jg.AgentInfo.LastName);
     }
   }
 }
