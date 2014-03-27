@@ -92,17 +92,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AgentCommon\AgentCommon.csproj">
-      <Project>{ae907598-b7f6-4e65-bfb6-2b71ecc672fa}</Project>
-      <Name>AgentCommon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Common\Common.csproj">
+    <ProjectReference Include="..\..\..\..\..\USU_CS5200_SP14_BSvsZP\BSvsZP-Common\Common\Common.csproj">
       <Project>{1ab5119f-befc-4350-aeec-845105a3543c}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Messages\Messages.csproj">
+    <ProjectReference Include="..\..\..\..\..\USU_CS5200_SP14_BSvsZP\BSvsZP-Common\Messages\Messages.csproj">
       <Project>{126de25a-fb1f-4e0b-9ba3-7072656706b6}</Project>
       <Name>Messages</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AgentCommon\AgentCommon.csproj">
+      <Project>{ae907598-b7f6-4e65-bfb6-2b71ecc672fa}</Project>
+      <Name>AgentCommon</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
