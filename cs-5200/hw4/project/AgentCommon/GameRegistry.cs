@@ -5,24 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 
 using AgentCommon.Registrar;
-using AgentCommon;
-using Messages;
-using Common;
 
 namespace AgentCommon
 {
   public class GameRegistry
   {
-
-    public GameRegistry()
-    {
-
-    }
-
-    public GameInfo[] GetGames()
+    public List<string> getAvailableGameList()
     {
       RegistrarClient client = new RegistrarClient();
-      return client.GetGames(GameInfo.GameStatus.AVAILABLE);
+
+      GameInfo[] games = client.GetGames(GameInfo.GameStatus.AVAILABLE);
+
+      List<string> gameList = new List<string>();
+
+      foreach (GameInfo game in games)
+      {
+        gameList.Add(game.Label);
+      }
+
+      return gameList;
     }
   }
 }

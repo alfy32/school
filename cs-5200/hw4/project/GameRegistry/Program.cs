@@ -12,13 +12,15 @@ namespace GameRegistry
 {
   class Program
   {
+    static public Registrar.GameInfo[] getGames()
+    {
+      RegistrarClient client = new RegistrarClient();
+      return client.GetGames(Registrar.GameInfo.GameStatus.AVAILABLE);
+    }
+
     static void Main(string[] args)
     {
-      EndPoint ep = new EndPoint();
-
-      RegistrarClient client = new RegistrarClient();
-
-      Registrar.GameInfo[] games = client.GetGames(Registrar.GameInfo.GameStatus.AVAILABLE);
+      Registrar.GameInfo[] games = getGames();
 
       Console.WriteLine("Current available games:");
 
@@ -35,15 +37,9 @@ namespace GameRegistry
 
       Common.EndPoint gameEndPoint = new Common.EndPoint(game.CommunicationEndPoint.Address, game.CommunicationEndPoint.Port);
 
-      Communicator communicator = new Communicator(23456);
+      Communicator communicator = new Communicator(23455);
 
-      Common.AgentInfo agentInfo = new Common.AgentInfo();
-      //agentInfo.Id = 10;
-      agentInfo.AgentType = Common.AgentInfo.PossibleAgentType.BrilliantStudent;
-      //agentInfo.ANumber = "A01072246";
-      //agentInfo.FirstName = "Alan";
-      //agentInfo.LastName = "Christensen";
-      agentInfo.CommunicationEndPoint = new Common.EndPoint();
+      Common.AgentInfo agentInfo = new Common.AgentInfo(10, Common.AgentInfo.PossibleAgentType.BrilliantStudent);
 
       JoinGame joinGame = new JoinGame(game.Id, agentInfo);
 
@@ -51,7 +47,7 @@ namespace GameRegistry
 
       communicator.Send(envelope);
 
-      
+      System.Threading.Thread.Sleep(500);
 
       Envelope response = communicator.Recieve();
 
@@ -59,8 +55,12 @@ namespace GameRegistry
 
       if (ackNak.Status == Messages.Reply.PossibleStatus.Success)
       {
+        Common.AgentInfo resultAgentInfo = (Common.AgentInfo)ackNak.ObjResult;
         Console.WriteLine("Success!");
-      }   
+      }
+
+      Console.WriteLine(" Press any key to continue . . .");
+      Console.ReadKey();
     }
   }
 }

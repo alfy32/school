@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+using AgentCommon.Registrar;
 using AgentCommon;
-using Common;
 
 namespace AgentCommonTester
 {
@@ -13,9 +13,6 @@ namespace AgentCommonTester
     public void TestGetGames()
     {
       GameRegistry registry = new GameRegistry();
-
-      GameInfo[] games = registry.GetGames();
-
 
     }
   }

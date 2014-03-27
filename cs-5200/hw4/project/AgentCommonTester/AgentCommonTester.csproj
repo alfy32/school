@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B7947140-7D4A-4D20-B050-9E640517BF32}</ProjectGuid>
+    <ProjectGuid>{47B2FA7B-D4CF-49EF-B813-E4C51FF0F9E9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AgentCommonTester</RootNamespace>
@@ -51,17 +51,17 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BackgroundThreadTester.cs" />
+    <Compile Include="CommunicatorTester.cs" />
     <Compile Include="DoerTester.cs" />
     <Compile Include="EnvelopeTester.cs" />
-    <Compile Include="CommunicatorTester.cs" />
+    <Compile Include="GameRegistryTester.cs" />
     <Compile Include="ListenerTester.cs" />
     <Compile Include="MessageQueueTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GameRegistryTester.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AgentCommon\AgentCommon.csproj">
-      <Project>{33b8cb80-fa9d-4cad-a918-05474bdfc27c}</Project>
+      <Project>{ae907598-b7f6-4e65-bfb6-2b71ecc672fa}</Project>
       <Name>AgentCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
