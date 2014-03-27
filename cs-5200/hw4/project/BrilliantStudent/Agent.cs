@@ -44,51 +44,40 @@ namespace BrilliantStudent
 
     void autoPickGame()
     {
-      AgentCommon.Registrar.RegistrarClient client = new AgentCommon.Registrar.RegistrarClient();
+      //AgentCommon.Registrar.RegistrarClient client = new AgentCommon.Registrar.RegistrarClient();
 
-      AgentCommon.Registrar.GameInfo[] games = client.GetGames(AgentCommon.Registrar.GameInfo.GameStatus.AVAILABLE);
+      //AgentCommon.Registrar.GameInfo[] games = client.GetGames(AgentCommon.Registrar.GameInfo.GameStatus.AVAILABLE);
 
-      if (games.Length > 0)
-      {
-        AgentCommon.Registrar.GameInfo game = games[0];
+      //if (games.Length > 0)
+      //{
+      //  AgentCommon.Registrar.GameInfo game = games[0];
 
-        int address = game.CommunicationEndPoint.Address;
-        int port = game.CommunicationEndPoint.Port;
+      //  int address = game.CommunicationEndPoint.Address;
+      //  int port = game.CommunicationEndPoint.Port;
 
-        EndPoint endPoint = new EndPoint(address, port);
+      //  EndPoint endPoint = new EndPoint(address, port);
 
-        startJoinGameConversation(game.Id, endPoint);
-      }
+      //  startJoinGameConversation(game.Id, endPoint);
+      //}
     }
 
     void askUserForGame()
     {
-      AgentCommon.Registrar.RegistrarClient client = new AgentCommon.Registrar.RegistrarClient();
-      AgentCommon.Registrar.GameInfo[] games = client.GetGames(AgentCommon.Registrar.GameInfo.GameStatus.AVAILABLE);
-
-      Console.WriteLine("Current available games:");
-
-      int count = 0;
-
-      foreach (AgentCommon.Registrar.GameInfo gameInfo in games)
-      {
-        Console.WriteLine(++count + ":");
-        Console.WriteLine("  Game Id: " + gameInfo.Id);
-        Console.WriteLine("  Label: " + gameInfo.Label);
-      }
+      GameRegistry gameRegistry = new GameRegistry();
+      gameRegistry.displayAvailableGames();
 
       Console.WriteLine();
-      Console.Write("Enter the game you want to play: ");
+      Console.Write("Enter id of the game you want to play: ");
 
-      short gameIndex = short.Parse(Console.ReadLine());
-      gameIndex--;
+      //short gameIndex = short.Parse(Console.ReadLine());
+      //gameIndex--;
 
-      int address = games[gameIndex].CommunicationEndPoint.Address;
-      int port = games[gameIndex].CommunicationEndPoint.Port;
+      //int address = games[gameIndex].CommunicationEndPoint.Address;
+      //int port = games[gameIndex].CommunicationEndPoint.Port;
 
-      EndPoint endPoint = new EndPoint(address, port);
+      //EndPoint endPoint = new EndPoint(address, port);
 
-      startJoinGameConversation(games[gameIndex].Id, endPoint);
+      //startJoinGameConversation(games[gameIndex].Id, endPoint);
     }
 
     void startJoinGameConversation(short gameId, EndPoint endPoint)
@@ -116,8 +105,9 @@ namespace BrilliantStudent
 
       agent.start();
 
-      if (args.Length == 2) agent.askUserForGame();
-      else agent.autoPickGame(); 
+      //if (args.Length == 2)
+      agent.askUserForGame();
+      //else agent.autoPickGame(); 
 
       MessageQueue requestQueue = RequestMessageQueue.getQueue();
 
