@@ -4,62 +4,67 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using GameRegistry.Registrar;
 using AgentCommon;
 using Messages;
+using Common;
 
 namespace GameRegistry
 {
   class Program
   {
-    static public Registrar.GameInfo[] getGames()
+    static Registrar.GameInfo chooseGame()
     {
-      RegistrarClient client = new RegistrarClient();
-      return client.GetGames(Registrar.GameInfo.GameStatus.AVAILABLE);
+      Registrar.RegistrarClient client = new Registrar.RegistrarClient();
+      Registrar.GameInfo[] games = client.GetGames(Registrar.GameInfo.GameStatus.AVAILABLE);
+
+      Console.WriteLine("Current available games:");
+
+      int count = 0;
+
+      foreach (Registrar.GameInfo gameInfo in games)
+      {
+        Console.WriteLine(++count + ":");
+        Console.WriteLine("  Game Id: " + gameInfo.Id);
+        Console.WriteLine("  Label: " + gameInfo.Label);
+      }
+
+      Console.WriteLine();
+      Console.Write("Enter the game you want to play: ");
+
+      short gameIndex = short.Parse(Console.ReadLine());
+      gameIndex--;
+
+      return games[gameIndex];
     }
 
     static void Main(string[] args)
     {
-      Registrar.GameInfo[] games = getGames();
+      Console.Write("Enter communicator port number: ");
+      Communicator communicator = new Communicator(int.Parse(Console.ReadLine()));
 
-      Console.WriteLine("Current available games:");
+      Registrar.GameInfo game = chooseGame();      
 
-      for (int i = 0; i < games.Length; ++i)
-      {
-        Console.WriteLine(i + ": gameId: " + games[i].Id + " Label: " + games[i].Label);
-      }
-
-      Console.Write("Enter the game you want to play: ");
-
-      short gameIndex = short.Parse(Console.ReadLine());
-
-      Registrar.GameInfo game = games[gameIndex];
-
-      Common.EndPoint gameEndPoint = new Common.EndPoint(game.CommunicationEndPoint.Address, game.CommunicationEndPoint.Port);
-
-      Communicator communicator = new Communicator(23455);
-
-      Common.AgentInfo agentInfo = new Common.AgentInfo(10, Common.AgentInfo.PossibleAgentType.BrilliantStudent);
-
+      EndPoint gameEndPoint = new EndPoint(game.CommunicationEndPoint.Address, game.CommunicationEndPoint.Port);
+          
+      AgentInfo agentInfo = new Common.AgentInfo(10, AgentInfo.PossibleAgentType.BrilliantStudent);
       JoinGame joinGame = new JoinGame(game.Id, agentInfo);
-
       Envelope envelope = new Envelope(joinGame, gameEndPoint);
 
+
       communicator.Send(envelope);
-
       System.Threading.Thread.Sleep(500);
-
       Envelope response = communicator.Recieve();
-
       AckNak ackNak = (AckNak)response.message;
 
       if (ackNak.Status == Messages.Reply.PossibleStatus.Success)
       {
-        Common.AgentInfo resultAgentInfo = (Common.AgentInfo)ackNak.ObjResult;
+        AgentInfo resultAgentInfo = (AgentInfo)ackNak.ObjResult;
+ 
         Console.WriteLine("Success!");
       }
 
-      Console.WriteLine(" Press any key to continue . . .");
+      Console.WriteLine();
+      Console.WriteLine("Press any key to continue . . .");
       Console.ReadKey();
     }
   }

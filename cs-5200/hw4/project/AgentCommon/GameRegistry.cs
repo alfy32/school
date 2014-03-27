@@ -4,21 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using AgentCommon.Registrar;
-
 namespace AgentCommon
 {
   public class GameRegistry
   {
     public List<string> getAvailableGameList()
     {
-      RegistrarClient client = new RegistrarClient();
+      Registrar.RegistrarClient client = new Registrar.RegistrarClient();
 
-      GameInfo[] games = client.GetGames(GameInfo.GameStatus.AVAILABLE);
+      Registrar.GameInfo[] games = client.GetGames(Registrar.GameInfo.GameStatus.AVAILABLE);
 
       List<string> gameList = new List<string>();
 
-      foreach (GameInfo game in games)
+      foreach (Registrar.GameInfo game in games)
       {
         gameList.Add(game.Label);
       }
