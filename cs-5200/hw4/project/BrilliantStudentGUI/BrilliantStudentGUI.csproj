@@ -106,12 +106,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AgentCommon\AgentCommon.csproj">
-      <Project>{ae907598-b7f6-4e65-bfb6-2b71ecc672fa}</Project>
-      <Name>AgentCommon</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +125,12 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AgentCommon\AgentCommon.csproj">
+      <Project>{762ff2c4-aab7-443f-bab6-d495e09e7d49}</Project>
+      <Name>AgentCommon</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

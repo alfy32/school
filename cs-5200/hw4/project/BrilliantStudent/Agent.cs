@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using AgentCommon;
 using Messages;
 using Common;
+using GameServer;
 
 namespace BrilliantStudent
 {
@@ -44,51 +45,31 @@ namespace BrilliantStudent
 
     void autoPickGame()
     {
-      AgentCommon.Registrar.RegistrarClient client = new AgentCommon.Registrar.RegistrarClient();
+      GameRegistry gameRegistry = new GameRegistry();
+      GameServer.Registrar.GameInfo game = gameRegistry.getRandomGame();
 
-      AgentCommon.Registrar.GameInfo[] games = client.GetGames(AgentCommon.Registrar.GameInfo.GameStatus.AVAILABLE);
+      int address = game.CommunicationEndPoint.Address;
+      int port = game.CommunicationEndPoint.Port;
 
-      if (games.Length > 0)
-      {
-        AgentCommon.Registrar.GameInfo game = games[0];
-
-        int address = game.CommunicationEndPoint.Address;
-        int port = game.CommunicationEndPoint.Port;
-
-        EndPoint endPoint = new EndPoint(address, port);
-
-        startJoinGameConversation(game.Id, endPoint);
-      }
+      startJoinGameConversation(game.Id, new EndPoint(address, port));
     }
 
     void askUserForGame()
     {
-      AgentCommon.Registrar.RegistrarClient client = new AgentCommon.Registrar.RegistrarClient();
-      AgentCommon.Registrar.GameInfo[] games = client.GetGames(AgentCommon.Registrar.GameInfo.GameStatus.AVAILABLE);
+      GameRegistry gameRegistry = new GameRegistry();
+      gameRegistry.displayAvailableGames();
 
-      Console.WriteLine("Current available games:");
+      Console.Write("Enter the id of the game you want to play: ");
+      short gameId = short.Parse(Console.ReadLine());
 
-      int count = 0;
+      GameServer.Registrar.GameInfo game = gameRegistry.getGameInfoById(gameId);
 
-      foreach (AgentCommon.Registrar.GameInfo gameInfo in games)
-      {
-        Console.WriteLine(++count + ":");
-        Console.WriteLine("  Game Id: " + gameInfo.Id);
-        Console.WriteLine("  Label: " + gameInfo.Label);
-      }
-
-      Console.WriteLine();
-      Console.Write("Enter the game you want to play: ");
-
-      short gameIndex = short.Parse(Console.ReadLine());
-      gameIndex--;
-
-      int address = games[gameIndex].CommunicationEndPoint.Address;
-      int port = games[gameIndex].CommunicationEndPoint.Port;
+      int address = game.CommunicationEndPoint.Address;
+      int port = game.CommunicationEndPoint.Port;
 
       EndPoint endPoint = new EndPoint(address, port);
 
-      startJoinGameConversation(games[gameIndex].Id, endPoint);
+      startJoinGameConversation(gameId, endPoint);
     }
 
     void startJoinGameConversation(short gameId, EndPoint endPoint)
@@ -121,7 +102,9 @@ namespace BrilliantStudent
 
       MessageQueue requestQueue = RequestMessageQueue.getQueue();
 
-      Console.WriteLine("Agent Started: Listening on port " + port);
+      Console.WriteLine("Agent Started...");
+      Console.WriteLine();
+      Console.WriteLine("Communicator running on port " + port);
       Console.WriteLine();
 
       Console.WriteLine("Hit any key to quit...");

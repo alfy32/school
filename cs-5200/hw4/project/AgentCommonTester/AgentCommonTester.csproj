@@ -69,7 +69,7 @@
       <Name>Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\AgentCommon\AgentCommon.csproj">
-      <Project>{ae907598-b7f6-4e65-bfb6-2b71ecc672fa}</Project>
+      <Project>{762ff2c4-aab7-443f-bab6-d495e09e7d49}</Project>
       <Name>AgentCommon</Name>
     </ProjectReference>
   </ItemGroup>

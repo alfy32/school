@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Games.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Registrar\Reference.cs">
@@ -101,7 +102,7 @@
       <Name>Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\AgentCommon\AgentCommon.csproj">
-      <Project>{ae907598-b7f6-4e65-bfb6-2b71ecc672fa}</Project>
+      <Project>{762ff2c4-aab7-443f-bab6-d495e09e7d49}</Project>
       <Name>AgentCommon</Name>
     </ProjectReference>
   </ItemGroup>

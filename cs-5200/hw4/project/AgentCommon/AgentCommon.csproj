@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AE907598-B7F6-4E65-BFB6-2B71ECC672FA}</ProjectGuid>
+    <ProjectGuid>{762FF2C4-AAB7-443F-BAB6-D495E09E7D49}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AgentCommon</RootNamespace>
@@ -47,7 +47,6 @@
     <Compile Include="Doer.cs" />
     <Compile Include="Envelope.cs" />
     <Compile Include="ExecutionStrategy.cs" />
-    <Compile Include="GameRegistry.cs" />
     <Compile Include="JoinGameExecutionStrategy.cs" />
     <Compile Include="Listener.cs" />
     <Compile Include="MessageQueue.cs" />
