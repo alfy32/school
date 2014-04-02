@@ -40,9 +40,9 @@ std::vector<Point> ClosestPair::mixedPoints(int n) {
   int n05 = n - n95;
 
   std::vector<Point> points(uniformPoints(n95));
-  std::vector<Point> randomPoints(randomPoints(n05));
+  std::vector<Point> random(randomPoints(n05));
 
-  for (Point& point : randomPoints) {
+  for (Point& point : random) {
     points.push_back(point);
   }
 
@@ -68,7 +68,7 @@ double ClosestPair::nTimesN(std::vector<Point> points, int low, int high) {
 double ClosestPair::divideAndConquerSlow(std::vector<Point> points, int low, int high) {
   // base case
   if (low + 1 == high) return points[low].distance(points[high]);
-  if (low == high) return DBL_MAX;
+  if (low == high) return 200;
 
   // problem decomposition:
   // a) just split points[0...n/2-1] points[n/2...n-1]
@@ -115,7 +115,7 @@ double ClosestPair::divideAndConquerSlow(std::vector<Point> points, int low, int
 double ClosestPair::divideAndConquerFast(std::vector<Point> points, int low, int high) {
   // base case
   if (low + 1 == high)return points[low].distance(points[high]);
-  if (low == high)  return DBL_MAX;
+  if (low == high)  return 200;
 
   // problem decomposition:
   // a) just split points[0...n/2-1] points[n/2...n-1]

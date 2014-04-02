@@ -1,15 +1,15 @@
-all: FFT PolyMult test main.cpp
-	g++ -g -std=c++11 main.cpp FFT.o PolyMult.o test.o -o FFT
+all: ClosestPair Point test main.cpp
+	g++ -g -std=c++11 main.cpp ClosestPair.o Point.o test.o -o ClosestPair
 
 clean:
-	rm -r -f FFT
+	rm -r -f ClosestPair
 	rm -r -f *.o
 
-FFT: FFT.hpp FFT.cpp
-	g++ -g -std=c++11 -c FFT.cpp -o FFT.o
+ClosestPair: ClosestPair.hpp ClosestPair.cpp
+	g++ -g -std=c++11 -c ClosestPair.cpp -o ClosestPair.o
 
-PolyMult: PolyMult.hpp PolyMult.cpp
-	g++ -g -std=c++11 -c PolyMult.cpp -o PolyMult.o
+Point: Point.hpp Point.cpp
+	g++ -g -std=c++11 -c Point.cpp -o Point.o
 
 test: Test.hpp Test.cpp
 	g++ -g -std=c++11 -c Test.cpp -o test.o
