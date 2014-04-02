@@ -76,15 +76,15 @@ double ClosestPair::divideAndConquerSlow(std::vector<Point> points, int low, int
   double min = left < right ? left : right;
 
   int rightIndex = mid, leftIndex = mid;
-  for (int i = mid; i >= 0 && points[mid].x - points[i].x <= min; --i) {
+  for (int i = mid; i >= 0 && points[mid].x - points[i].x < min; --i) {
     leftIndex = i;
   }
-  for (int i = mid; i < points.size() && points[i].x - points[mid].x <= min; ++i) {
+  for (int i = mid; i < points.size() && points[i].x - points[mid].x < min; ++i) {
     rightIndex = i;
   }
 
   // Right mid section
-  for (int i = mid; i < rightIndex; ++i) {
+  for (int i = mid-1; i < rightIndex; ++i) {
     for (int j = i + 1; j <= rightIndex; ++j) {
       double distance = points[i].distance(points[j]);
       if (distance < min) min = distance;
@@ -92,7 +92,7 @@ double ClosestPair::divideAndConquerSlow(std::vector<Point> points, int low, int
   }
 
   // Left mid section
-  for (int i = mid; i > leftIndex; --i) {
+  for (int i = mid+1; i > leftIndex; --i) {
     for (int j = i - 1; j >= leftIndex; --j) {
       double distance = points[i].distance(points[j]);
       if (distance < min) min = distance;
