@@ -38,11 +38,24 @@ void Test::test(std::string which) {
   else if (which == "rightAnswers") {
     test_rightAnswers();
   }
+  else if (which == "uniformPoints") {
+    for (int n = 2; n <= 10; ++n)
+      test_uniformPoints(n);
+  }
 }
 
 void Test::run(std::string which) {
   if (which == "") {
     std::cout << "Type which test to run." << std::endl;
+  }
+  else if (which == "naiveRandom") {
+    run_naiveRandom();
+  }
+  else if (which == "slowRandom") {
+    run_slowRandom();
+  }
+  else if (which == "fastRandom") {
+    run_fastRandom();
   }
 }
 
@@ -139,4 +152,113 @@ void Test::test_rightAnswers() {
 
     std::cout << "Results: " << good << " good, " << bad << " bad" << std::endl;
   }
+}
+
+void Test::test_uniformPoints(int n) {
+  ClosestPair cp;
+  std::vector<Point> points = cp.uniformPoints(n);
+  for (Point point : points) {
+    std::cout << point << std::endl;
+  }
+  printPoints(points);
+  std::cout << std::endl;
+}
+
+void Test::printPoints(std::vector<Point> points) {
+  std::fstream file("results", std::ios::app);
+
+  file << "Here are some results..." << std::endl
+    << std::endl;
+
+  bool found = false;
+  for (int y = 0; y < 100; ++y) {
+    for (int x = 0; x < 100; ++x) {
+      found = false;
+      for (Point point : points) {
+        if (point.x == x && point.y == y)
+          file << "*";
+      }
+      if (!found) file << "-";
+    }
+    file << std::endl;
+  }
+}
+
+void Test::run_naiveRandom() {
+  std::cout << "Naive method on random " << std::endl;
+  std::cout << "n" << "\t" << "runtime(ms)" << std::endl;
+
+  for (int n = 2; n < INT_MAX; n *= 2) {
+    ClosestPair closestPair;
+    std::vector<Point> points = closestPair.randomPoints(n);
+
+    int runTime = averageRuntime([&]() {
+      closestPair.nTimesN(points, 0, n - 1);
+    }, RUNS);
+
+    std::cout << n << '\t' << runTime << std::endl;
+
+
+  }
+}
+
+void Test::run_naiveUniform() {
+
+}
+
+void Test::run_naiveMixed() {
+
+}
+
+void Test::run_slowRandom(){
+  std::cout << "Slow method on random " << std::endl;
+  std::cout << "n" << "\t" << "runtime(ms)" << std::endl;
+
+  for (int n = 2; n < INT_MAX; n *= 2) {
+    ClosestPair closestPair;
+    std::vector<Point> points = closestPair.randomPoints(n);
+
+    int runTime = averageRuntime([&]() {
+      closestPair.divideAndConquerSlow(points, 0, n - 1);
+    }, RUNS);
+
+    std::cout << n << '\t' << runTime << std::endl;
+
+
+  }
+}
+
+void Test::run_slowUniform(){
+
+}
+
+void Test::run_slowMixed(){
+
+}
+
+
+void Test::run_fastRandom(){
+  std::cout << "Fast method on random " << std::endl;
+  std::cout << "n" << "\t" << "runtime(ms)" << std::endl;
+
+  for (int n = 2; n < INT_MAX; n *= 2) {
+    ClosestPair closestPair;
+    std::vector<Point> points = closestPair.randomPoints(n);
+
+    int runTime = averageRuntime([&]() {
+      closestPair.divideAndConquerFast(points, 0, n - 1);
+    }, RUNS);
+
+    std::cout << n << '\t' << runTime << std::endl;
+
+
+  }
+}
+
+void Test::run_fastUniform(){
+
+}
+
+void Test::run_fastMixed(){
+
 }

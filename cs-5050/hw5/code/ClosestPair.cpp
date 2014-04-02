@@ -14,15 +14,21 @@ std::vector<Point> ClosestPair::randomPoints(int n) {
 }
 
 std::vector<Point> ClosestPair::uniformPoints(int n) {
-  std::vector<Point> points(n);
+  std::vector<Point> points;
 
-  double rowSpace = 1;
-  double colSpace = 2;
+  double ratio = 100 / sqrt(n);
 
-  for (double x = 0; x < WIDTH; ++x) {
-    for (double y = (int)x % 2 * colSpace / 2; y < HEIGHT; y += sqrt(3) / 2) {
-      points[n].x = x;
-      points[n].y = y;
+  std::cout << "ratio: " << ratio << std::endl;
+
+  for (int x = 0; x*ratio + ratio*0.5 < WIDTH; ++x) {
+    for (int y = 0; y*ratio < HEIGHT; y++) {
+      if (y % 2) {
+        points.push_back(Point(ratio*x, ratio*y));
+      }
+      else {
+        points.push_back(Point(ratio*x + ratio*0.5, ratio*y));
+      }
+      if (points.size() == n) return points;
     }
   }
 
@@ -30,10 +36,14 @@ std::vector<Point> ClosestPair::uniformPoints(int n) {
 }
 
 std::vector<Point> ClosestPair::mixedPoints(int n) {
-  std::vector<Point> points(n);
+  int n95 = n*0.95;
+  int n05 = n - n95;
 
-  for (int i = 0; i < n; ++i) {
-    points[n] = Point::random(0, 100);
+  std::vector<Point> points(uniformPoints(n95));
+  std::vector<Point> randomPoints(randomPoints(n05));
+
+  for (Point& point : randomPoints) {
+    points.push_back(point);
   }
 
   return points;
