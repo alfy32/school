@@ -3,6 +3,8 @@
 
 #include <utility>
 #include <vector>
+#include <algorithm>
+#include <iostream>
 
 #include "Point.hpp"
 
@@ -12,7 +14,9 @@ public:
   std::vector<Point> uniformPoints(int n);
   std::vector<Point> mixedPoints(int n);
 
-  double nTimesN(std::vector<Point>& points);
+  double nTimesN(std::vector<Point> points, int low, int high);
+  double divideAndConquerSlow(std::vector<Point> points, int low, int high);
+  double divideAndConquerFast(std::vector<Point> points, int low, int high);
 };
 
 #endif

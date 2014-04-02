@@ -19,6 +19,7 @@ public:
   static void test(std::string which);
   static void run(std::string which);
 
+  static void test_rightAnswers();
 };
 
 #endif

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <ctime>
 #include <cstdlib>
+#include <ostream>
 
 class Point {
 public:
@@ -15,5 +16,7 @@ public:
 
   double distance(Point);
 };
+
+std::ostream& operator<< (std::ostream& out, Point point);
 
 #endif

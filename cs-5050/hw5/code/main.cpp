@@ -3,6 +3,8 @@
 #include "Test.hpp"
 
 int main(int argc, char** argv) {
+  srand(time(0));
+
   if(argc >= 2 && std::string(argv[1]) == "test")
   {
     if(argc == 2) Test::test("All");

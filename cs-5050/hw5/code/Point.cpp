@@ -6,8 +6,6 @@ Point::Point(int x, int y) {
 }
 
 Point Point::random(int min, int max) {
-  srand(time(0));
-
   int x = rand() % (max - min) + min;
   int y = rand() % (max - min) + min;
 
@@ -19,4 +17,9 @@ double Point::distance(Point point) {
   int y = point.y - this->y;
 
   return sqrt(x*x + y*y);
+}
+
+std::ostream& operator<< (std::ostream& out, Point point) {
+  out << '(' << point.x << ',' << point.y << ')';
+  return out;
 }
