@@ -18,8 +18,6 @@ std::vector<Point> ClosestPair::uniformPoints(int n) {
 
   double ratio = 100 / sqrt(n);
 
-  std::cout << "ratio: " << ratio << std::endl;
-
   for (int x = 0; x*ratio + ratio*0.5 < WIDTH; ++x) {
     for (int y = 0; y*ratio < HEIGHT; y++) {
       if (y % 2) {
