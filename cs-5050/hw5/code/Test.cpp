@@ -217,6 +217,9 @@ void Test::run_slowRandom(){
   for (int n = 2; n < INT_MAX; n *= 2) {
     ClosestPair closestPair;
     std::vector<Point> points = closestPair.randomPoints(n);
+    std::sort(points.begin(), points.end(), [](Point left, Point right) {
+      return left.x < right.x;
+    });
 
     int runTime = averageRuntime([&]() {
       closestPair.divideAndConquerSlow(points, 0, n - 1);

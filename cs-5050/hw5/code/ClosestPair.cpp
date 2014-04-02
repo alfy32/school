@@ -49,7 +49,7 @@ std::vector<Point> ClosestPair::mixedPoints(int n) {
   return points;
 }
 
-double ClosestPair::nTimesN(std::vector<Point> points, int low, int high) {
+double ClosestPair::nTimesN(std::vector<Point>& points, int low, int high) {
   double closest = points[0].distance(points[1]);
 
   for (int i = low; i < high; ++i) {
@@ -65,7 +65,7 @@ double ClosestPair::nTimesN(std::vector<Point> points, int low, int high) {
   return closest;
 }
 
-double ClosestPair::divideAndConquerSlow(std::vector<Point> points, int low, int high) {
+double ClosestPair::divideAndConquerSlow(std::vector<Point>& points, int low, int high) {
   // base case
   if (low + 1 == high) return points[low].distance(points[high]);
   if (low == high) return 200;
@@ -74,10 +74,10 @@ double ClosestPair::divideAndConquerSlow(std::vector<Point> points, int low, int
   // a) just split points[0...n/2-1] points[n/2...n-1]
   int mid = (high - low) / 2 + low;
 
-  // b) sort by x first
-  std::sort(points.begin() + low, points.begin() + high + 1, [](Point left, Point right){
-    return left.x < right.x;
-  });
+  //// b) sort by x first
+  //std::sort(points.begin() + low, points.begin() + high + 1, [](Point left, Point right){
+  //  return left.x < right.x;
+  //});
 
   // Solution Construction:
   double left = divideAndConquerSlow(points, low, mid);
@@ -112,7 +112,7 @@ double ClosestPair::divideAndConquerSlow(std::vector<Point> points, int low, int
   return min;
 }
 
-double ClosestPair::divideAndConquerFast(std::vector<Point> points, int low, int high) {
+double ClosestPair::divideAndConquerFast(std::vector<Point>& points, int low, int high) {
   // base case
   if (low + 1 == high)return points[low].distance(points[high]);
   if (low == high)  return 200;
