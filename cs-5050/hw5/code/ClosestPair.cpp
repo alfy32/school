@@ -74,10 +74,10 @@ double ClosestPair::divideAndConquerSlow(std::vector<Point>& points, int low, in
   // a) just split points[0...n/2-1] points[n/2...n-1]
   int mid = (high - low) / 2 + low;
 
-  //// b) sort by x first
-  //std::sort(points.begin() + low, points.begin() + high + 1, [](Point left, Point right){
-  //  return left.x < right.x;
-  //});
+  // b) sort by x first
+  std::sort(points.begin() + low, points.begin() + high + 1, [](Point left, Point right){
+   return left.x < right.x;
+  });
 
   // Solution Construction:
   double left = divideAndConquerSlow(points, low, mid);
