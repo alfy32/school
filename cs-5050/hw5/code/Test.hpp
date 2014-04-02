@@ -3,10 +3,11 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 #include <iomanip>
 
-#include "FFT.hpp"
-#include "PolyMult.hpp"
+#include "Point.hpp"
+#include "ClosestPair.hpp"
 
 class Test {
 private:
