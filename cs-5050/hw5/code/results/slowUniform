@@ -1,0 +1,13 @@
+Slow method on uniform data
+n	runtime(ms)
+2	0
+4	0
+8	0
+16	0
+32	0
+64	0
+128	2
+256	9
+512	69
+1024	593
+2048	4669

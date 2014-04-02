@@ -1,0 +1,12 @@
+Slow method on mixed data
+n	runtime(ms)
+2	0
+4	0
+8	0
+16	0
+32	0
+64	0
+128	1
+256	9
+512	71
+1024	541
