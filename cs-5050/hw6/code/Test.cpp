@@ -31,16 +31,52 @@ double Test::avg(std::vector<double>& values) {
 
 ///////////////// Public ////////////////////
 
-void Test::test(std::string which) {
-  if (which == "") {
-    std::cout << "Type which test to run." << std::endl;
-  }
-}
-
-void Test::run(std::string which) {
-  if (which == "") {
-    std::cout << "Type what to run." << std::endl;
-  }
+void Test::test_all() {
+  std::cout << "Running all tests..." << std::endl
+            << std::endl;
+  
+  test_naive_works();
 }
 
 ///////////////// Tests ///////////////////
+
+void Test::test_naive_works() {
+  std::cout << "Match to find..." << std::endl << std::endl;
+  {
+    StringMatch* stringMatcher = new NaiveStringMatch;
+
+    std::string P = "Something very long that has something in it that will be matched to something";
+    std::string T = "something";
+
+    int match = stringMatcher->match(P, T);
+    std::cout << match << ' ';
+
+    if (match != StringMatch::NO_MATCH) {
+      std::string matchString = std::string(P.begin() + match, P.begin() + match + T.length());
+      std::cout << matchString << std::endl;
+    }    
+
+    std::cout << std::endl;
+
+    delete stringMatcher;
+  }
+  std::cout << "No Match..." << std::endl << std::endl;
+  {
+    StringMatch* stringMatcher = new NaiveStringMatch;
+
+    std::string P = "Something very long that has Something in it that will be matched to Something";
+    std::string T = "something";
+
+    int match = stringMatcher->match(P, T);
+    std::cout << match << ' ';
+
+    if (match != StringMatch::NO_MATCH) {
+      std::string matchString = std::string(P.begin() + match, P.begin() + match + T.length());
+      std::cout << matchString << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    delete stringMatcher;
+  }
+}

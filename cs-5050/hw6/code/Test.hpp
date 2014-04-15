@@ -7,6 +7,9 @@
 #include <iomanip>
 #include <fstream>
 
+#include "StringMatch.h"
+#include "NaiveStringMatch.h"
+
 class Test {
 private:
   template<typename T>
@@ -14,8 +17,9 @@ private:
   static double avg(std::vector<double>&);
 
 public:
-  static void test(std::string which);
-  static void run(std::string which);
+  static void test_all();
+
+  static void test_naive_works();
 };
 
 #endif
