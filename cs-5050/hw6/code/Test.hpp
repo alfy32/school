@@ -7,8 +7,10 @@
 #include <iomanip>
 #include <fstream>
 
-#include "StringMatch.h"
-#include "NaiveStringMatch.h"
+#include "StringMatch.hpp"
+#include "NaiveStringMatch.hpp"
+#include "KMLStringMatch.hpp"
+#include "BMStringMatch.hpp"
 
 class Test {
 private:
@@ -20,6 +22,8 @@ public:
   static void test_all();
 
   static void test_naive_works();
+  static void test_bm_works();
+  static void test_kml_works();
 };
 
 #endif

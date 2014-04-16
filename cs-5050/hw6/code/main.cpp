@@ -3,7 +3,7 @@
 #include "Test.hpp"
 
 int main(int argc, char** argv) {
-  srand(time(0));
+  srand((unsigned)time(0));
 
   if(argc >= 2 && std::string(argv[1]) == "test")
   {
@@ -11,6 +11,8 @@ int main(int argc, char** argv) {
 
     if (which == "all") Test::test_all();
     else if (which == "naive") Test::test_naive_works();
+    else if (which == "bm") Test::test_bm_works();
+    else if (which == "kml") Test::test_kml_works();
   }
 
   else if(argc == 3 && std::string(argv[1]) == "run")

@@ -3,14 +3,15 @@
 
 #include <string>
 
-#include "StringMatch.h"
+#include "StringMatch.hpp"
 
 class NaiveStringMatch : public StringMatch
 {
 private:
 
 public:
-  virtual int match(std::string P, std::string T);
+  virtual void preprocess(std::string& T);
+  virtual int match(std::string& P, std::string& T);
 };
 
 #endif

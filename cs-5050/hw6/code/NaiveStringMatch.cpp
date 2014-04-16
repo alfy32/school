@@ -1,8 +1,10 @@
-#include "NaiveStringMatch.h"
+#include "NaiveStringMatch.hpp"
 
-#include <iostream>
+void NaiveStringMatch::preprocess(std::string& T) {
 
-int NaiveStringMatch::match(std::string P, std::string T)
+}
+
+int NaiveStringMatch::match(std::string& P, std::string& T)
 {
   int matchIndex = NO_MATCH;
   bool match = true;
