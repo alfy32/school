@@ -4,7 +4,7 @@
 
 int main(int argc, char** argv) {
   srand((unsigned)time(0));
-
+  
   if(argc >= 2 && std::string(argv[1]) == "test")
   {
     std::string which = argv[2];
