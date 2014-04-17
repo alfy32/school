@@ -9,7 +9,7 @@
 
 #include "StringMatch.hpp"
 #include "NaiveStringMatch.hpp"
-#include "KMLStringMatch.hpp"
+#include "KMPStringMatch.hpp"
 #include "BMStringMatch.hpp"
 
 class Test {
@@ -23,7 +23,12 @@ public:
 
   static void test_naive_works();
   static void test_bm_works();
-  static void test_kml_works();
+  static void test_KMP_works();
+
+  static void test_1(StringMatch*);
+  static void test_2(StringMatch*);
+  static void test_3(StringMatch*);
+  static void test_fail(StringMatch*);
 };
 
 #endif

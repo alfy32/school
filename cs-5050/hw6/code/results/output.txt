@@ -1,2 +1,20 @@
-Match to find...
+Running all tests...
+
+Naive: 
+Test 1: 6 ababaca
+Test 2: 69 something
+Test 3: 18 ccababa
+Test Fail: -1 No Match
+
+BM: 
+Test 1: 6 ababaca
+Test 2: 69 something
+Test 3: 18 ccababa
+Test Fail: -1 No Match
+
+KMP: 
+Test 1: 6 ababaca
+Test 2: 69 something
+Test 3: 18 ccababa
+Test Fail: -1 No Match
 

@@ -1,12 +1,12 @@
-#ifndef KML_STRING_MATCH_HPP
-#define KML_STRING_MATCH_HPP
+#ifndef KMP_STRING_MATCH_HPP
+#define KMP_STRING_MATCH_HPP
 
 #include <string>
 #include <vector>
 
 #include "StringMatch.hpp"
 
-class KMLStringMatch : public StringMatch
+class KMPStringMatch : public StringMatch
 {
 private:
   std::vector<int> a;
