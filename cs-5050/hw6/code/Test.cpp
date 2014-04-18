@@ -1,6 +1,6 @@
 #include "Test.hpp"
 
-const int RUNS = 30;
+const int RUNS = 10;
 
 /////////////// Private ////////////////////
 
@@ -154,4 +154,100 @@ void Test::test_fail(StringMatch* stringMatch) {
   if (match != StringMatch::NO_MATCH){
     std::cout << "************ FAILED ********************" << std::endl;
   }
+}
+
+void Test::run_alphabet_size_naive() {
+  StringMatch* stringMatch = new NaiveStringMatch;
+
+  std::string string = StringMatch::readFullFile("strings/shakespeare.txt");
+  std::string pattern = "anyone";
+
+  stringMatch->preprocess(pattern);
+  
+  int runTime = (int)averageRuntime([&]() {
+    stringMatch->match(string, pattern);
+  }, RUNS);
+
+  std::cout << "Shakespeare:" << std::endl
+    << " pattern: " << pattern << std::endl
+    << " run time: " << runTime << std::endl;
+
+  string = StringMatch::readFullFile("strings/dna.txt");
+  pattern = "ATTACG";
+
+  stringMatch->preprocess(pattern);
+
+  runTime = (int)averageRuntime([&]() {
+    stringMatch->match(string, pattern);
+  }, RUNS);
+
+  std::cout << "Shakespeare:" << std::endl
+    << " pattern: " << pattern << std::endl
+    << " run time: " << runTime << std::endl;
+
+  delete stringMatch;
+}
+
+void Test::run_alphabet_size_bm() {
+  StringMatch* stringMatch = new BMStringMatch;
+
+  std::string string = StringMatch::readFullFile("strings/shakespeare.txt");
+  std::string pattern = "anyone";
+
+  stringMatch->preprocess(pattern);
+
+  int runTime = (int)averageRuntime([&]() {
+    stringMatch->match(string, pattern);
+  }, RUNS);
+
+  std::cout << "Shakespeare:" << std::endl
+    << " pattern: " << pattern << std::endl
+    << " run time: " << runTime << std::endl;
+
+  string = StringMatch::readFullFile("strings/dna.txt");
+  pattern = "ATTACG";
+
+  stringMatch->preprocess(pattern);
+
+  runTime = (int)averageRuntime([&]() {
+    stringMatch->match(string, pattern);
+  }, RUNS);
+
+  std::cout << "Shakespeare:" << std::endl
+    << " pattern: " << pattern << std::endl
+    << " run time: " << runTime << std::endl;
+
+  delete stringMatch;
+}
+
+void Test::run_alphabet_size_kmp() {
+  StringMatch* stringMatch = new KMPStringMatch;
+
+  std::string string = StringMatch::readFullFile("strings/shakespeare.txt");
+  std::string pattern = "anyone";
+
+  stringMatch->preprocess(pattern);
+
+  int runTime = (int)averageRuntime([&]() {
+    stringMatch->match(string, pattern);
+  }, RUNS);
+
+  std::cout << "Shakespeare:" << std::endl
+    << " pattern: " << pattern << std::endl
+    << " run time: " << runTime << std::endl;
+
+  string = StringMatch::readFullFile("strings/dna.txt");
+  pattern = "ATTACG";
+
+  stringMatch->preprocess(pattern);
+
+  runTime = (int)averageRuntime([&]() {
+    stringMatch->match(string, pattern);
+  }, RUNS);
+
+  std::cout << "Shakespeare:" << std::endl
+    << " pattern: " << pattern << std::endl
+    << " run time: " << runTime << std::endl;
+
+  delete stringMatch;
 }

@@ -29,6 +29,10 @@ public:
   static void test_2(StringMatch*);
   static void test_3(StringMatch*);
   static void test_fail(StringMatch*);
+
+  static void run_alphabet_size_naive();
+  static void run_alphabet_size_bm();
+  static void run_alphabet_size_kmp();
 };
 
 #endif

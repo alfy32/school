@@ -19,6 +19,9 @@ int main(int argc, char** argv) {
   {
     std::string which = argv[2];
 
+    if (which == "naivesp") Test::run_alphabet_size_naive();
+    else if (which == "bmsp") Test::run_alphabet_size_bm();
+    else if (which == "kmpsp") Test::run_alphabet_size_kmp();
   }
 
   return 0;
