@@ -38,7 +38,7 @@ void Test::test_all() {
 
   test_naive_works();
   test_bm_works();
-  test_KMP_works();
+  test_kmp_works();
 }
 
 ///////////////// Tests ///////////////////
@@ -70,7 +70,7 @@ void Test::test_bm_works() {
   std::cout << std::endl;
 }
 
-void Test::test_KMP_works() {
+void Test::test_kmp_works() {
   std::cout << "KMP: " << std::endl;
   StringMatch* stringMatch = new KMPStringMatch;
 

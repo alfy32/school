@@ -23,7 +23,7 @@ public:
 
   static void test_naive_works();
   static void test_bm_works();
-  static void test_KMP_works();
+  static void test_kmp_works();
 
   static void test_1(StringMatch*);
   static void test_2(StringMatch*);
