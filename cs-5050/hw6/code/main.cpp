@@ -2,6 +2,13 @@
 
 #include "Test.hpp"
 
+StringMatch* getAlgorithm(std::string which) {
+  if (which == "naive") return new NaiveStringMatch;
+  if (which == "bm") return new BMStringMatch;
+  if (which == "kmp") return new KMPStringMatch;
+  else return NULL;
+}
+
 int main(int argc, char** argv) {
   srand((unsigned)time(0));
   
@@ -15,13 +22,13 @@ int main(int argc, char** argv) {
     else if (which == "kmp") Test::test_kmp_works();
   }
 
-  else if(argc == 3 && std::string(argv[1]) == "run")
+  else if(argc >= 4 && std::string(argv[1]) == "run")
   {
-    std::string which = argv[2];
+    std::string which = argv[3];
 
-    if (which == "naivesp") Test::run_alphabet_size_naive();
-    else if (which == "bmsp") Test::run_alphabet_size_bm();
-    else if (which == "kmpsp") Test::run_alphabet_size_kmp();
+    if (which == "shakespeare") Test::run_shakespeare(getAlgorithm(argv[2]));
+    else if (which == "binary") Test::run_binary(getAlgorithm(argv[2]), std::stoi(argv[4]));
+    else if (which == "size") Test::run_patternSize(getAlgorithm(argv[2]), std::stoi(argv[4]));
   }
 
   return 0;

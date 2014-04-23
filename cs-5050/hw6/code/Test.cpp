@@ -156,98 +156,68 @@ void Test::test_fail(StringMatch* stringMatch) {
   }
 }
 
-void Test::run_alphabet_size_naive() {
-  StringMatch* stringMatch = new NaiveStringMatch;
+//////////////////////////////////////////////////////////////////////////
+//                    TESTS TO RUN                                      //
+//////////////////////////////////////////////////////////////////////////
+
+void Test::run_shakespeare(StringMatch* stringMatch) {
 
   std::string string = StringMatch::readFullFile("strings/shakespeare.txt");
   std::string pattern = "anyone";
 
   stringMatch->preprocess(pattern);
-  
-  int runTime = (int)averageRuntime([&]() {
-    stringMatch->match(string, pattern);
-  }, RUNS);
-
   std::cout << "Shakespeare:" << std::endl
     << " pattern: " << pattern << std::endl
-    << " run time: " << runTime << std::endl;
+    << "Size(n)" << '\t' << "Runtime(ms)" << std::endl;
 
-  string = StringMatch::readFullFile("strings/dna.txt");
-  pattern = "ATTACG";
+  for (int n = 64; n < (int)string.length(); n *= 2) {
+    std::string theString(string.begin(), string.begin() + n);
+    int runTime = (int)averageRuntime([&]() {
+      stringMatch->match(theString, pattern);
+    }, RUNS);
 
-  stringMatch->preprocess(pattern);
-
-  runTime = (int)averageRuntime([&]() {
-    stringMatch->match(string, pattern);
-  }, RUNS);
-
-  std::cout << "Shakespeare:" << std::endl
-    << " pattern: " << pattern << std::endl
-    << " run time: " << runTime << std::endl;
+    std::cout << n << '\t' << runTime << std::endl;
+  }
 
   delete stringMatch;
 }
 
-void Test::run_alphabet_size_bm() {
-  StringMatch* stringMatch = new BMStringMatch;
-
-  std::string string = StringMatch::readFullFile("strings/shakespeare.txt");
-  std::string pattern = "anyone";
-
+void Test::run_binary(StringMatch* stringMatch, int regularityPercent) {
+  std::string pattern = StringMatch::generateArtificialString(10, regularityPercent);
   stringMatch->preprocess(pattern);
 
-  int runTime = (int)averageRuntime([&]() {
-    stringMatch->match(string, pattern);
-  }, RUNS);
-
-  std::cout << "Shakespeare:" << std::endl
+  std::cout << "Binary String:" << std::endl
     << " pattern: " << pattern << std::endl
-    << " run time: " << runTime << std::endl;
+    << "Size(n)" << '\t' << "Runtime(ms)" << std::endl;
 
-  string = StringMatch::readFullFile("strings/dna.txt");
-  pattern = "ATTACG";
+  for (int n = 64; n < 2000000000; n *= 2) {
+    std::string theString = StringMatch::generateArtificialString(n, regularityPercent);
+    int runTime = (int)averageRuntime([&]() {
+      stringMatch->match(theString, pattern);
+    }, RUNS);
 
-  stringMatch->preprocess(pattern);
-
-  runTime = (int)averageRuntime([&]() {
-    stringMatch->match(string, pattern);
-  }, RUNS);
-
-  std::cout << "Shakespeare:" << std::endl
-    << " pattern: " << pattern << std::endl
-    << " run time: " << runTime << std::endl;
+    std::cout << n << '\t' << runTime << std::endl;
+  }
 
   delete stringMatch;
 }
 
-void Test::run_alphabet_size_kmp() {
-  StringMatch* stringMatch = new KMPStringMatch;
-
-  std::string string = StringMatch::readFullFile("strings/shakespeare.txt");
-  std::string pattern = "anyone";
-
+void Test::run_patternSize(StringMatch* stringMatch, int patternLength) {
+  std::string pattern = StringMatch::generateRandomAlphaString(patternLength);
   stringMatch->preprocess(pattern);
 
-  int runTime = (int)averageRuntime([&]() {
-    stringMatch->match(string, pattern);
-  }, RUNS);
-
-  std::cout << "Shakespeare:" << std::endl
+  std::cout << "Pattern Size:" << std::endl
     << " pattern: " << pattern << std::endl
-    << " run time: " << runTime << std::endl;
+    << "Size(n)" << '\t' << "Runtime(ms)" << std::endl;
 
-  string = StringMatch::readFullFile("strings/dna.txt");
-  pattern = "ATTACG";
+  for (int n = 64; n < 2000000000; n *= 2) {
+    std::string theString = StringMatch::generateRandomAlphaString(n);
+    int runTime = (int)averageRuntime([&]() {
+      stringMatch->match(theString, pattern);
+    }, RUNS);
 
-  stringMatch->preprocess(pattern);
-
-  runTime = (int)averageRuntime([&]() {
-    stringMatch->match(string, pattern);
-  }, RUNS);
-
-  std::cout << "Shakespeare:" << std::endl
-    << " pattern: " << pattern << std::endl
-    << " run time: " << runTime << std::endl;
+    std::cout << n << '\t' << runTime << std::endl;
+  }
 
   delete stringMatch;
 }

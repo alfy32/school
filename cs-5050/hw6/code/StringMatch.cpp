@@ -26,3 +26,12 @@ std::string StringMatch::generateArtificialString(int length, int p) {
 
   return generatedString;
 }
+
+std::string StringMatch::generateRandomAlphaString(int length) {
+  std::string generatedString(length, 'a');
+
+  for (char& ch : generatedString) 
+    ch += rand() % 26;
+
+  return generatedString;
+}

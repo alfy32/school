@@ -14,6 +14,7 @@ public:
   
   static std::string readFullFile(std::string fileName);
   static std::string generateArtificialString(int length, int p);
+  static std::string generateRandomAlphaString(int length);
 
   StringMatch() { srand((unsigned)time(NULL)); }
 
