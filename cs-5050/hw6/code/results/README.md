@@ -3,15 +3,21 @@ Assignment 6 string matching
 
 **Three questions**
 
-1. How does the alphabet size affect the performance of the algorithms?
-2. How does the regularity of the string affect the performance of the algorithms?
-3. How does the length of the pattern to match affect performance?
+1. Which algorithm runs faster on the complete works of shakespeare?
+2. How does the regularity of a binary string affect performance?
+3. Given three different pattern lengths, how is performance affected on each algoritm?
 
 
-**How does the alphabet size affect the performance of the algorithms?**
+**Which algorithm runs faster on the complete works of shakespeare?**
+
+![Shakespeare](shakespeare.png)
 
 
-**How does the regularity of the string affect the performance of the algorithms?**
+**How does the regularity of a binary string affect performance?**
+
+![Binary](binary.png)
 
 
-**How does the length of the pattern to match affect performance?**
+**Given three different pattern lengths, how is performance affected on each algoritm?**
+
+![Pattern Size](size.png)
