@@ -19,7 +19,13 @@ The problem size is how much of the Shakespeare text was searched. Each algorith
 
 ![Binary](binary.png)
 
-The problem size corresponds to the length of the binary text that we are searching through. According to this graph the run times of all three algorithms is similar no matter the regularity. I do note that the BM algorithm is the fastest and the naive algorithm is the slowest. It also seems that the 20% regularity is takes longer to run than the 50% and the 50% longer than the 80%. The naive algorithm turned out the same for the three regularities. This makes sense because the pattern has no effect on how it works. 
+The problem size corresponds to the length of the binary text that we are searching through. According to this graph the run times of all three algorithms is similar no matter the regularity. 
+
+I do note that the BM algorithm is the fastest and the naive algorithm is the slowest. 
+
+It also seems that the 20% regularity is takes longer to run than the 50% and the 50% longer than the 80%. 
+
+The naive algorithm turned out the same for the three regularities. This makes sense because the pattern has no effect on how it works. 
 
 
 **Given three different pattern lengths, how is performance affected on each algoritm?**
