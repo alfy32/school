@@ -35,14 +35,9 @@ MYGAME.screens['game-play'] = (function() {
 			rotation : 0
 		});
 
-var lastHit = 0;
-var hitTime = 500;
 		//
 		// Create the keyboard input handler and register the keyboard commands
-		myKeyboard.registerCommand(KeyEvent.DOM_VK_A, function (elapsedTime) {
-if(performance.now() - lastHit < hitTime) return;
-lastHit = performance.now();
-
+		myKeyboard.registerCommand(KeyEvent.DOM_VK_SPACE, function (elapsedTime) {
 			if(!myMeter.hit(elapsedTime)) {
 				gameOver = true;
 			}

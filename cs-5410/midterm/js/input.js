@@ -88,9 +88,11 @@ MYGAME.input = (function() {
 
 		function keyPress(e) {
 			that.keys[e.keyCode] = e.timeStamp;
+			console.log(e.keyCode, e.timeStamp);
 		}
 
 		function keyRelease(e) {
+			console.log(e.keyCode, that.keys[e.keyCode]);
 			delete that.keys[e.keyCode];
 		}
 
@@ -109,9 +111,12 @@ MYGAME.input = (function() {
 		//
 		// ------------------------------------------------------------------
 		that.update = function(elapsedTime) {
+
 			for (key = 0; key < that.handlers.length; key++) {
 				if (typeof that.keys[that.handlers[key].key] !== 'undefined') {
+					console.log(that.keys);
 					that.handlers[key].handler(elapsedTime);
+					delete that.keys[that.handlers[key].key];
 				}
 			}
 		};
